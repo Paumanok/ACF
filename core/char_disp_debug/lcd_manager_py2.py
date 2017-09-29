@@ -6,7 +6,7 @@
 from subprocess import *
 from time import sleep, strftime, time
 from datetime import datetime
-from queue import *
+from Queue import *
 import signal
 import Adafruit_CharLCD as LCD
 import ipclock

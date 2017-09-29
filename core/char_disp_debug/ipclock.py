@@ -23,14 +23,15 @@ class ipclock:
 
     def run_cmd(self):
         p = Popen(self.ipaddr_cmd, shell=True, stdout=PIPE)
-        self.ipaddr = p.communicate()[0]
+        self.ipaddr = p.communicate()[0].decode('ascii') #decode needed cus python3 screws with output
 
     def display(self):
         #am/pm time string ('%b %d %I:%M %p\n')
         self.run_cmd()
         lcd.set_cursor(0,0)
         lcd.message(datetime.now().strftime('%b %d  %I:%M:%S\n'))
-        lcd.message('IP %s\n' % (self.ipaddr))
+        ipstring = ('IP %s\n' % (self.ipaddr))
+        lcd.message(ipstring)
 
 
 def main():
