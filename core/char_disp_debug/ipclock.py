@@ -17,10 +17,9 @@ debug = False
 
 class ipclock:
     
-    def __init__(self, repeat):    
+    def __init__(self):    
         self.ipaddr_cmd = "ip addr show wlan0 | grep  'inet ' | awk '{print $2}' | cut -d/ -f1"
         self.ipaddr = ""
-        self.repeat = repeat
 
     def run_cmd(self):
         p = Popen(self.ipaddr_cmd, shell=True, stdout=PIPE)
