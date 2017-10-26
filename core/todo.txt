@@ -1,0 +1,35 @@
+so i need to sort my thoughts
+==========================================================================================
+We need to store information about pets in the DB
+    we will keep this in JSON in order to be able to send this off to the app and recieve
+    it in the same format.
+    -this information also needs to be deserialized into an object to decide to operate on
+    -these classes will be used to determine when/how much to feed
+        -default schedule vs programmed schedule
+
+We need to store data about dynamic feedings
+    when in dynamic mode:
+        1: animal approaches
+        2: feed initiated
+        3: update feeding db: [<pet>,<timestamp>]
+            -allows us to sort by pet,day, month, year
+
+============================================================================================
+dynamic feedings vs scheduled feedings
+
+Dynamic:
+#define schedule breaks==> dont feed on schedule but block dynamic feeds until break
+
+03:00|--------|12:00|--------|20:00|--------|03:00|--...
+      \      /       \      /       \      /
+       1 feed         1 feed         1 feed
+
+
+Scheduled:
+
+03:00|----------|12:00|----------|20:00|----------|03:00|--...
+      \        /       \        /       \         /
+^feed^  _ignore_ ^feed^  _ignore_ ^feed^  _ignore_
+
+
+=============================================================================================
