@@ -1,17 +1,16 @@
 #database class
 
-import sqlite3
+from pymongo import mongoClient
 
 
-class db_manager:
+class ddm
 
     def __init__(self):
-        #check for existing dbs
-        #maybe have config file defining databases
-        #if not there, create from definitions
-        #if they exist, do nothing, other class
-        #functions will handle writing and reading
+        self.client = MongoClient('mongodb://localhost:27017/')
+        self.db = self.client['ACF_db']
+        self.collection = self.db['pets']
+        self.collect = self.db['feedlogs']
 
-    def insert(self, db_name, entry)
+    def insert(self, db_name, entry):
         #i know nothing about db shit
 
