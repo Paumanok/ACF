@@ -33,3 +33,6 @@ Scheduled:
 
 
 =============================================================================================
+
+mongodb tutorial 
+https://www.learntutors.com/install-mongodb-fedora-24/
