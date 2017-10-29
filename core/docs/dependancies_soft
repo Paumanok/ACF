@@ -1,0 +1,14 @@
+We need to formalize python dependencies with pip and virtual env 
+later
+
+for now this is what I'm working with:
+
+    Python3:
+        pymongo
+        json
+        bson
+
+    Linux:
+        python3
+        mongodb v2.6 --- hoping this is the one in the raspberian repos
+                        as its the one in the fedora repos

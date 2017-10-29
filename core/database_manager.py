@@ -17,17 +17,19 @@ class dbm:
         self.feedlogs = self.db['feedlogs']
 
     def insert(self, collection, entry):
-        #get dict of object
-        entry_dict = entry.__dict__
-        #insert into appropriate collection
-        entry.db_id = collection.insert_one(entry_dict).inserted_id
-        print("i just got this id " )
-        print(entry.db_id)
+        if(len(list(collection.find({"_id":entry.db_id})))==0):
+            #get dict of object
+            entry_dict = entry.__dict__
+            #insert into appropriate collection
+            entry.db_id = collection.insert_one(entry_dict).inserted_id
+        else:
+            self.replace(collection, entry)
 
     def update(self, collection, entry):
         #collection.updateOne()
         #replacing with updated python object might be easier
-        return
+        #calling replace for now
+        self.replace(collection, entry)
 
     def replace(self, collection, entry):
         something = collection.replace_one({"_id":entry.db_id}, entry.__dict__)
