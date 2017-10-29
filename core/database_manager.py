@@ -4,6 +4,9 @@ from pymongo import MongoClient
 import json
 from bson import objectid
 
+#print debug flag
+debug = False
+
 class dbm:
 
     def __init__(self):
@@ -16,13 +19,16 @@ class dbm:
         self.pets = self.db['pets']
         self.feedlogs = self.db['feedlogs']
 
+    #insert will check for a name and replace instead of insert if cat
+    #is there. This must be fixed for other types of db entries
     def insert(self, collection, entry):
-        if(len(list(collection.find({"_id":entry.db_id})))==0):
+        if(len(list(collection.find({"name":entry.name})))==0):
             #get dict of object
             entry_dict = entry.__dict__
             #insert into appropriate collection
             entry.db_id = collection.insert_one(entry_dict).inserted_id
         else:
+            if debug: print("replacing instead of inserting")
             self.replace(collection, entry)
 
     def update(self, collection, entry):
