@@ -30,7 +30,7 @@ class dbm:
         return
 
     def replace(self, collection, entry):
-        something = collection.replace_one({"name":entry.name}, entry.__dict__)
+        something = collection.replace_one({"_id":entry.db_id}, entry.__dict__)
         print(something)
 
     def get_by_id(self, collection, entry):
