@@ -1,0 +1,226 @@
+\documentclass[12pt]{article}
+
+\usepackage{graphicx} % pictures
+\usepackage{multicol} %Make columns
+\usepackage{multirow} %Make rows
+\usepackage{amsmath} % Mathy things
+\usepackage{gensymb} % Literally only need for degree symbol why 
+\usepackage{amssymb}
+\usepackage{sympytex} 
+\usepackage{booktabs} % Pretty Tables
+\usepackage{colortbl} % Might replace xcolor for table  coloring
+\usepackage{array} % Tably stuff
+\usepackage{longtable} 
+\usepackage[margin=1in]{geometry} %Change margins
+\usepackage{fancyhdr} 
+\usepackage{tabu} 
+\usepackage{tabularx} 
+\usepackage{pdfpages} % include pdf
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage[per-mode=symbol]{siunitx}
+\usepackage{float}
+\usepackage[labelfont=bf,textfont=small]{caption} %Makes captions look nice, will use in the future (maybe)
+
+\usepackage{tocloft}
+
+\renewcommand{\figurename}{Fig.}
+\def\cequationautorefname{Equation}%
+\usepackage{hyperref}
+\usepackage{listings}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\rhead{\hfill\thepage}
+\lhead{\projectDescriptionShort}
+\lstset{%
+    basicstyle={\scriptsize\ttfamily},
+    inputpath=./lvsreps
+    }
+
+\definecolor{lightgray2}{gray}{0.9} % Color for table rows
+
+\newcolumntype{x}[1]{>{\centering\arraybackslash}p{#1}} %center fixed with columns 
+%Use x{''width''}
+\newfloat{cequation}{H}{equ}
+\floatname{cequation}{Equation}
+\newcounter{NameOfTheNewCounter}
+\newcommand{\startalign}{\setcounter{NameOfTheNewCounter}{\theequation+1}}
+\newcommand{\equationset}[1]{% \equationset{<caption>}
+\noindent\makebox[\linewidth]{Equations \theNameOfTheNewCounter-\theequation: \textbf{#1}}\bigskip}% Print caption
+%allow align environment numbering
+\newcounter{engineering}
+\renewcommand{\theengineering}{\Alph{engineering}}
+\newcommand\engineerthis[1]{\refstepcounter{engineering}\label{#1}\theengineering. }
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand\Vcc{\ensuremath{V_{cc}}}
+\newcommand\sip{\texttt{SI}}
+\newcommand\clk{\texttt{clk}}
+\newcommand\ao{\texttt{AO}}
+\newcommand\mm{~\si{\milli\meter}}
+\newcommand{\kohm}[1]{#1~\si{\kilo\ohm}}
+\newcommand{\khz}[1]{#1~\si{\kilo\hertz}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+\graphicspath{{images/}}
+\pgfplotsset{compat=1.13}
+\pgfplotstableset{%
+    %every head row/.style={before row=\toprule,after row=\midrule},
+    every last row/.style ={after row=\bottomrule},
+    every even row/.style={before row={\rowcolor[gray]{0.9}}},
+}
+% The following should be changed to represent your personal information
+\newcommand{\projectDescription}{A smart solution to automate and regulate \\the feeding of common household pets}
+\newcommand{\projectTitle}{Automated Pet Feeder}
+\newcommand{\yourname}{Chris Ranc}
+\newcommand{\myname}{Matt Smith}
+\newcommand{\anothername}{Shabab Siddiq}
+\newcommand{\dateSubmitted}{November 7, 2017}
+\newcommand{\collab}{In Collaboration with teams from Northeastern University, Georgia Tech, and Virginia Tech}
+\newcommand{\componentDescription}{Microcontroller Options}
+\newcommand{\projectDescriptionShort}{Microcontroller Options}
+
+
+\setcounter{secnumdepth}{0} % Remove section numbering
+
+\begin{document}
+    
+\thispagestyle{empty}
+    \vspace*{2.5cm} 
+    \begin{center}
+        \LARGE
+        \textbf{\projectTitle}
+
+        \Large
+        \projectDescription
+
+    \vspace*{2.5cm} 
+        \large
+        \textbf{CMPE 495 Independent Risk Investigation}
+
+        \componentDescription
+    \end{center}
+    
+    \vspace*{2cm}
+    
+    \begin{multicols}{2}
+        \phantom{LaTeX doesn't like empty columns} % Phantom will take up that much space, but not actually appear
+        \columnbreak{}
+        \begin{raggedright}
+            
+        Name: \yourname\\
+        Team Members: \myname\
+        \phantom{Team Members:} \anothername\\
+        Submitted: \dateSubmitted\\
+        \vspace{\baselineskip}
+        \end{raggedright}
+    \end{multicols}
+\newpage
+%
+% TOC
+%
+\renewcommand{\cftaftertoctitle}{\thispagestyle{empty}} 
+\renewcommand\cftsecleader{\cftdotfill{\cftdotsep}}
+\tableofcontents
+\newpage
+
+\section{Overview}
+%Brief textual description of the role of this high-risk component in the overall project
+Like any embedded system a microcontroller that is cost effective and provides adequate hardware
+for the requirements of the system is needed.  These requirements being to operate the mechanical 
+communication aspects of the feeder.  It must have available documentation and easy to use
+toolchains, with useful SDKs, for efficient development.  
+%An engine controller, like any electrical device requires power to function properly. 
+% The system is heavily constrained by both weight and size requirements and thus must be 
+% developed carefully to ensure compliance. The power systems will be responsible for delivering 
+% power to both the electrical components, such as microcontrollers, and mechanical components, 
+% like valves. 
+\section{Risk specification}
+Marketing requirements for microcontrollers:
+\begin{enumerate}
+    \item\label{light} Must be lightweight.
+    \item\label{remote}Must be able to control remote vent valves for propellant and pressurant tanks.
+    \item\label{depress}Must be able to depressurize the rocket independent of the launch controller.
+    \item\label{pressure}Must have remote electronic pressure instrumentation for tank pressures.
+    \item\label{temp}Must have remote electronic temperature instrumentation for tank temperatures.
+    \item\label{ignition}Must ignite only from an electrical ignition source with a key lock-out on the pad and with the same key lock-out at the main launch controller.
+    \item\label{press}Must be able to open the helium press valve before and keep it open during flight.
+    \item\label{pyro}Must be able to fire the main pyro valves for takeoff.
+    \item\label{spark}Must be safe to operate in a flammable environment.
+\end{enumerate}
+The relevant specifications can be found in \autoref{tab:specs}.
+
+\begin{table}[H]
+    \centering
+    \caption{Engineering Specifications}
+    \label{tab:specs}
+    \begin{tabularx}{\linewidth}{cXX} \toprule
+        Marketing Requirement(s) & Engineering Requirement & Justification \\ \midrule
+        \ref{light}              & \engineerthis{elight}Must weigh less than 1 lb& The rocket cannot weigh too much or the height goal is not achievable.\\
+        \ref{remote},\ref{depress}              & \engineerthis{eremote}Must be able to open the release valves & The relief valves allow the launch to be scrubbed, as well as the air released during filling.\\
+        \ref{pressure}              & \engineerthis{epressure}Must be able to read from a pressure transducer & The propulsion team needs to be able to monitor tank pressure before liftoff to determine whether to scrub the launch.\\
+        \ref{temp}              & \engineerthis{etemp}Must be able to read from a thermocouple& The propulsion team needs to monitor tank temperature to determine whether to scrub the launch.\\
+        \ref{ignition}              & \engineerthis{eigintion}Must not ignite the engine& The rocket launch, per range safety rules, must be initialized by a keyed system.\\
+        \ref{press}              & \engineerthis{epress}Must be able to power the press valve for at least 30 minutes at 24~\si{\volt} and 0.4~\si{\ampere}& The helium valve is opened on the ground and may need to remain so for an extended period of time.\\
+        \ref{pyro}              & \engineerthis{epyro}Must be able to power the two pyro valves for 1 second at 24~\si{\volt} and 1~\si{\ampere} & The pyro valves are the main engine valves the release the propellants into the chamber and cannot be closed via electrical means.\\
+        \ref{spark}              & \engineerthis{espark}Must not produce any sparks during operation & Sparking around flammable materials in a high oxygen environment could lead to RUD (rapid unscheduled disassembly)\\
+    \end{tabularx}
+\end{table}
+Many of these specifications, such as \ref{elight}, do not appear directly connected to the power system, but must be kept in mind, as they make options such as more batteries infeasible.
+%Mostly tables introduced and explained in text
+    %– Needs (0–2 points)—numbered customer needs or marketing requirements related to
+    %this risk, (i.e., a subset of the overall project needs)
+    %– Engineering specifications (0–2 points)—numbered/lettered engineering specification
+    %related to this risk, each related to needs by number, (i.e., a subset of the overall project
+    %specifications).
+    %– Analysis to justify engineering specifications (0–3 points)
+\section{Risk investigation}
+%Combination of textual explanation and tables
+    %– Survey of existing systems/components and how they relate to this risk (0–5 points)
+    %– Concepts considered and chosen (0–3 points)
+    %– Rationale for choice(s), including analysis performed, (e.g., Pugh table) (0–4 points)
+\section{Risk mitigation design}
+%Technical details of proposed design choice—textual explanation with many meaningful
+%diagrams, (introduced and explained in text); should include input(s) and output(s) and
+%should define any interfaces/protocols
+    %– Overview (0–2 points)
+    %– How it works (0–10 points)—include specifications for this component to enable the
+    %overall project to meet its engineering specifications, (which were presented in Section
+    %II)
+    %– Why this design mitigates, (i.e., eliminates or minimizes), risk (0–10 points)
+    %– Overall risk subsystem diagrams (0–5 points)
+    %– Detailed design (0–5 points)
+        %· Circuits and assemblies, of any hardware components
+            %o Circuit schematics
+            %o Sensor types and placement
+            %o Actuators
+            %o Other components
+            %o Interface(s) to other project components
+            %o State diagrams, flowcharts, system models, etc.
+        %· User interface and controls, of any software components
+            %o State diagrams, flowcharts, system models, etc.
+    %– Intellectual property (0–3 points)—results of patent search for design of proposed risk
+    %solution
+\section{Parts List}
+%List of parts for proposed risk mitigation design.
+    %– Part description (with name and number, if applicable)
+    %– Cost—(standard purchase price of component)
+    %– Your cost—(your cost for component; could be $0 if you already own)
+    %– Availability—(vendor information, including lead time from order placement to delivery)
+\section{Testing strategy}
+%Plan for verification of proper component/subsystem operation within the project’s
+%particular operating environment. The plan should include what will be measured/tested
+%along with an estimate of when. (Notes: 1. manufacturer’s performance specifications are
+%often unachievable in practice, [e.g., new car mileage estimates]; 2. testing sooner is much
+%better than later— whether this high-risk component will perform adequately in the overall
+%project system needs to be determined as early as possible.)
+\section{Uncertainties}
+%Any remaining doubts or questions about using or testing this component/subsystem—any
+%concerns the author or other team members have about this aspect of the project.
+\section{Appendices}
+%Copies of (or links to) the manufacturer’s literature on the component/subsystem—
+%especially technical specification(s) and application notes.
+
+\end{document}
