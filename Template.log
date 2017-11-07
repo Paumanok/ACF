@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.29)  7 NOV 2017 14:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.29)  7 NOV 2017 14:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1652,6 +1652,35 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [8]
+Overfull \hbox (32.92023pt too wide) in paragraph at lines 338--340
+[][]$\OT1/cmtt/m/n/12 https : / / www . amazon . com / SanDisk-[]Mobile-[]Micro
+SDHC-[]Memory-[]SDSDQM-[]B35A / dp / B004ZIENBA /
+ []
+
+
+Overfull \hbox (55.62024pt too wide) in paragraph at lines 338--340
+\OT1/cmtt/m/n/12 ref = sr _ 1 _ 5 ? ie = UTF8 & qid = 1510058599 & sr = 8-[]5 &
+ keywords = micro + sd + card + 8gb & dpID = 41hGPOLym4L &
+ []
+
+
+Overfull \hbox (32.92023pt too wide) in paragraph at lines 342--344
+[][]$\OT1/cmtt/m/n/12 https : / / www . amazon . com / SanDisk-[]Mobile-[]Micro
+SDHC-[]Memory-[]SDSDQM-[]B35A / dp / B004ZIENBA /
+ []
+
+
+Overfull \hbox (55.62024pt too wide) in paragraph at lines 342--344
+\OT1/cmtt/m/n/12 ref = sr _ 1 _ 5 ? ie = UTF8 & qid = 1510058599 & sr = 8-[]5 &
+ keywords = micro + sd + card + 8gb & dpID = 41hGPOLym4L &
+ []
+
+
+Overfull \hbox (56.12024pt too wide) in paragraph at lines 354--356
+[][]$\OT1/cmtt/m/n/12 https : / / www . mouser . com / search / ProductDetail .
+ aspx ? R = 0virtualkey0virtualkeyBBBWL-[]SC-[]562$[][] 
+ []
+
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -1659,23 +1688,23 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [9]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 332.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 332.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 362.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 362.
  (./Template.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 332.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 332.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 362.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 362.
 Package rerunfilecheck Info: File `Template.out' has not changed.
 (rerunfilecheck)             Checksum: FEF216A6F418C2B1F69D8612A3394ED7;428.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 332.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 362.
  ) 
 Here is how much of TeX's memory you used:
  41439 strings out of 492990
  957421 string characters out of 6132621
- 1114466 words of memory out of 5000000
+ 1114492 words of memory out of 5000000
  44385 multiletter control sequences out of 15000+600000
  538753 words of font info for 54 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1683,11 +1712,12 @@ Here is how much of TeX's memory you used:
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 ></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><
 /usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></u
-sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on Template.pdf (9 pages, 288494 bytes).
+sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr
+/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on Template.pdf (9 pages, 302134 bytes).
 PDF statistics:
- 175 PDF objects out of 1000 (max. 8388607)
- 128 compressed objects within 2 object streams
+ 191 PDF objects out of 1000 (max. 8388607)
+ 143 compressed objects within 2 object streams
  33 named destinations out of 1000 (max. 500000)
  92 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -26,7 +26,7 @@
 
 \renewcommand{\figurename}{Fig.}
 \def\cequationautorefname{Equation}%
-\usepackage[colorlinks=true,urlcolor=cyan]{hyperref}
+\usepackage[colorlinks=true,urlcolor=cyan,linkcolor=black]{hyperref}
 \usepackage{listings}
 \pagestyle{fancy}
 \fancyhead{}
@@ -79,8 +79,8 @@
 \newcommand{\anothername}{Shabab Siddiq}
 \newcommand{\dateSubmitted}{November 7, 2017}
 \newcommand{\collab}{In Collaboration with teams from Northeastern University, Georgia Tech, and Virginia Tech}
-\newcommand{\componentDescription}{Microcontroller Options}
-\newcommand{\projectDescriptionShort}{Microcontroller Options}
+\newcommand{\componentDescription}{Embedded Controller Options}
+\newcommand{\projectDescriptionShort}{Embedded controller Options}
 
 \newcommand{\nimg}[4][width=\textwidth]{
     \begin{figure}[H]
@@ -107,7 +107,7 @@
 
     \vspace*{2.5cm}
         \large
-        \textbf{CMPE 495 Independent Risk Investigation}
+        \textbf{CMPE 495 Independent Risk Investigation:}
 
         \componentDescription
     \end{center}
@@ -137,9 +137,9 @@
 
 \section{I Overview}
 %Brief textual description of the role of this high-risk component in the overall project
-Like any embedded system a microcontroller that is cost effective and provides adequate hardware
-for the requirements of the system is needed.  These requirements being to operate the mechanical
-communication aspects of the feeder.  It must have available documentation and easy to use
+Like any embedded system a controller that is cost effective and provides adequate hardware
+for the requirements of the system being designed needs to be use.  These requirements being to operate the mechanical
+and communication aspects of the feeders.  It must have available documentation and easy to use
 toolchains, with useful SDKs, for efficient development.
 %An engine controller, like any electrical device requires power to function properly.
 % The system is heavily constrained by both weight and size requirements and thus must be
@@ -308,25 +308,55 @@ and motors inside of the feeder.
 %often unachievable in practice, [e.g., new car mileage estimates]; 2. testing sooner is much
 %better than later— whether this high-risk component will perform adequately in the overall
 %project system needs to be determined as early as possible.)
-When the system is finished enought to operate in a software simulation state both feeders will be exposed 
-to stress testing.  The Suplementary feeder will be stress tested for correct concurrent operation.  
+When the system is finished enought to operate in a software simulation state both feeders will be exposed
+to stress testing.  The Suplementary feeder will be stress tested for correct concurrent operation.
 This is to make sure its custom firm ware is capable of handling multiple interruptions from pets and configuration
-changes being sent from the master unit. Likewise the master feeder will be simulated against multiple virtual 
-feeders sending requests and information. Along with simulated user changes. 
+changes being sent from the master unit. Likewise the master feeder will be simulated against multiple virtual
+feeders sending requests and information. Along with simulated user changes.
 
 
 \section{VII Uncertainties}
 %Any remaining doubts or questions about using or testing this component/subsystem—any
 %concerns the author or other team members have about this aspect of the project.
-Determining the optimum scheduling to ensure concurrent operation of the Suplementary feeder.  
-Accounting for random behaviour of pets while communicating with the Master Feeder might 
-make concuurent operation tricky and cause missing deadlines if not careful.  Which could be 
+Determining the optimum scheduling to ensure concurrent operation of the Suplementary feeder.
+Accounting for random behaviour of pets while communicating with the Master Feeder might
+make concuurent operation tricky and cause missing deadlines if not careful.  Which could be
 problematic when the master feeder is trying to update a suplementary feeder and the interrupt of pet
-causes it to miss the feeding configuration update.  
+causes it to miss the feeding configuration update.
 
 \newpage
 \section{Appendices}
 %Copies of (or links to) the manufacturer’s literature on the component/subsystem—
 %especially technical specification(s) and application notes.
+
+Raspberry Pi Zero W\\
+\url{https://www.canakit.com/raspberry-pi-zero-wireless.html?src=raspberrypi}
+
+Raspberry Pi Zero W GPIO Pinout\\
+\url{https://pinout.xyz/pinout/pin1\_3v3\_power}
+
+Micro SD\\
+\url{https://www.amazon.com/SanDisk-Mobile-MicroSDHC-Memory-SDSDQM-B35A/dp/B004ZIENBA/ref=sr\_1\_5?ie=UTF8\&qid=1510058599\&sr=8-5\&keywords=micro+sd+card+8gb\&dpID=41hGPOLym4L\&preST=\_SX300\_QL70\_\&dpSrc=srch}
+
+
+ESP8266 (Feather)\\
+\url{https://www.amazon.com/SanDisk-Mobile-MicroSDHC-Memory-SDSDQM-B35A/dp/B004ZIENBA/ref=sr\_1\_5?ie=UTF8\&qid=1510058599\&sr=8-5\&keywords=micro+sd+card+8gb\&dpID=41hGPOLym4L\&preST=\_SX300\_QL70\_\&dpSrc=srch}
+
+
+ESP8266 Feather Documentation\\
+\url{https://learn.adafruit.com/adafruit-feather-huzzah-esp8266/downloads}
+
+
+Raspberry Pi Model 3 B\\
+\url{https://www.canakit.com/raspberry-pi-3-model-b.html?cid=usd\&src=raspberrypi}
+
+
+Beaglebone\\
+\url{https://www.mouser.com/search/ProductDetail.aspx?R=0virtualkey0virtualkeyBBBWL-SC-562}
+
+
+Bananna Pi Zero\\
+\url{http://www.banana-pi.org/bpi-zero.html}
+
 
 \end{document}
