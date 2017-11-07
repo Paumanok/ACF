@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.29)  7 NOV 2017 08:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.29)  7 NOV 2017 11:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1525,22 +1525,22 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 182--182
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/12 Raspberry
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 182--182
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/12 Bananna
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 182--182
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/12 Raspberry
  []
 
 
-Overfull \hbox (2.94981pt too wide) in paragraph at lines 182--182
+Overfull \hbox (2.94981pt too wide) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/12 Beaglebone
  []
 
@@ -1551,47 +1551,47 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 235--235
+Underfull \hbox (badness 10000) in paragraph at lines 265--265
 \OT1/cmr/m/n/12 3-5 busi-ness
  []
 
 
-Underfull \hbox (badness 5756) in paragraph at lines 235--235
+Underfull \hbox (badness 5756) in paragraph at lines 265--265
 []|\OT1/cmr/m/n/12 SD card for
  []
 
 
-Underfull \hbox (badness 1383) in paragraph at lines 235--235
+Underfull \hbox (badness 1383) in paragraph at lines 265--265
 \OT1/cmr/m/n/12 OS and data
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 235--235
+Underfull \hbox (badness 10000) in paragraph at lines 265--265
 \OT1/cmr/m/n/12 stor-age of
  []
 
 
-Underfull \hbox (badness 2012) in paragraph at lines 235--235
+Underfull \hbox (badness 2012) in paragraph at lines 265--265
 []|[][]\OT1/cmr/m/n/12 Amazon Link[][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 235--235
+Underfull \hbox (badness 10000) in paragraph at lines 265--265
 []|\OT1/cmr/m/n/12 Adafruit dev
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 235--235
+Underfull \hbox (badness 10000) in paragraph at lines 265--265
 \OT1/cmr/m/n/12 board vari-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 235--235
+Underfull \hbox (badness 10000) in paragraph at lines 265--265
 \OT1/cmr/m/n/12 ant of the
  []
 
 
-Underfull \hbox (badness 2012) in paragraph at lines 235--235
+Underfull \hbox (badness 2012) in paragraph at lines 265--265
 []|[][]\OT1/cmr/m/n/12 Amazon Link[][]
  []
 
@@ -1602,19 +1602,26 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [5]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 256.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 256.
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 14.49998pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[6]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 286.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 286.
  (./Template.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 256.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 256.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 286.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 286.
 Package rerunfilecheck Info: File `Template.out' has not changed.
 (rerunfilecheck)             Checksum: 170C6F2C5DD2E71E09022FC76931D271;406.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 256.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 286.
  ) 
 Here is how much of TeX's memory you used:
- 41409 strings out of 492990
- 956955 string characters out of 6132621
- 1115304 words of memory out of 5000000
+ 41410 strings out of 492990
+ 956961 string characters out of 6132621
+ 1117304 words of memory out of 5000000
  44367 multiletter control sequences out of 15000+600000
  538753 words of font info for 54 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1623,10 +1630,10 @@ Here is how much of TeX's memory you used:
 ></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><
 /usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></u
 sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on Template.pdf (5 pages, 67668 bytes).
+Output written on Template.pdf (6 pages, 71130 bytes).
 PDF statistics:
- 147 PDF objects out of 1000 (max. 8388607)
- 108 compressed objects within 2 object streams
- 26 named destinations out of 1000 (max. 500000)
+ 152 PDF objects out of 1000 (max. 8388607)
+ 112 compressed objects within 2 object streams
+ 27 named destinations out of 1000 (max. 500000)
  77 words of extra memory for PDF output out of 10000 (max. 10000000)
 
