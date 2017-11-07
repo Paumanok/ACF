@@ -105,3 +105,5 @@ __pycache__
 *.aux
 *.out
 *.toc
+*.sympy
+independent_risk_investigation.pdf
