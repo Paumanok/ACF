@@ -102,3 +102,6 @@ ENV/
 *.pyc
 __pycache__
 .~lock.*
+*.aux
+*.out
+*.toc
