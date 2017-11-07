@@ -138,17 +138,12 @@ toolchains, with useful SDKs, for efficient development.
 % power to both the electrical components, such as microcontrollers, and mechanical components, 
 % like valves. 
 \section{Risk specification}
-Marketing requirements for microcontrollers:
+Marketing requirements relevant for microcontrollers:
 \begin{enumerate}
-    \item\label{light} Must be lightweight.
-    \item\label{remote}Must be able to control remote vent valves for propellant and pressurant tanks.
-    \item\label{depress}Must be able to depressurize the rocket independent of the launch controller.
-    \item\label{pressure}Must have remote electronic pressure instrumentation for tank pressures.
-    \item\label{temp}Must have remote electronic temperature instrumentation for tank temperatures.
-    \item\label{ignition}Must ignite only from an electrical ignition source with a key lock-out on the pad and with the same key lock-out at the main launch controller.
-    \item\label{press}Must be able to open the helium press valve before and keep it open during flight.
-    \item\label{pyro}Must be able to fire the main pyro valves for takeoff.
-    \item\label{spark}Must be safe to operate in a flammable environment.
+    \item\label{auto}Supplementary and Master Feeders should operate unattended
+    \item\label{wifi}Supplementary and Master Feeders should be able to connect to a wireless network
+    \item\label{network}Master Feeder should be able to brodcast localized network for managing Suplementary Feeders
+    \item\label{storage}Master Feeder should be able to store feeding schedules and the amount of food eaten by owners pets
 \end{enumerate}
 The relevant specifications can be found in \autoref{tab:specs}.
 
@@ -158,17 +153,12 @@ The relevant specifications can be found in \autoref{tab:specs}.
     \label{tab:specs}
     \begin{tabularx}{\linewidth}{cXX} \toprule
         Marketing Requirement(s) & Engineering Requirement & Justification \\ \midrule
-        \ref{light}              & \engineerthis{elight}Must weigh less than 1 lb& The rocket cannot weigh too much or the height goal is not achievable.\\
-        \ref{remote},\ref{depress}              & \engineerthis{eremote}Must be able to open the release valves & The relief valves allow the launch to be scrubbed, as well as the air released during filling.\\
-        \ref{pressure}              & \engineerthis{epressure}Must be able to read from a pressure transducer & The propulsion team needs to be able to monitor tank pressure before liftoff to determine whether to scrub the launch.\\
-        \ref{temp}              & \engineerthis{etemp}Must be able to read from a thermocouple& The propulsion team needs to monitor tank temperature to determine whether to scrub the launch.\\
-        \ref{ignition}              & \engineerthis{eigintion}Must not ignite the engine& The rocket launch, per range safety rules, must be initialized by a keyed system.\\
-        \ref{press}              & \engineerthis{epress}Must be able to power the press valve for at least 30 minutes at 24~\si{\volt} and 0.4~\si{\ampere}& The helium valve is opened on the ground and may need to remain so for an extended period of time.\\
-        \ref{pyro}              & \engineerthis{epyro}Must be able to power the two pyro valves for 1 second at 24~\si{\volt} and 1~\si{\ampere} & The pyro valves are the main engine valves the release the propellants into the chamber and cannot be closed via electrical means.\\
-        \ref{spark}              & \engineerthis{espark}Must not produce any sparks during operation & Sparking around flammable materials in a high oxygen environment could lead to RUD (rapid unscheduled disassembly)\\
+        \ref{auto},\ref{wifi},\ref{network},\ref{storage}            & \engineerthis{elight}Suplementary Feeders need to be able to transmit and recieve data to and from master feeder on a private localized network.  & Allow for automation of supplementary feeders, without interfering with owners network if any, and to reduce cost for owners of multiple pets.\\
+        \ref{wifi},\ref{network}              & \engineerthis{eremote} Suplementary and Master Feeders need wireless pheripherals or to be able to integrate with a wireless module.& Needed to permit network communication between Master and Suplementary feeders.\\
+        \ref{network},\ref{network},\ref{storage}              & \engineerthis{epressure} User needs to be able to communicate with Master Feeder via its localized network or the User's personal network.& Needed to allow for user to configure eating times and food portions in pet profiles\\
+        \ref{auto}              & \engineerthis{etemp}Supplementary and Master Feeders should be able to measure food dispensed and detect pets& Needed to adequately feed pet/s when it is their feeding time.\\
     \end{tabularx}
 \end{table}
-Many of these specifications, such as \ref{elight}, do not appear directly connected to the power system, but must be kept in mind, as they make options such as more batteries infeasible.
 %Mostly tables introduced and explained in text
     %– Needs (0–2 points)—numbered customer needs or marketing requirements related to
     %this risk, (i.e., a subset of the overall project needs)
