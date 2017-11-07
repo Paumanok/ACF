@@ -26,7 +26,7 @@
 
 \renewcommand{\figurename}{Fig.}
 \def\cequationautorefname{Equation}%
-\usepackage{hyperref}
+\usepackage[colorlinks=true,urlcolor=cyan]{hyperref}
 \usepackage{listings}
 \pagestyle{fancy}
 \fancyhead{}
@@ -153,9 +153,9 @@ The relevant specifications can be found in \autoref{tab:specs}.
     \label{tab:specs}
     \begin{tabularx}{\linewidth}{cXX} \toprule
         Marketing Requirement(s) & Engineering Requirement & Justification \\ \midrule
-        \ref{auto},\ref{wifi},\ref{network},\ref{storage}            & \engineerthis{elight}Suplementary Feeders need to be able to transmit and recieve data to and from master feeder on a private localized network.  & Allow for automation of supplementary feeders, without interfering with owners network if any, and to reduce cost for owners of multiple pets.\\
+        \ref{auto},\ref{wifi},\ref{network},\ref{storage}            & \engineerthis{elight}Suplementary Feeders need to be able to transmit and recieve data to and from master feeder on a private localized network.  & Allow for automation of supplementary feeders, without interfering with owners network if any, and to reduce cost for owners of multiple pets.\\\\
         \ref{wifi},\ref{network}              & \engineerthis{eremote} Suplementary and Master Feeders need wireless pheripherals or to be able to integrate with a wireless module.& Needed to permit network communication between Master and Suplementary feeders.\\
-        \ref{network},\ref{network},\ref{storage}              & \engineerthis{epressure} User needs to be able to communicate with Master Feeder via its localized network or the User's personal network.& Needed to allow for user to configure eating times and food portions in pet profiles\\
+        \ref{wifi},\ref{network},\ref{storage}              & \engineerthis{epressure} User needs to be able to communicate with Master Feeder via its localized network or the User's personal network.& Needed to allow for user to configure eating times and food portions in pet profiles\\
         \ref{auto}              & \engineerthis{etemp}Supplementary and Master Feeders should be able to measure food dispensed and detect pets& Needed to adequately feed pet/s when it is their feeding time.\\
     \end{tabularx}
 \end{table}
@@ -166,9 +166,38 @@ The relevant specifications can be found in \autoref{tab:specs}.
     %related to this risk, each related to needs by number, (i.e., a subset of the overall project
     %specifications).
     %– Analysis to justify engineering specifications (0–3 points)
-\section{Risk investigation}
+    \section{Risk investigation}
+
+\begin{table}[H]
+    \centering
+    \caption{Decision Matrix: Master Feeder}
+    \label{tab:specs2}
+    \begin{tabularx}{\linewidth}{cXXXXX} \toprule
+        Criteria & Weight & Raspberry Pi 3 B & Bananna Pi Zero & Raspberry Pi Zero W & Beaglebone Black\\ \midrule
+        Price & 3 & 0 & 0  & 1 & -1 \\
+        Compact Size & 1 & 1 & 0 & 1 & 0\\
+        Wireless Built-in& 3 & 1 & 0 & 1 & 1\\
+        Development Resources & 2 & 0 & 1 & 1 & 0\\
+        & total & 5 & 4 & 9 & 0
+    \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Decision Matrix: Suplementary Feeder}
+    \label{tab:specs3}
+    \begin{tabularx}{\linewidth}{cXXXX} \toprule
+        Criteria & Weight & KL64 & Teensy & ESP8266\\ \midrule
+        Price & 3 & 0 & 1 & 1 \\
+        Compact Size & 1 & 0 & 1 & 1 \\
+        Wireless Built-in& 3 & 0 & 0 & 1 \\
+        Development Resources & 2 & 1 & 1 & 1 \\
+        & total & 2 & 6 & 9 
+    \end{tabularx}
+\end{table}
+
 %Combination of textual explanation and tables
-    %– Survey of existing systems/components and how they relate to this risk (0–5 points)
+    %– Survey of existing systems/components and how they relate to this risk (0–5 points) 
     %– Concepts considered and chosen (0–3 points)
     %– Rationale for choice(s), including analysis performed, (e.g., Pugh table) (0–4 points)
 \section{Risk mitigation design}
@@ -194,6 +223,17 @@ The relevant specifications can be found in \autoref{tab:specs}.
     %– Intellectual property (0–3 points)—results of patent search for design of proposed risk
     %solution
 \section{Parts List}
+\begin{table}[H]
+    \centering
+    \caption{Parts List}
+    \label{tab:specs4}
+    \begin{tabularx}{\linewidth}{cXXXX} \toprule
+        Part & Description & Cost & Actually Paid & Availability\\ \midrule
+        \\Raspberry Pi Zero W & A tiny Raspberry Pi with built in Wireless and Bluetooth& \$10.00 & \$0 (owned) & \href{https://www.canakit.com/raspberry-pi-zero-wireless.html?src=raspberrypi}{Cana Kit Link} 3-5 business days\\
+        \\Micro SD Card & SD card for OS and data storage of Raspberry Pi& \$7.80 & \$0 (owned) & \href{https://www.amazon.com/SanDisk-Mobile-MicroSDHC-Memory-SDSDQM-B35A/dp/B004ZIENBA/ref=sr\_1\_5?ie=UTF8\&qid=1510058599\&sr=8-5\&keywords=micro+sd+card+8gb\&dpID=41hGPOLym4L\&preST=\_SX300\_QL70\_\&dpSrc=srch}{Amazon Link} 2 day shipping (Prime)\\
+        \\ESP8266(Feather) & Adafruit dev board variant of the ESP8266 & \$17.12 & \$0 (owned) & \href{https://www.amazon.com/Adafruit-2821-Feather-HUZZAH-ESP8266/dp/B019MGW6N6/ref=sr\_1\_1\_sspa?ie=UTF8\&qid=1510058499\&sr=8-1-spons\&keywords=adafruit+feather\&psc=1}{Amazon Link} 2 day shipping (Prime)\\ 
+    \end{tabularx}
+\end{table}
 %List of parts for proposed risk mitigation design.
     %– Part description (with name and number, if applicable)
     %– Cost—(standard purchase price of component)
