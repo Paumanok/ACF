@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.29)  7 NOV 2017 11:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.29)  7 NOV 2017 13:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1331,25 +1331,31 @@ Package: listings 2015/06/04 1.6 (Carsten Heinz)
 \c@NameOfTheNewCounter=\count357
 \c@engineering=\count358
 
-(./Template.aux)
+(./Template.aux
+
+LaTeX Warning: Label `Risk' multiply defined.
+
+
+LaTeX Warning: Label `Risk' multiply defined.
+
+)
 \openout1 = `Template.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-
-(/usr/local/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+ (/usr/local/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count359
 \scratchdimen=\dimen342
@@ -1379,15 +1385,15 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Info: Redefining \celsius on input line 88.
-Package gensymb Info: Faking symbols for \degree and \celsius on input line 88.
+LaTeX Info: Redefining \celsius on input line 97.
+Package gensymb Info: Faking symbols for \degree and \celsius on input line 97.
 
 
 
 Package gensymb Warning: Not defining \perthousand.
 
-LaTeX Info: Redefining \ohm on input line 88.
-Package gensymb Info: Using \Omega for \ohm on input line 88.
+LaTeX Info: Redefining \ohm on input line 97.
+Package gensymb Info: Using \Omega for \ohm on input line 97.
 
 Package gensymb Warning: Not defining \micro.
 
@@ -1450,7 +1456,7 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring ON on input line 88.
+Package hyperref Info: Link coloring ON on input line 97.
  (/usr/local/texlive/2017/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 
@@ -1459,9 +1465,9 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count365
 )
-LaTeX Info: Redefining \ref on input line 88.
-LaTeX Info: Redefining \pageref on input line 88.
-LaTeX Info: Redefining \nameref on input line 88.
+LaTeX Info: Redefining \ref on input line 97.
+LaTeX Info: Redefining \pageref on input line 97.
+LaTeX Info: Redefining \nameref on input line 97.
 
 (./Template.out) (./Template.out)
 \@outlinefile=\write5
@@ -1469,12 +1475,12 @@ LaTeX Info: Redefining \nameref on input line 88.
 
 \c@lstlisting=\count366
 \c__siunitx_mathsf_int=\count367
-LaTeX Font Info:    Try loading font information for U+msa on input line 88.
+LaTeX Font Info:    Try loading font information for U+msa on input line 97.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 88.
+LaTeX Font Info:    Try loading font information for U+msb on input line 97.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -1489,32 +1495,32 @@ late.toc)
 
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 160--160
+Underfull \hbox (badness 10000) in paragraph at lines 169--169
 []|\OT1/cmr/m/n/12 A. Su-ple-men-tary Feed-ers
  []
 
 
-Underfull \hbox (badness 1424) in paragraph at lines 160--160
+Underfull \hbox (badness 1424) in paragraph at lines 169--169
 []|\OT1/cmr/m/n/12 Needed to per-mit net-work
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 160--160
+Underfull \hbox (badness 10000) in paragraph at lines 169--169
 \OT1/cmr/m/n/12 com-mu-ni-ca-tion be-tween
  []
 
 
-Underfull \hbox (badness 6995) in paragraph at lines 160--160
+Underfull \hbox (badness 6995) in paragraph at lines 169--169
 \OT1/cmr/m/n/12 Mas-ter and Su-ple-men-tary
  []
 
 
-Underfull \hbox (badness 1132) in paragraph at lines 160--160
+Underfull \hbox (badness 1132) in paragraph at lines 169--169
 \OT1/cmr/m/n/12 con-fig-ure eat-ing times and
  []
 
 
-Underfull \hbox (badness 1147) in paragraph at lines 160--160
+Underfull \hbox (badness 1147) in paragraph at lines 169--169
 []|\OT1/cmr/m/n/12 Needed to ad-e-quately feed
  []
 
@@ -1525,22 +1531,22 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 193--193
+Underfull \hbox (badness 10000) in paragraph at lines 202--202
 []|\OT1/cmr/m/n/12 Raspberry
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 193--193
+Underfull \hbox (badness 10000) in paragraph at lines 202--202
 []|\OT1/cmr/m/n/12 Bananna
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 193--193
+Underfull \hbox (badness 10000) in paragraph at lines 202--202
 []|\OT1/cmr/m/n/12 Raspberry
  []
 
 
-Overfull \hbox (2.94981pt too wide) in paragraph at lines 193--193
+Overfull \hbox (2.94981pt too wide) in paragraph at lines 202--202
 []|\OT1/cmr/m/n/12 Beaglebone
  []
 
@@ -1551,50 +1557,6 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 265--265
-\OT1/cmr/m/n/12 3-5 busi-ness
- []
-
-
-Underfull \hbox (badness 5756) in paragraph at lines 265--265
-[]|\OT1/cmr/m/n/12 SD card for
- []
-
-
-Underfull \hbox (badness 1383) in paragraph at lines 265--265
-\OT1/cmr/m/n/12 OS and data
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 265--265
-\OT1/cmr/m/n/12 stor-age of
- []
-
-
-Underfull \hbox (badness 2012) in paragraph at lines 265--265
-[]|[][]\OT1/cmr/m/n/12 Amazon Link[][]
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 265--265
-[]|\OT1/cmr/m/n/12 Adafruit dev
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 265--265
-\OT1/cmr/m/n/12 board vari-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 265--265
-\OT1/cmr/m/n/12 ant of the
- []
-
-
-Underfull \hbox (badness 2012) in paragraph at lines 265--265
-[]|[][]\OT1/cmr/m/n/12 Amazon Link[][]
- []
-
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -1602,27 +1564,119 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [5]
+<pics/subsystems.png, id=115, 1521.685pt x 791.95876pt>
+File: pics/subsystems.png Graphic file (type png)
+<use pics/subsystems.png>
+Package pdftex.def Info: pics/subsystems.png  used on input line 276. on input 
+line 276.
+Package pdftex.def Info: Requested size: 416.57233pt x 216.81pt on input line 2
+76.
+<pics/Pi_Zero_pinout.png, id=117, 393.47pt x 599.23875pt>
+File: pics/Pi_Zero_pinout.png Graphic file (type png)
+<use pics/Pi_Zero_pinout.png>
+Package pdftex.def Info: pics/Pi_Zero_pinout.png  used on input line 282. on in
+put line 282.
+Package pdftex.def Info: Requested size: 177.95442pt x 271.0125pt on input line
+ 282.
+
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[6]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 286.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 286.
+[6 <./pics/subsystems.png>]
+<pics/feather.png, id=124, 882.29625pt x 594.22pt>
+File: pics/feather.png Graphic file (type png)
+<use pics/feather.png>
+Package pdftex.def Info: pics/feather.png  used on input line 284. on input lin
+e 284.
+Package pdftex.def Info: Requested size: 402.41473pt x 271.0125pt on input line
+ 284.
+
+Underfull \hbox (badness 10000) in paragraph at lines 296--296
+\OT1/cmr/m/n/12 3-5 busi-ness
+ []
+
+
+Underfull \hbox (badness 5756) in paragraph at lines 296--296
+[]|\OT1/cmr/m/n/12 SD card for
+ []
+
+
+Underfull \hbox (badness 1383) in paragraph at lines 296--296
+\OT1/cmr/m/n/12 OS and data
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 296--296
+\OT1/cmr/m/n/12 stor-age of
+ []
+
+
+Underfull \hbox (badness 2012) in paragraph at lines 296--296
+[]|[][]\OT1/cmr/m/n/12 Amazon Link[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 296--296
+[]|\OT1/cmr/m/n/12 Adafruit dev
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 296--296
+\OT1/cmr/m/n/12 board vari-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 296--296
+\OT1/cmr/m/n/12 ant of the
+ []
+
+
+Underfull \hbox (badness 2012) in paragraph at lines 296--296
+[]|[][]\OT1/cmr/m/n/12 Amazon Link[][]
+ []
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 14.49998pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[7 <./pics/Pi_Zero_pinout.png> <./pics/feather.png>]
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 14.49998pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[8]
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 14.49998pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[9]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 320.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 320.
  (./Template.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 286.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 286.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 320.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 320.
 Package rerunfilecheck Info: File `Template.out' has not changed.
-(rerunfilecheck)             Checksum: 170C6F2C5DD2E71E09022FC76931D271;406.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 286.
+(rerunfilecheck)             Checksum: FEF216A6F418C2B1F69D8612A3394ED7;428.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 320.
  ) 
 Here is how much of TeX's memory you used:
- 41410 strings out of 492990
- 956961 string characters out of 6132621
- 1117304 words of memory out of 5000000
- 44367 multiletter control sequences out of 15000+600000
+ 41439 strings out of 492990
+ 957421 string characters out of 6132621
+ 1114466 words of memory out of 5000000
+ 44385 multiletter control sequences out of 15000+600000
  538753 words of font info for 54 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,11n,103p,10377b,729s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1630,10 +1684,10 @@ Here is how much of TeX's memory you used:
 ></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><
 /usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></u
 sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on Template.pdf (6 pages, 71130 bytes).
+Output written on Template.pdf (9 pages, 287719 bytes).
 PDF statistics:
- 152 PDF objects out of 1000 (max. 8388607)
- 112 compressed objects within 2 object streams
- 27 named destinations out of 1000 (max. 500000)
- 77 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 175 PDF objects out of 1000 (max. 8388607)
+ 128 compressed objects within 2 object streams
+ 33 named destinations out of 1000 (max. 500000)
+ 92 words of extra memory for PDF output out of 10000 (max. 10000000)
 

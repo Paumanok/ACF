@@ -82,6 +82,15 @@
 \newcommand{\componentDescription}{Microcontroller Options}
 \newcommand{\projectDescriptionShort}{Microcontroller Options}
 
+\newcommand{\nimg}[4][width=\textwidth]{
+    \begin{figure}[H]
+        \centering
+        \includegraphics[ #1]{#3}
+        \caption{#4}
+        \label{#2}
+    \end{figure}
+}
+
 
 \setcounter{secnumdepth}{0} % Remove section numbering
 
@@ -126,7 +135,7 @@
 \tableofcontents
 \newpage
 
-\section{Overview}
+\section{I Overview}
 %Brief textual description of the role of this high-risk component in the overall project
 Like any embedded system a microcontroller that is cost effective and provides adequate hardware
 for the requirements of the system is needed.  These requirements being to operate the mechanical
@@ -137,7 +146,7 @@ toolchains, with useful SDKs, for efficient development.
 % developed carefully to ensure compliance. The power systems will be responsible for delivering
 % power to both the electrical components, such as microcontrollers, and mechanical components,
 % like valves.
-\section{Risk specification}
+\section{II Risk specification}
 Marketing requirements relevant for microcontrollers:
 \begin{enumerate}
     \item\label{auto}Supplementary and Master Feeders should operate unattended
@@ -166,7 +175,7 @@ The relevant specifications can be found in \autoref{tab:specs}.
     %related to this risk, each related to needs by number, (i.e., a subset of the overall project
     %specifications).
     %– Analysis to justify engineering specifications (0–3 points)
-\section{Risk investigation}
+\section{III Risk investigation}
 The Master Feeder needs to be advanced enough to manage multiple suplementary
 feeders with its own localized network, store feeding configuration data, and control
 the pheripherals of itself.  The brands of embedded computer that can suffice
@@ -203,14 +212,14 @@ online shops to purchase or see its price.  Which makes it unable to be fully co
 The Suplementary Feeder simply requires some kind of microcontroller to operate concurrently with controlling the
 detection of pets, dispensing of food when needed, and communicating with the Master feeder to transmit and recieve data.
 These tasks can be performed by most microcontrollers provided they have proper connections to appropriate modules or sensors
-to perform those tasks.  The task of communicating with the master feeder via its localized network requires integrating a 
-wireless module.  The ESP8266 wireless module by espressif is normally configured to run firmware called nodemcu allowing 
+to perform those tasks.  The task of communicating with the master feeder via its localized network requires integrating a
+wireless module.  The ESP8266 wireless module by espressif is normally configured to run firmware called nodemcu allowing
 versatile and cost effective controllers like the KL64 and Arduino Teensy to send command strings via UART to connect to
-wireless networks.  However the ESP8266 can also operate using custom firmware allowing access to its other pheripherals 
+wireless networks.  However the ESP8266 can also operate using custom firmware allowing access to its other pheripherals
 such as its UART and PWM related pins.  Allowing it to control the sensors and motors operating the feeder while at the
 same time utilizing its internal wireless communication hardware to communicate with the Master Feeders network.  The network
 communication is made easier due to the SDK provided for the ESP8266 making the communication aspect more direct.  Thus making
-the ESP8266 the more ideal option for the the Suplementary Feeder to cut out and middle man hardware and save cost.  
+the ESP8266 the more ideal option for the the Suplementary Feeder to cut out and middle man hardware and save cost.
 
 \begin{table}[H]
     \centering
@@ -230,7 +239,7 @@ the ESP8266 the more ideal option for the the Suplementary Feeder to cut out and
     %– Survey of existing systems/components and how they relate to this risk (0–5 points)
     %– Concepts considered and chosen (0–3 points)
     %– Rationale for choice(s), including analysis performed, (e.g., Pugh table) (0–4 points)
-\section{Risk mitigation design}
+\section{IV Risk mitigation design}
 %Technical details of proposed design choice—textual explanation with many meaningful
 %diagrams, (introduced and explained in text); should include input(s) and output(s) and
 %should define any interfaces/protocols
@@ -252,7 +261,29 @@ the ESP8266 the more ideal option for the the Suplementary Feeder to cut out and
             %o State diagrams, flowcharts, system models, etc.
     %– Intellectual property (0–3 points)—results of patent search for design of proposed risk
     %solution
-\section{Parts List}
+
+Using the Raspberry Pi Zero W and ESP8266 for managing the Master and
+Suplementary feeders respectively autonumous function of the feeders will be easily met.
+When fully developed the Suplementary Feeders managed by the ESP8266 will be able request
+the information pertaining to the Pet it should look out for when it is time to dispense food.
+As well as return information regarding whether or not the pet came and got its food.  The 
+Master Feeder also communicates with the user upon request when changing configurations 
+for their pets feeding times.  It will do this through a app while connected to the the units 
+localized network or over the users local network, provided the feeder is connected.  A high
+level diagram of the controllers interacting with one another and their pheripherals can be seen in Figure 1 on
+the following page. 
+
+    \nimg [height = 3.00 in]{Risk}{pics/subsystems.png}{Controller Subsystems}
+
+This design for the feeders operation mitigates their risk due to their builtin wireless capabilities and
+their various available pheripherals as seen in Figures 2 and 3.  Allowing for them operate the sensors
+and motors inside of the feeder.  
+
+    \nimg [height = 3.75 in]{Risk}{pics/Pi_Zero_pinout.png}{Pi Zero W GPIO}
+
+    \nimg [height = 3.75 in]{Risk}{pics/feather.png}{ESP8266 GPIO}
+
+\section{V Parts List}
 \begin{table}[H]
     \centering
     \caption{Parts List}
@@ -269,16 +300,19 @@ the ESP8266 the more ideal option for the the Suplementary Feeder to cut out and
     %– Cost—(standard purchase price of component)
     %– Your cost—(your cost for component; could be $0 if you already own)
     %– Availability—(vendor information, including lead time from order placement to delivery)
-\section{Testing strategy}
+\section{VI Testing strategy}
 %Plan for verification of proper component/subsystem operation within the project’s
 %particular operating environment. The plan should include what will be measured/tested
 %along with an estimate of when. (Notes: 1. manufacturer’s performance specifications are
 %often unachievable in practice, [e.g., new car mileage estimates]; 2. testing sooner is much
 %better than later— whether this high-risk component will perform adequately in the overall
 %project system needs to be determined as early as possible.)
-\section{Uncertainties}
+    
+
+\section{VII Uncertainties}
 %Any remaining doubts or questions about using or testing this component/subsystem—any
 %concerns the author or other team members have about this aspect of the project.
+\newpage
 \section{Appendices}
 %Copies of (or links to) the manufacturer’s literature on the component/subsystem—
 %especially technical specification(s) and application notes.

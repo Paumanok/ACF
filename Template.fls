@@ -380,6 +380,15 @@ INPUT Template.toc
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 OUTPUT Template.toc
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmr10.tfm
+INPUT pics/subsystems.png
+INPUT ./pics/subsystems.png
+INPUT ./pics/subsystems.png
+INPUT pics/Pi_Zero_pinout.png
+INPUT ./pics/Pi_Zero_pinout.png
+INPUT ./pics/Pi_Zero_pinout.png
+INPUT pics/feather.png
+INPUT ./pics/feather.png
+INPUT ./pics/feather.png
 INPUT Template.aux
 INPUT ./Template.out
 INPUT ./Template.out
