@@ -266,18 +266,18 @@ Using the Raspberry Pi Zero W and ESP8266 for managing the Master and
 Suplementary feeders respectively autonumous function of the feeders will be easily met.
 When fully developed the Suplementary Feeders managed by the ESP8266 will be able request
 the information pertaining to the Pet it should look out for when it is time to dispense food.
-As well as return information regarding whether or not the pet came and got its food.  The 
-Master Feeder also communicates with the user upon request when changing configurations 
-for their pets feeding times.  It will do this through a app while connected to the the units 
+As well as return information regarding whether or not the pet came and got its food.  The
+Master Feeder also communicates with the user upon request when changing configurations
+for their pets feeding times.  It will do this through a app while connected to the the units
 localized network or over the users local network, provided the feeder is connected.  A high
 level diagram of the controllers interacting with one another and their pheripherals can be seen in Figure 1 on
-the following page. 
+the following page.
 
     \nimg [height = 3.00 in]{Risk}{pics/subsystems.png}{Controller Subsystems}
 
 This design for the feeders operation mitigates their risk due to their builtin wireless capabilities and
 their various available pheripherals as seen in Figures 2 and 3.  Allowing for them operate the sensors
-and motors inside of the feeder.  
+and motors inside of the feeder.
 
     \nimg [height = 3.75 in]{Risk}{pics/Pi_Zero_pinout.png}{Pi Zero W GPIO}
 
@@ -295,6 +295,7 @@ and motors inside of the feeder.
         \\ESP8266(Feather) & Adafruit dev board variant of the ESP8266 & \$17.12 & \$0 (owned) & \href{https://www.amazon.com/Adafruit-2821-Feather-HUZZAH-ESP8266/dp/B019MGW6N6/ref=sr\_1\_1\_sspa?ie=UTF8\&qid=1510058499\&sr=8-1-spons\&keywords=adafruit+feather\&psc=1}{Amazon Link} 2 day shipping (Prime)\\
     \end{tabularx}
 \end{table}
+
 %List of parts for proposed risk mitigation design.
     %– Part description (with name and number, if applicable)
     %– Cost—(standard purchase price of component)
@@ -307,11 +308,22 @@ and motors inside of the feeder.
 %often unachievable in practice, [e.g., new car mileage estimates]; 2. testing sooner is much
 %better than later— whether this high-risk component will perform adequately in the overall
 %project system needs to be determined as early as possible.)
-    
+When the system is finished enought to operate in a software simulation state both feeders will be exposed 
+to stress testing.  The Suplementary feeder will be stress tested for correct concurrent operation.  
+This is to make sure its custom firm ware is capable of handling multiple interruptions from pets and configuration
+changes being sent from the master unit. Likewise the master feeder will be simulated against multiple virtual 
+feeders sending requests and information. Along with simulated user changes. 
+
 
 \section{VII Uncertainties}
 %Any remaining doubts or questions about using or testing this component/subsystem—any
 %concerns the author or other team members have about this aspect of the project.
+Determining the optimum scheduling to ensure concurrent operation of the Suplementary feeder.  
+Accounting for random behaviour of pets while communicating with the Master Feeder might 
+make concuurent operation tricky and cause missing deadlines if not careful.  Which could be 
+problematic when the master feeder is trying to update a suplementary feeder and the interrupt of pet
+causes it to miss the feeding configuration update.  
+
 \newpage
 \section{Appendices}
 %Copies of (or links to) the manufacturer’s literature on the component/subsystem—
