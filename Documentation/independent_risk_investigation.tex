@@ -128,7 +128,7 @@
 
 \section{Overview}
 %Brief textual description of the role of this high-risk component in the overall project
-As a Computer Engineering project, one extremely important aspect of a physical design that carries the most risk is the actual method of dispensing food. As a dispensing unit, the design must be able to hold several days worth of food and be able to dispense without jamming or crushing the food. This design needs to be free of obstructions that would restrict food flow as well. Since the food will be gravity fed, we will also need to ensure that the assembly is not too top heavy such that it’d fall over with little effort.  
+As a Computer Engineering project,physical design can carry the most risk as it's outside of our curriculum.one extremely important aspect of a physical design that carries the most risk is the actual method of dispensing food. As a dispensing unit, the design must be able to hold several days worth of food and be able to dispense without jamming or crushing the food. This design needs to be free of obstructions that would restrict food flow as well. Since the food will be gravity fed, we will also need to ensure that the assembly is not too top heavy such that it’d fall over with little effort.  
  
 \section{Risk specification}
 Marketing requirements for the dispensing unit:
@@ -173,7 +173,8 @@ can be seen in Fig. \ref{figure:bind}  in the appendix. This is often solved by 
 
 Another possible method seen in other dry goods dispensers is the simple trap door design. This idea can take many forms and orientations to allow food to spill out. This design is also very simple to implement. Similar to the paddle-based design, this method has trouble with precise dispensing. Unlike the paddle-based design, binding is rarely an issue due to the nature of an opening and closing door. It is possible that the door used in conjunction with a secondary dispensing method would allow to reduce the force of food stacked above the mechanism and by relation, reduce or remove possible binding. This possibility will need to be investigated further as well.
 
-A third design possibility is not often seen in the context of moving dry food but is very common in automation applications such as injection molding, where a precise amount of material must be fed and injected into a mold. This design uses a a screw embedded into a tube that would allow for food to fall into the tube and the screw would rotate and push it along. The screw would be installed on an axle that could be easily driven by a motor. Since the screw would only allow small amounts of food to fall between threads and pushed forward by the screw rotating, thus advancing the food to the drop point. This allows for the speed and the amount of food dispensed to be controlled with a far greater amount of precision. The downside to the screw based dispenser mechanism is that great care will be involved in designing the screw and hopper, particularly the angle of attach on the threads and the taper of the hopper. Any sort of binding could be greatly mitigated with a proper design, compared to the nature of the paddle dispenser that has far less room for improvement compared to the screw design.
+A third design possibility is not often seen in the context of moving dry food but is very common in automation applications such as injection molding, where a precise amount of material must be fed and injected into a mold. This design uses a a screw embedded into a tube that would allow for food to fall into the tube and the screw would rotate and push it along. The screw would be installed on an axle that could be easily driven by a motor. Since the screw would only allow small amounts of
+food to fall between threads and pushed forward by the screw rotating, thus advancing the food to the drop point. This allows for the speed and the amount of food dispensed to be controlled with a far greater amount of precision. The downside to the screw based dispenser mechanism is that great care will be involved in designing the screw and hopper, particularly the angle of attack on the threads and the taper of the hopper. Any sort of binding could be greatly mitigated with a proper design, compared to the nature of the paddle dispenser that has far less room for improvement compared to the screw design.
 
 \textbf{Concepts considered and chosen:}
 
@@ -210,15 +211,23 @@ used as a jumping off point towards creating a working prototype. One particular
 
 Using this feed screw/auger design. Material must be selected for the outer tube. The original application called for a 1.5’’ female PVC T coupling. Since The inner diameter of this fitting is the outer diameter of standard PVC, the design will likely need to be modified to fit a standard sized piece of tubing. It would be beneficial to use a standard size pipe with a smooth interior to reduce and mitigate any possible binding that could be caused by a rough surface. PVC is also commonly used in water and food applications, making it a safe choice to use with food. It will still be important to have clean cuts and wash after working on it to ensure nothing could get into the animals food. 
 
-In order to drive this feed screw, an electric motor with both feedback and continuous rotation will be needed. A simple DC motor does not have the ability to know its rotational position and would not be a good choice for driving something where you need fine control. A servo can be aware of position, but a continuous servo loses that ability and is just a geared motor. A stepper motor can have fine grain control over movement with the ability to rotate continuously in a single direction. The torque requirements of the stepper motor is currently unknown, therefore specific decisions on motors and belt/pulley configurations are currently unknown as well. Is known that additional electronics will be needed to drive a stepper motor using a micro controller. This will be a consideration for later in the design and is not within the scope of this investigation. 
+In order to drive this feed screw, an electric motor with both feedback and continuous rotation will be
+needed. A simple DC motor does not have the ability to know its rotational position and would not be a good
+choice for driving something where you need fine control. A servo can be aware of position, but a continuous
+servo loses that ability and is just a geared motor. A stepper motor can have fine grain control over
+movement with the ability to rotate continuously in a single direction. The torque requirements of the
+stepper motor is currently unknown, therefore specific decisions on motors and belt/pulley configurations are
+currently unknown as well. What is known is that additional electronics will be needed to drive a stepper
+motor using a micro controller. This will be a consideration for later in the design and is not within the
+scope of this investigation. 
 
 Finally, the hopper/food container can be made from durable acrylic panels. These panels can be cut to construct a proper taper at the bottom of the hopper to ensure smooth feeding.  The acrylic can be constructed via screws and pre-drilled holes, combined with a glue to seal it. This will result in a strong and safe container for an animal’s food to be held. A cover can be constructed in the same fashion to prevent foreign objects from falling in. 
 
  With proper clearances, this design will be able to avoid most binding while being powerful enough to push the food. The feeder screw allows for fine control due to how it releases small amounts of food per revolution. With a smooth outer tube and a correct blade angle, binding should be rare. This setup allows for food to be filled high in the hopper, supporting a multi-day food supply. 
 
-<risk subsystem diagrams>
+%<risk subsystem diagrams>
 
-<Detailed Design>
+%<Detailed Design>
 
 In searching for patents of a similar design, one patent, US 6401657 B1, was found to be similar but not nearly identical in form or purpose. This device uses a very common auger feed delivery system but the bowl is integrated in the unit. It does not extend to the extended functionality of the design. 
 
@@ -265,6 +274,8 @@ Initial testing will consist of verification of the main functionality. The feed
 %concerns the author or other team members have about this aspect of the project.
 As this area of the design is outside the standard Computer Engineering curriculum, none of the team members are particularly skilled in modeling or mechanical design. This means that we will need to do a considerable amount of self learning and outside consultation to persons of distinguishable skill in the area. However, the scope of this design is not too far outside the abilities of competent “maker” and is not an unreasonable task.
 
+
+\pagebreak
 \section{Appendices}
 %Copies of (or links to) the manufacturer’s literature on the component/subsystem—
 %especially technical specification(s) and application notes.
@@ -272,18 +283,26 @@ As this area of the design is outside the standard Computer Engineering curricul
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=.5\textwidth]{bind}
+\includegraphics[width=1\textwidth]{bind}
 \caption{Illlustration of food bind}
 \label{figure:bind}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=.5\textwidth]{feed_screw}
+\includegraphics[width=.75\textwidth]{feed_screw}
 \caption{3D model of feed screw base design}
 \label{figure:feed_screw}
 \end{figure}
+\textbf{Sources:}
 
+\textbf{Auger Based Cat Feeder- Thingverse:} https://www.thingiverse.com/thing:27854
+
+\textbf{Possible stepper driver:} https://www.banggood.com/3Pcs-3D-Printer-A4988-Reprap-Stepping-Stepper-Step-Motor-Driver-Module-p-967057.html?rmmds=search&cur_warehouse=CN
+
+\textbf{Possible stepper motor:} https://www.banggood.com/28YBJ-48-DC-5V-4-Phase-5-Wire-Stepper-Motor-With-ULN2003-Driver-Board-p-74397.html?rmmds=search&cur_warehouse=CN
+
+\textbf{Patent found that is similar in design:} https://www.google.com/patents/US6401657
 
 
 \end{document}
