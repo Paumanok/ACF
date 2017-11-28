@@ -16,8 +16,8 @@ lcd = LCD.Adafruit_CharLCDPlate()
 debug = False
 
 class ipclock:
-    
-    def __init__(self):    
+
+    def __init__(self):
         self.ipaddr_cmd = "ip addr show wlan0 | grep  'inet ' | awk '{print $2}' | cut -d/ -f1"
         self.ipaddr = ""
 
