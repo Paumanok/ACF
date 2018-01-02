@@ -7,6 +7,26 @@
 #         initialize application server
 #
 
-import database_manager.py
-import char_disp_debug/lcd_manager
+from queue import *
+import database_manager import dbm
+#import char_disp_debug/lcd_manager
+import server
+
+
+class ACF():
+    self.host = 0
+    self.port = 0
+
+    def __init__(self):
+        print("initializing database")
+        self.dbm = dbm()
+        print("initializing server")
+        self.server = server(self.host, self.port, self.dbm)
+
+
+
+if __name__ == "__main__":
+    feeder = ACF()
+    while True:
+        continue
 

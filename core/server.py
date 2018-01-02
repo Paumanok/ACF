@@ -17,7 +17,8 @@ class server:
     running_path = os.path.dirname(os.path.abspath(__file__))
 
     #initialize server socket
-    def __init__(self, host, port):
+    def __init__(self, host, port, dbm):
+        self.dbm = dbm
         self.host = host
         self.port = port
         #create tcp/ip socket
@@ -25,7 +26,9 @@ class server:
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.bind((self.host, self.port))
 
-        self.handlers = { "GET": lambda x: self.HTTP_GET(x)}
+        self.handlers = { "GET": lambda x: self.HTTP_GET(x),
+                          "GET_JSON": lambda x: self.HTTP_GET_JSON(x)
+                          }
 
         self.codes = {    "404": lambda x:self.HTTP_404(x),
                           "403": lambda x:self.HTTP_403(x),
@@ -107,6 +110,10 @@ class server:
         print("constructed and sending response")
 
         return bytes(response, "utf8")
+
+    def HTTP_GET_JSON(self, request):
+        #use self.dbm
+
 
     def construct_header(self,response_status, content_type, content_length):
         time = 0
