@@ -3,6 +3,7 @@
 
 from http.server import BaseHTTPRequestHandler
 from datetime import datetime
+from urlliub.parse import parse_qs
 import io
 import socket
 import threading
@@ -13,6 +14,7 @@ from multiprocessing import Process
 class server:
     default_version = "HTTP/0.9"
     content_type_text = "text/html"
+    content_type_json = "application/json"
     enable_threading = "thread" #process, thread, None(process is bork)
     running_path = os.path.dirname(os.path.abspath(__file__))
 
@@ -86,18 +88,34 @@ class server:
         else:
             return self.handlers[command](request)
 
-
+    #lil fatboi http_get method, with api documentation inline for now
+    #qs = "json=<true/false>&pet_req=<true/false>&name=<pet_name>&date=<date/"">"
+    #json - is this request for json data from db?
+    #pet_req - is it asking for pet data or feed history
+    #name - pet name
+    #date - date of feed data if pet_req == false, otherwise, just empty string
     def HTTP_GET(self, request):
-        if(request.path == '/'):
+        args = parse_qs(request.path[2:]) #get args from request
+
+        if(request.path == '/'):          #check if requesting default page
             file_size = os.path.getsize("hello.htm")
             file_name = "hello.htm"
-        else:
+            ct = self.content_type_text
+
+        else if(args["json"] == "true"):  #check if requesting json from db
+            f = HTTP_GET_JSON(request, args)
+            file_size = len(response)
+            ct = self.content_type_json
+
+        else:                             #just go grab file being requested
             path = self.running_path + request.path
             print(path)
             if(os.access(path, os.R_OK)):
                 if(os.path.exists(path)):
                     file_size = os.path.getsize(path)
                     file_name = request.path[1:]
+                    f = (open(file_name).read())
+                    ct = self.content_type_text
                 else:
                     print(":it doesnt exist")
                     return self.codes["404"](request)
@@ -105,16 +123,37 @@ class server:
                 print(":not allowed")
                 return self.codes["403"](request)
 
-        response = self.construct_header("200 OK",self.content_type_text, file_size )
-        response = response + "\r\n" + (open(file_name).read())
+        #construct response with content_type(ct),
+        #file size, and string f as the file to be sent
+        response = self.construct_header("200 OK",ct, file_size )
+        response = response + "\r\n" + f)
         print("constructed and sending response")
 
         return bytes(response, "utf8")
 
-    def HTTP_GET_JSON(self, request):
+    #grab json data from db
+    #todo:
+    #need error checking for non existent animals
+    #implement feed history grabbin
+    def HTTP_GET_JSON(self, request, args):
         #use self.dbm
+        if(args["pet_req"] == "true"):
+            pet_name = args["pet_name"]
+            pet_data = self.dbm.pets.get_by_name({"name":pet_name})
+            file_size = len(pet_data)
+            response = self.construct_header("200 OK", \
+                    self.content_type_JSON, file_size)
+            response = response + "\r\n" + pet_data
+        else:
+            #do something for the feed history
 
+        return pet_data
 
+#
+#
+#    def HTTP_PUT_JSON(self, request):
+#        #use self.dbm
+#
     def construct_header(self,response_status, content_type, content_length):
         time = 0
         #time = datetime.now().strftime('%b %d  %I:%M:%S\r\n')
@@ -131,7 +170,7 @@ class server:
         construct_header("501 not implemented", content_type_text, 0)
         return 0
 
-    def HTTP_404(self, request):
+    def HTTP_404(self, request):b
         file_size = os.path.getsize("htm/404.htm")
         response = self.construct_header("404",self.content_type_text, file_size )
         response = response + "\r\n" + (open("htm/404.htm").read())
