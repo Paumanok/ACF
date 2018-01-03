@@ -28,8 +28,7 @@ class server:
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.bind((self.host, self.port))
 
-        self.handlers = { "GET": lambda x: self.HTTP_GET(x),
-                          "GET_JSON": lambda x: self.HTTP_GET_JSON(x)
+        self.handlers = { "GET": lambda x: self.HTTP_GET(x)
                           }
 
         self.codes = {    "404": lambda x:self.HTTP_404(x),
