@@ -3,7 +3,7 @@
 
 from http.server import BaseHTTPRequestHandler
 from datetime import datetime
-from urlliub.parse import parse_qs
+from urllib.parse import parse_qs
 import io
 import socket
 import threading
@@ -101,7 +101,7 @@ class server:
             file_name = "hello.htm"
             ct = self.content_type_text
 
-        else if(args["json"] == "true"):  #check if requesting json from db
+        elif(args["json"] == "true"):  #check if requesting json from db
             f = HTTP_GET_JSON(request, args)
             file_size = len(response)
             ct = self.content_type_json
@@ -125,7 +125,7 @@ class server:
         #construct response with content_type(ct),
         #file size, and string f as the file to be sent
         response = self.construct_header("200 OK",ct, file_size )
-        response = response + "\r\n" + f)
+        response = (response + "\r\n" + f)
         print("constructed and sending response")
 
         return bytes(response, "utf8")
@@ -143,7 +143,7 @@ class server:
             response = self.construct_header("200 OK", \
                     self.content_type_JSON, file_size)
             response = response + "\r\n" + pet_data
-        else:
+        #else:
             #do something for the feed history
 
         return pet_data
@@ -164,12 +164,12 @@ class server:
 
         return http_response
 
-
+#====================================================================
     def HTTP_501(self, request):
         construct_header("501 not implemented", content_type_text, 0)
         return 0
 
-    def HTTP_404(self, request):b
+    def HTTP_404(self, request):
         file_size = os.path.getsize("htm/404.htm")
         response = self.construct_header("404",self.content_type_text, file_size )
         response = response + "\r\n" + (open("htm/404.htm").read())
@@ -180,6 +180,7 @@ class server:
         response = self.construct_header("403",self.content_type_text, file_size )
         response = response + "\r\n" + (open("htm/403.htm").read())
         return bytes(response, "utf8")
+#====================================================================
 
 #executive decision: project not about text parsing, so offload parsing
 #to subset of HTTP library

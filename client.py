@@ -9,7 +9,7 @@ import time
 #0 indexed
 thread_max = 100
 
-class send_spam:
+class client:
 
     get_end = "HTTP/1.1\r\nHost: localhost:8080\r\nUser-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0\r\nAccept:  text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Language: en- US,en;q=0.5\r\nAccept-Encoding: gzip, deflate\r\nDNT: 1\r\nConnection: keep-alive\r\nUpgrade-Insecure-Requests: 1\r\n\r\n"
 
@@ -23,12 +23,12 @@ class send_spam:
         sock.connect(server_address)
         return sock
 
-    def send(self):
+    def send(self, get_param):
         sock = self.connect()
         recv_data = ""
         data = True
 
-        message = bytes(self.request_get, 'utf8')
+        message = bytes(get_param, 'utf8')
         print("sending message")
         sock.sendall(message)
 
@@ -46,16 +46,9 @@ class send_spam:
             time.sleep(.1)
 
 def main():
-    spammer = send_spam()
-    threads = []
 
-    for i in range(0,thread_max):
-        t = threading.Thread(target = spammer.spam())
-        t.start()
-        threads.append(t)
-
-    for t in threads:
-        t.join()
-
+    c = client()
+    #threads = []
+    c.send(pet_get + get_end)
 
 main()

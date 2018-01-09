@@ -8,7 +8,7 @@
 #
 
 from queue import *
-import database_manager import dbm
+from database_manager import dbm
 #import char_disp_debug/lcd_manager
 import server
 
