@@ -14,8 +14,8 @@ import server
 
 
 class ACF():
-    self.host = 0
-    self.port = 0
+    self.host = ''
+    self.port = 8080
 
     def __init__(self):
         print("initializing database")
