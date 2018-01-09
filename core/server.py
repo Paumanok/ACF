@@ -95,20 +95,19 @@ class server:
     #date - date of feed data if pet_req == false, otherwise, just empty string
     def HTTP_GET(self, request):
         args = parse_qs(request.path[2:]) #get args from request
-
         if(request.path == '/'):          #check if requesting default page
             file_size = os.path.getsize("hello.htm")
             file_name = "hello.htm"
             ct = self.content_type_text
 
-        elif(args["json"] == "true"):  #check if requesting json from db
+        elif(args['json'][0] == 'true'):  #check if requesting json from db
+            print("reached json block")
             f = HTTP_GET_JSON(request, args)
             file_size = len(response)
             ct = self.content_type_json
 
         else:                             #just go grab file being requested
             path = self.running_path + request.path
-            print(path)
             if(os.access(path, os.R_OK)):
                 if(os.path.exists(path)):
                     file_size = os.path.getsize(path)
@@ -136,8 +135,9 @@ class server:
     #implement feed history grabbin
     def HTTP_GET_JSON(self, request, args):
         #use self.dbm
-        if(args["pet_req"] == "true"):
-            pet_name = args["pet_name"]
+        print("reached http get json")
+        if(args["pet_req"][0] == "true"):
+            pet_name = args["pet_name"][0]
             pet_data = self.dbm.pets.get_by_name({"name":pet_name})
             file_size = len(pet_data)
             response = self.construct_header("200 OK", \
