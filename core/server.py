@@ -10,6 +10,7 @@ import threading
 import sys
 import os
 from multiprocessing import Process
+import pdb
 
 class server:
     default_version = "HTTP/0.9"
@@ -94,6 +95,7 @@ class server:
     #name - pet name
     #date - date of feed data if pet_req == false, otherwise, just empty string
     def HTTP_GET(self, request):
+        #pdb.set_trace()
         args = parse_qs(request.path[2:]) #get args from request
         if(request.path == '/'):          #check if requesting default page
             file_size = os.path.getsize("hello.htm")
@@ -101,9 +103,11 @@ class server:
             ct = self.content_type_text
 
         elif(args['json'][0] == 'true'):  #check if requesting json from db
+            #pdb.set_trace()
             print("reached json block")
-            f = HTTP_GET_JSON(request, args)
-            file_size = len(response)
+            f = self.HTTP_GET_JSON(request, args)
+            print("past get json")
+            file_size = len(f)
             ct = self.content_type_json
 
         else:                             #just go grab file being requested
@@ -136,17 +140,17 @@ class server:
     def HTTP_GET_JSON(self, request, args):
         #use self.dbm
         print("reached http get json")
+        print(args)
         if(args["pet_req"][0] == "true"):
-            pet_name = args["pet_name"][0]
-            pet_data = self.dbm.pets.get_by_name({"name":pet_name})
+            pet_name = args["name"][0]
+            pet_data = self.dbm.get_by_name(self.dbm.pets, pet_name)
             file_size = len(pet_data)
-            response = self.construct_header("200 OK", \
-                    self.content_type_JSON, file_size)
-            response = response + "\r\n" + pet_data
+            #response = self.construct_header("200 OK", \
+            #       self.content_type_json, file_size)
+            #response = response + "\r\n" + str(pet_data)
         #else:
             #do something for the feed history
-
-        return pet_data
+        return str(pet_data)
 
 #
 #

@@ -37,8 +37,8 @@ class client:
 
         while data:
             data = sock.recv(1024)
-            #recv_data += data
-            #print('recieved: ' + str(data))
+            recv_data += str(data)
+            print('recieved: ' + str(data))
 
         sock.close()
         return recv_data
