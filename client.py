@@ -1,5 +1,5 @@
 #author: matthew smith mrs9107@g.rit.edu
-#file: multithreaded http socket client
+#file:  http socket client testing database requests
 
 import socket
 import sys
@@ -38,20 +38,23 @@ class client:
         while data:
             data = sock.recv(1024)
             recv_data += str(data)
-            print('recieved: ' + str(data))
+        #    print('recieved: ' + str(data))
+
+        #here i'm grabbing only the json response.
+        #at the end of the header before json, you see "Closed\r\n\r\n"
+        #i split on 'Closed' and advance by 8 and terminate 4 from the EOL
+        #to just print the data. You will need to find this json in Kotlin & C
+        parts = recv_data.split('Closed')
+        print(parts[1][8:-4])
 
         sock.close()
         return recv_data
 
-    def spam(self):
-        while True:
-            self.send()
-            time.sleep(.1)
 
 def main():
 
     c = client()
-    #threads = []
     c.send(pet_get + get_end)
+
 
 main()
