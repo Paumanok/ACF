@@ -1,5 +1,7 @@
 #author: matthew smith mrs9107@g.rit.edu
 #file: multithreaded http socket server
+#with mongodb support
+
 
 from http.server import BaseHTTPRequestHandler
 from datetime import datetime
@@ -89,7 +91,7 @@ class server:
             return self.handlers[command](request)
 
     #lil fatboi http_get method, with api documentation inline for now
-    #qs = "json=<true/false>&pet_req=<true/false>&name=<pet_name>&date=<date/"">"
+    #qs = "json=<true/false>&pet_req=<true/false>&name=<pet_name>&date_start=<date/""&date_end=date/"">"
     #json - is this request for json data from db?
     #pet_req - is it asking for pet data or feed history
     #name - pet name
@@ -134,22 +136,19 @@ class server:
         return bytes(response, "utf8")
 
     #grab json data from db
-    #todo:
-    #need error checking for non existent animals
-    #implement feed history grabbin
+    #need to implement feed history grabbin
     def HTTP_GET_JSON(self, request, args):
         #use self.dbm
-        print("reached http get json")
-        print(args)
         if(args["pet_req"][0] == "true"):
             pet_name = args["name"][0]
-            pet_data = self.dbm.get_by_name(self.dbm.pets, pet_name)
-            file_size = len(pet_data)
-            #response = self.construct_header("200 OK", \
-            #       self.content_type_json, file_size)
-            #response = response + "\r\n" + str(pet_data)
-        #else:
+            try:
+                pet_data = self.dbm.get_by_name(self.dbm.pets, pet_name)
+            except:
+                pet_data = "404: pet not found"
+
+        else:
             #do something for the feed history
+
         return str(pet_data)
 
 #
