@@ -15,6 +15,11 @@ get_end = "HTTP/1.1\r\nHost: localhost:8080\r\nUser-Agent: Mozilla/5.0 (X11; Lin
 
 pet_get = "GET /?json=true&pet_req=true&name=sniffles "
 
+new_pet_post = "POST / HTTP/1.1\r\nHost: localhost:8080\r\nConent-Type: application/json\r\nContent-length: "
+new_pet_post_end = "json=true&pet_req=false&name=snuggles "
+new_pet_post_content = "fug"
+
+
 class client:
 
 
@@ -57,4 +62,3 @@ def main():
     c.send(pet_get + get_end)
 
 
-main(
