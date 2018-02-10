@@ -42,7 +42,7 @@ class dbm:
         print(something)
 
     def get_by_id(self, collection, entry):
-        return collection.find_one({"_id": str(entry.db_id)})
+        return collection.find_one({"_id": entry._id.valueOf()})
 
     def get_by_name(self, collection, name):
         return collection.find_one({"name": name});

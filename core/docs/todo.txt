@@ -36,3 +36,14 @@ Scheduled:
 
 mongodb tutorial 
 https://www.learntutors.com/install-mongodb-fedora-24/
+
+
+=============================================================================================
+So major refactoring is needed
+http server being replaced with flask so total server re-write
+
+this led to disocvery of little to no error checking
+need to work over:
+    database_manager
+    db_test
+
