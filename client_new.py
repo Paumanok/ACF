@@ -1,0 +1,33 @@
+#author: matthew smith mrs9107
+#file: client_new
+#purpose: improving on old http server and doing things the "right" way
+
+import requests
+from core.db_types.pet import pet
+
+
+host_addr = "localhost:5000"
+
+#here we're manually defining the json to pass to the server
+new_cat = {"name":"bucky", "age":3, "weight": 10, "feed_times" : []}
+
+#here i'm using my pets db type and converting it to a dict
+cat1 = pet("sniffles", 5, 25).__dict__
+cat2 = pet("fluff", 2, 15).__dict__
+
+
+def request_pet_info():
+    r = requests.get("http://" + host_addr + "/pets/name/sniffles")
+    print(r.status_code)
+    #print(r.json())
+
+def insert_pet():
+    cat = cat2
+    r = requests.post( "http://" + host_addr + "/pets/name/"+ cat["name"], json = cat )
+    print(r.status_code)
+    #print(r.json())
+
+
+if __name__ == "__main__":
+    insert_pet()
+    request_pet_info()
