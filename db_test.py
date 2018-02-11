@@ -18,6 +18,7 @@ def main():
     print("sniffles entry: " + str(my_dbm.get_by_name(my_dbm.pets, "sniffles")))
     print("sniffles id:" + str(cat1.db_id))
     cat1.weight = 20
+    sniffles = my_dbm.get_by_name(my_dbm.pets, "sniffles")
 
     my_dbm.replace(my_dbm.pets, cat1)
     print("updated sniffles")
