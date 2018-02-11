@@ -38,11 +38,11 @@ class dbm:
         self.replace(collection, entry)
 
     def replace(self, collection, entry):
-        something = collection.replace_one({"_id":entry.db_id}, entry.__dict__)
+        something = collection.replace_one({"name":entry.name}, entry.__dict__)
         print(something)
 
     def get_by_id(self, collection, entry):
-        return collection.find_one({"_id": entry._id.valueOf()})
+        return collection.find_one({"_id": str(entry.db_id)})
 
     def get_by_name(self, collection, name):
         return collection.find_one({"name": name});
