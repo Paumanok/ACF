@@ -1,0 +1,4 @@
+due to version issues, instead of installing pymongo via pip, it must be installed via apt as:
+$apt install python3-pymongo
+
+This is due to newer versions of mongodb don't work on the rpi 32bit processor
