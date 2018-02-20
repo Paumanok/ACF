@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-#!/bin/python3
-=======
 #!/bin/python
->>>>>>> 262ec59f64d87d888fa8a05cf95dfb37d21b9574
 #author: matthew smith mrs9107
 #file: server_new.py
 #purpose: to move past that janky http server and move to flask
@@ -41,11 +37,8 @@ def pet(pet_name):
             data = request.json
             if pets.find({"name":pet_name}).count() > 0:
                 #no data cleansing. Maybe should do more
-<<<<<<< HEAD
-                pets.update_one({"name":pet_name}, data)
-=======
+                #pets.update_one({"name":pet_name}, data)
                 pets.update_one({"name":pet_name}, {"$set":data})
->>>>>>> 262ec59f64d87d888fa8a05cf95dfb37d21b9574
             else:
                 print(data, file=sys.stderr)
                 pets.insert_one(data)
@@ -71,9 +64,5 @@ def pet_by_id(pet_id):
 
 
 if __name__ == "__main__":
-<<<<<<< HEAD
-    app.run(host='127.0.0.1')
-=======
 #    app.run(host='127.0.0.1')
     app.run(host='0.0.0.0')
->>>>>>> 262ec59f64d87d888fa8a05cf95dfb37d21b9574
