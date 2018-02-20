@@ -1,4 +1,4 @@
-#!/bin/python
+#!/bin/python3
 #author: matthew smith mrs9107
 #file: server_new.py
 #purpose: to move past that janky http server and move to flask
@@ -39,6 +39,7 @@ def pet(pet_name):
                 #no data cleansing. Maybe should do more
                 #pets.update_one({"name":pet_name}, data)
                 pets.update_one({"name":pet_name}, {"$set":data})
+
             else:
                 print(data, file=sys.stderr)
                 pets.insert_one(data)
@@ -64,5 +65,5 @@ def pet_by_id(pet_id):
 
 
 if __name__ == "__main__":
-#    app.run(host='127.0.0.1')
     app.run(host='0.0.0.0')
+
