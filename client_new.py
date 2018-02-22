@@ -6,7 +6,8 @@ import requests
 from core.db_types.pet import pet
 
 
-host_addr = "localhost:5000"
+host_addr = "192.168.10.1:5000"
+
 
 #here we're manually defining the json to pass to the server
 new_cat = {"name":"bucky", "age":3, "weight": 10, "feed_times" : []}
@@ -19,7 +20,9 @@ cat2 = pet("fluff", 2, 15).__dict__
 def request_pet_info():
     r = requests.get("http://" + host_addr + "/pets/name/sniffles")
     print(r.status_code)
-    #print(r.json())
+
+    print(r.json())
+
 
 def insert_pet():
     cat = cat2
