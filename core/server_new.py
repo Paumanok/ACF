@@ -90,7 +90,7 @@ def feeder_config():
                 feeder_js = {"id":data['id'], "key":newkey, "ip":ip}
                 
                 if feeders.find({"id":data['id']}).count() > 0:
-                    feeders.update_one({"id":str(data['id'])},{"$set":feeder_js})
+                    feeders.update_one({"id":data['id']},{"$set":feeder_js})
                 else:
                     feeders.insert_one(feeder_js)
                 
