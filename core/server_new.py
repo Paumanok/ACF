@@ -20,6 +20,7 @@ resp501 = Response({"status": "501"}, status = 501, mimetype='application/json')
 def pet(pet_name):
     db = dbm().db
     pets = dbm().pets
+    resp = ""
 
     if request.method == 'GET':
         if pets.find({"name":pet_name}).count() > 0:
