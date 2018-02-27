@@ -55,6 +55,30 @@ def pet(pet_name):
         resp = resp501
         #probably goes against standards, talk about response formats with team
     return resp
+
+
+#be able to get data on all pets in order to initalize local data or update local data
+@app.route('/pets/', methods = ['GET'])
+def get_all_pets():
+    db = dbm().db
+    pets = dbm().pets
+
+    if request.method == 'GET':
+        #return all pets
+        pet_cursor = pets.find({})
+        if len(pet_cursor) > 0:
+            for document in pet_cursor:
+                data += document
+            js = dumps(data)
+            resp = Response(js, status=200, mimetype='application/json')
+        else:
+            resp = resp501
+
+    else:
+        resp = resp501
+
+    return resp
+
 @app.route('/pets/id/<pet_id>', methods = ['GET', 'POST', 'DELETE'])
 def pet_by_id(pet_id):
     db = dbm()
@@ -64,4 +88,4 @@ def pet_by_id(pet_id):
 
 if __name__ == "__main__":
 #    app.run(host='127.0.0.1')
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0')#runs on all local interfaces
