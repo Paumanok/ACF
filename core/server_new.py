@@ -1,4 +1,4 @@
-#!/bin/python
+#!/bin/python3
 #author: matthew smith mrs9107
 #file: server_new.py
 #purpose: to move past that janky http server and move to flask
@@ -20,6 +20,7 @@ resp501 = Response({"status": "501"}, status = 501, mimetype='application/json')
 def pet(pet_name):
     db = dbm().db
     pets = dbm().pets
+    resp = ""
 
     if request.method == 'GET':
         if pets.find({"name":pet_name}).count() > 0:
@@ -37,7 +38,9 @@ def pet(pet_name):
             data = request.json
             if pets.find({"name":pet_name}).count() > 0:
                 #no data cleansing. Maybe should do more
+                #pets.update_one({"name":pet_name}, data)
                 pets.update_one({"name":pet_name}, {"$set":data})
+
             else:
                 print(data, file=sys.stderr)
                 pets.insert_one(data)
@@ -87,5 +90,10 @@ def pet_by_id(pet_id):
 
 
 if __name__ == "__main__":
+<<<<<<< HEAD
 #    app.run(host='127.0.0.1')
     app.run(host='0.0.0.0')#runs on all local interfaces
+=======
+    app.run(host='0.0.0.0')
+
+>>>>>>> 75c1c61ad0e408a6469f4f112bf55a6a75a10979
