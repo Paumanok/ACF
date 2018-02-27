@@ -18,7 +18,7 @@ class dbm:
         #collections
         self.pets = self.db['pets']
         self.feedlogs = self.db['feedlogs']
-
+        self.feeders = self.db['feeders']
     #insert will check for a name and replace instead of insert if cat
     #is there. This must be fixed for other types of db entries
     def insert(self, collection, entry):
