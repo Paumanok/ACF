@@ -16,12 +16,15 @@ app =  Flask("ACF")
 resp200 = Response({"status": "200 OK"}, status = 200, mimetype='application/json')
 resp501 = Response({"status": "501"}, status = 501, mimetype='application/json')
 
+_DEBUG = False
 
 @app.route('/pets/name/<pet_name>', methods = ['GET', 'POST', 'DELETE'])
 def pet(pet_name):
     db = dbm().db
     pets = dbm().pets
-
+    #for key,val in request.headers:
+    #    print(key)
+    #    print(val)
     resp = resp501
     if request.method == 'GET':
         if pets.find({"name":pet_name}).count() > 0:
@@ -32,24 +35,34 @@ def pet(pet_name):
             #http://blog.luisrei.com/articles/flaskrest.html
 
     elif request.method == 'POST':
-        if request.headers['Content-Type'] == 'application/json':
+        if request.headers['Content-Type'][:16] == 'application/json':
             #check name if already in db, if so
             #run a replace with updated pet info
             #else create new pet in db
+            if _DEBUG:
+                print("it's a json")
+                raw_data = request.get_data()
+                print(raw_data)
+         
             data = request.json
+            
             if pets.find({"name":pet_name}).count() > 0:
+                print("we're updating stuff")
                 #no data cleansing. Maybe should do more
                 #pets.update_one({"name":pet_name}, data)
                 pets.update_one({"name":pet_name}, {"$set":data})
 
             else:
+                print("we're adding stuff")
                 print(data, file=sys.stderr)
                 pets.insert_one(data)
 
             #badly assuming inserts went well
             resp = resp200
         else:
+            print("you fucked up")
             #fug off with that other stuff
+            print(request.headers['Content-Type'][:16])
             resp = resp501
     elif request.method == 'DELETE':
         #you heard the man
@@ -133,4 +146,4 @@ def pet_by_id(pet_id):
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')#runs on all local interfaces
+    app.run(host='0.0.0.0', debug=False)#runs on all local interfaces
