@@ -15,6 +15,7 @@ new_cat = {"name":"bucky", "age":3, "weight": 10, "feed_times" : []}
 #here i'm using my pets db type and converting it to a dict
 cat1 = pet("sniffles", 5, 25).__dict__
 cat2 = pet("fluff", 2, 15).__dict__
+cat3 = pet("mango", 4, 12).__dict__
 
 
 def request_pet_info():

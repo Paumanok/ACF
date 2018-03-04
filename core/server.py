@@ -1,210 +1,154 @@
-#author: matthew smith mrs9107@g.rit.edu
-#file: multithreaded http socket server
-#with mongodb support
+#!/bin/python3
+#author: matthew smith mrs9107
+#file: server_new.py
+#purpose: to move past that janky http server and move to flask
 
-
-from http.server import BaseHTTPRequestHandler
-from datetime import datetime
-from urllib.parse import parse_qs
-import io
-import socket
-import threading
+from flask import Flask, Response, request
+from database_manager import dbm
+from bson import objectid
+from bson.json_util import dumps
+from config import *
 import sys
-import os
-from multiprocessing import Process
-import pdb
+import hashlib
 
-class server:
-    default_version = "HTTP/0.9"
-    content_type_text = "text/html"
-    content_type_json = "application/json"
-    enable_threading = "thread" #process, thread, None(process is bork)
-    running_path = os.path.dirname(os.path.abspath(__file__))
+app =  Flask("ACF")
 
-    #initialize server socket
-    def __init__(self, host, port, dbm):
-        self.dbm = dbm
-        self.host = host
-        self.port = port
-        #create tcp/ip socket
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.sock.bind((self.host, self.port))
+resp200 = Response({"status": "200 OK"}, status = 200, mimetype='application/json')
+resp501 = Response({"status": "501"}, status = 501, mimetype='application/json')
 
-        self.handlers = { "GET": lambda x: self.HTTP_GET(x)
-                          }
+_DEBUG = False
 
-        self.codes = {    "404": lambda x:self.HTTP_404(x),
-                          "403": lambda x:self.HTTP_403(x),
-                          "501": lambda x:self.HTTP_501(x)
-                          }
+#pet(pet name)
+#flask endpoint for dealing with pets via name
+#capitalizations matter--[SMELL]
+@app.route('/pets/name/<pet_name>', methods = ['GET', 'POST', 'DELETE'])
+def pet(pet_name):
+    db = dbm().db
+    pets = dbm().pets
+    resp = resp501
+    if request.method == 'GET':
+        if pets.find({"name":pet_name}).count() > 0:
+            data = pets.find_one({"name":pet_name})
+            print(data, file=sys.stderr)
+            js = dumps(data)
+            resp = Response(js, status=200, mimetype='application/json')
+            #http://blog.luisrei.com/articles/flaskrest.html
 
-    def listen(self):
-        self.sock.listen(5) #backlog num, # of connections allowed to be queued
-        processes = []
+    elif request.method == 'POST':
+        #this string split is sketchy [SMELL]
+        if request.headers['Content-Type'][:16] == 'application/json':
+            #check name if already in db, if so
+            #run a replace with updated pet info
+            #else create new pet in db
+            if _DEBUG:
+                print("it's a json")
+                raw_data = request.get_data()
+                print(raw_data)
 
-        while True:
-            client, address = self.sock.accept()
-            client.settimeout(60) #1 minute timeout
-            if(self.enable_threading == "thread"):
-                threading.Thread(target = self.handle_client, args= (client, address)).start()
+            data = request.json
 
-            elif(self.enable_threading == "process"):
-                process = Process(target = self.handle_client, args=(client, address))
-                process.daemon = True
-                process.start()
+            if pets.find({"name":pet_name}).count() > 0:
+                print("we're updating stuff")
+                #no data cleansing. Maybe should do more
+                pets.update_one({"name":pet_name}, {"$set":data})
 
             else:
-                self.handle_client(client, address)
+                print("we're adding stuff")
+                print(data, file=sys.stderr)
+                pets.insert_one(data)
 
-    def handle_client(self, client, address):
-        size = 1024
-        while True:
-            try:
-            #if True:
-                data = client.recv(size)
-                print("gotsomething")
-                if data:
-                    #print(data)
-                    response = self.handle_HTTP(data)
-                    client.send(response)
-                    client.close()
-                else:
-                    raise error('client disconnected')
-                    print('cient disconnected')
-
-            except:
-            #else:
-                client.close()
-
-                return False
-
-        return True
-
-
-    def handle_HTTP(self, data):
-        request = HTTP_request(data)
-        command = request.command
-        if not command in self.handlers.keys():
-            return self.codes["501"](request)
+            #badly assuming inserts went well
+            resp = resp200
         else:
-            return self.handlers[command](request)
+            print("POST failed: body of non-JSON type")
+            resp = resp501
 
-    #lil fatboi http_get method, with api documentation inline for now
-    #qs = "json=<true/false>&pet_req=<true/false>&name=<pet_name>&date_start=<date/""&date_end=date/"">"
-    #json - is this request for json data from db?
-    #pet_req - is it asking for pet data or feed history
-    #name - pet name
-    #date - date of feed data if pet_req == false, otherwise, just empty string
-    def HTTP_GET(self, request):
-        #pdb.set_trace()
-        args = parse_qs(request.path[2:]) #get args from request
-        if(request.path == '/'):          #check if requesting default page
-            file_size = os.path.getsize("hello.htm")
-            file_name = "hello.htm"
-            ct = self.content_type_text
+    elif request.method == 'DELETE':
+        #you heard the man
+        delete_count = pets.delete_many({"name":pet_name})
+        print("{} entries deleted\n".format(delete_count))
+        if delete_count > 0:
+            resp = resp200
+        else:
+            resp = resp501
+    else:
+        #error 501
+        resp = resp501
+        pass
+    return resp
 
-        elif(args['json'][0] == 'true'):  #check if requesting json from db
-            #pdb.set_trace()
-            print("reached json block")
-            f = self.HTTP_GET_JSON(request, args)
-            print("past get json")
-            file_size = len(f)
-            ct = self.content_type_json
 
-        else:                             #just go grab file being requested
-            path = self.running_path + request.path
-            if(os.access(path, os.R_OK)):
-                if(os.path.exists(path)):
-                    file_size = os.path.getsize(path)
-                    file_name = request.path[1:]
-                    f = (open(file_name).read())
-                    ct = self.content_type_text
+@app.route('/sfeeder/config', methods = ['GET','POST'])
+def feeder_config():
+    feeders = dbm().feeders
+    resp = resp501
+    if request.method == 'GET':
+        if request.headers['Content-Type'] == 'application/json':
+            data = request.json
+            if feeders.find(data).count() > 0:
+                print(data, file=sys.stderr)
+                resp = Response(dumps({'bool':True}), status=200, mimetype='application/json')
+            else :
+                resp = Response(dumps({'bool':False}), status=200, mimetype='application/json')
+
+    elif request.method == 'POST':
+        if request.headers['Content-Type'] == 'application/json':
+            data = request.json
+            if data['key'] == "CanIHasCheezeburger":
+                #attempt at hashing to make a key but http requests don't like binary values
+                #sha = hashlib.sha256()
+                print(data, file=sys.stderr)
+
+                ip = request.environ['REMOTE_ADDR']
+
+                #sha.update(data['id'])
+                #newkey = str(sha.digest())
+                newkey = str(data['id'] * 31)
+                feeder_js = {"id":data['id'], "key":newkey, "ip":ip}
+
+                if feeders.find({"id":data['id']}).count() > 0:
+                    feeders.update_one({"id":data['id']},{"$set":feeder_js})
                 else:
-                    print(":it doesnt exist")
-                    return self.codes["404"](request)
+                    feeders.insert_one(feeder_js)
+
+                resp_js_str = dumps({"bool":True, "key":newkey})
             else:
-                print(":not allowed")
-                return self.codes["403"](request)
+                resp_js_str = dumps({"bool":False, "key":""})
 
-        #construct response with content_type(ct),
-        #file size, and string f as the file to be sent
-        response = self.construct_header("200 OK",ct, file_size )
-        response = (response + "\r\n" + f)
-        print("constructed and sending response")
+            resp = Response(resp_js_str, status = 200, mimetype = 'application/json')
 
-        return bytes(response, "utf8")
+    return resp
 
-    #grab json data from db
-    #need to implement feed history grabbin
-    def HTTP_GET_JSON(self, request, args):
-        #use self.dbm
-        if(args["pet_req"][0] == "true"):
-            pet_name = args["name"][0]
-            try:
-                pet_data = self.dbm.get_by_name(self.dbm.pets, pet_name)
-            except:
-                pet_data = "404: pet not found"
+#be able to get data on all pets in order to initalize local data or update local data
+@app.route('/pets/', methods = ['GET'])
+def get_all_pets():
+    db = dbm().db
+    pets = dbm().pets
 
+    if request.method == 'GET':
+        #return all pets
+        pet_cursor = pets.find({})
+        if len(pet_cursor) > 0:
+            for document in pet_cursor:
+                data += document
+            js = dumps(data)
+            resp = Response(js, status=200, mimetype='application/json')
         else:
-            #do something for the feed history
+            resp = resp501
 
-        return str(pet_data)
+    else:
+        resp = resp501
 
-#
-#
-#    def HTTP_PUT_JSON(self, request):
-#        #use self.dbm
-#
-    def construct_header(self,response_status, content_type, content_length):
-        time = 0
-        #time = datetime.now().strftime('%b %d  %I:%M:%S\r\n')
-        http_response = ("HTTP/1.1" + response_status + "\r\n" + \
-                         "Server: python-custom\r\n" +\
-                         "Content-Length: " + str(content_length) + "\r\n" + \
-                         "Content-Type: " + content_type + "\r\n" + \
-                         "Connection: Closed\r\n" )
+    return resp
 
-        return http_response
+@app.route('/pets/id/<pet_id>', methods = ['GET', 'POST', 'DELETE'])
+def pet_by_id(pet_id):
+    db = dbm()
+    #yada yada
 
-#====================================================================
-    def HTTP_501(self, request):
-        construct_header("501 not implemented", content_type_text, 0)
-        return 0
-
-    def HTTP_404(self, request):
-        file_size = os.path.getsize("htm/404.htm")
-        response = self.construct_header("404",self.content_type_text, file_size )
-        response = response + "\r\n" + (open("htm/404.htm").read())
-        return bytes(response, "utf8")
-
-    def HTTP_403(self, request):
-        file_size = os.path.getsize("htm/403.htm")
-        response = self.construct_header("403",self.content_type_text, file_size )
-        response = response + "\r\n" + (open("htm/403.htm").read())
-        return bytes(response, "utf8")
-#====================================================================
-
-#executive decision: project not about text parsing, so offload parsing
-#to subset of HTTP library
-#https://stackoverflow.com/questions/4685217/parse-raw-http-headers
-class HTTP_request(BaseHTTPRequestHandler):
-
-    def __init__(self, request):
-        self.rfile = io.BytesIO(request)
-        self.raw_requestline = self.rfile.readline()
-        self.error_code = self.error_message = None
-        self.parse_request()
-
-    def send_error(self, code, message):
-        self.error_code = code
-        self.error_message = message
-
-
-def main():
-    port = 8080 #default http port
-    server('', port).listen()
-
+def run_server():
+    app.run(host='0.0.0.0')
 
 if __name__ == "__main__":
-    main()
+    #app.run(host='0.0.0.0', debug=False)#runs on all local interfaces
+    run_server()
