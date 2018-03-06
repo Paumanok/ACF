@@ -146,6 +146,14 @@ def pet_by_id(pet_id):
     db = dbm()
     #yada yada
 
+
+#for shabab to ping the server
+@app.route('/', methods = ['GET'])
+def hello_server():
+    if request.method == 'GET':
+        return resp200
+
+
 def run_server():
     app.run(host='0.0.0.0')
 
