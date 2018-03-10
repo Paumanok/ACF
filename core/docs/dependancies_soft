@@ -7,6 +7,7 @@ for now this is what I'm working with:
         pymongo
         json
         bson
+        pi-rc522
 
     Linux:
         python3
