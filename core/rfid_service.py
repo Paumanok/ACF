@@ -4,7 +4,7 @@
 import signal
 import time
 import sys
-from pirc522 import RFID
+from pirc522 import RFID, RFIDUtil
 from queue import *
 
 class RFID_util():
@@ -36,12 +36,15 @@ class RFID_util():
                 #put read into queue
 
                 #set card uid for util
-                util.set_tag(uid)
+                self.util.set_tag(uid)
                 #we need keys for each keychain, either default at 0xFF or store in db
 
                 self.util.auth(self.reader.auth_a, [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF])
-                (error, data) = self.reader.read(2)
+                self.util.do_auth(self.util.block_addr(2,1))
+                (error, data) = self.reader.read(9)
                 if not error:
                     print(data)
                     self.id_queue.put(data)
+                else:
+                    print("error hit")
                 time.sleep(3)
