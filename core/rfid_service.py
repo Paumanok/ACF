@@ -60,7 +60,7 @@ class RFID_util():
                     else:
                         print("RFID read error, try again")
                 time.sleep(3)
-                util.deauth()
+                self.util.deauth()
 
 
 

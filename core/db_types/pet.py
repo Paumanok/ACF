@@ -4,7 +4,7 @@ class pet:
     #db_id = None
     tag_id = None
 
-    def __init__(self, name, age, weight, feed_times):
+    def __init__(self, name, age, weight):
         self.name = name
         self.age = age
         self.weight = weight

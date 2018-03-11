@@ -19,7 +19,7 @@ cat3 = pet("mango", 4, 12).__dict__
 
 
 def request_pet_info():
-    r = requests.get("http://" + host_addr + "/pets/name/sniffles")
+    r = requests.get("http://" + host_addr + "/pets/name/fluff")
     print(r.status_code)
 
     print(r.json())
@@ -31,7 +31,14 @@ def insert_pet():
     print(r.status_code)
     #print(r.json())
 
+def config_tag():
+    cat = cat2
+    r =  requests.get("http://" + host_addr +"/rfid_config/" + cat["name"])
+    print(r.status_code)
+
 
 if __name__ == "__main__":
     insert_pet()
+    request_pet_info()
+    config_tag()
     request_pet_info()

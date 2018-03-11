@@ -10,16 +10,22 @@ from bson.json_util import dumps
 from config import *
 import sys
 import hashlib
+from queue import *
 
 app =  Flask("ACF")
 
 resp200 = Response({"status": "200 OK"}, status = 200, mimetype='application/json')
 resp501 = Response({"status": "501"}, status = 501, mimetype='application/json')
 
-rfid_command_queue = None
 
 _DEBUG = False
 
+
+class server():
+    def __init__(self):
+        self.rfid_command_queue = None
+
+this_server = server()
 #pet(pet name)
 #flask endpoint for dealing with pets via name
 #capitalizations matter--[SMELL]
@@ -196,9 +202,9 @@ def rfid_tag_config(pet_name):
             listed.insert(0, byt)
 
         #next tag detected will have the calculated tag id written
-        rfid_command_queue.add(listed)
+        this_server.rfid_command_queue.put(listed)
         #put the uid into the db entry
-        pets.update_one({"name":pet_name}, {"tag_id":uid})
+        pets.update_one({"name":pet_name}, {"$set":{"tag_id":str(uid)}})
 
         resp = resp200
 
@@ -209,9 +215,9 @@ def rfid_tag_config(pet_name):
     return resp
 
 def run_server(queue):
+    this_server.rfid_command_queue = queue
     app.run(host='0.0.0.0')
-    rfid_command_queue = queue
 
 if __name__ == "__main__":
     #app.run(host='0.0.0.0', debug=False)#runs on all local interfaces
-    run_server()
+    run_server(Queue())
