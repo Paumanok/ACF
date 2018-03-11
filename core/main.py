@@ -16,14 +16,15 @@ from application_server import app_serv
 class ACF():
 
     def __init__(self):
-        self.rfid_queue = Queue()
+        self.rfid_read_queue = Queue()
+        self.rfid_command_queue = Queue()
         print("initializing database")
         self.dbm = dbm()
-        self.rfid = RFID_util(self.rfid_queue)
-        self.apsrv = app_serv(self.rfid_queue)
+        self.rfid = RFID_util(self.rfid_read_queue, self.rfid_command_queue)
+        self.apsrv = app_serv(self.rfid_read_queue)
 
         print("starting services...")
-        #threading.Thread(target = server.run_server).start()
+        threading.Thread(target = server.run_server, args = self.rfid_command_queue).start()
         threading.Thread(target = self.rfid.read_while).start()
         threading.Thread(target = self.apsrv.print_queue).start()
 

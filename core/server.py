@@ -16,6 +16,8 @@ app =  Flask("ACF")
 resp200 = Response({"status": "200 OK"}, status = 200, mimetype='application/json')
 resp501 = Response({"status": "501"}, status = 501, mimetype='application/json')
 
+rfid_command_queue = None
+
 _DEBUG = False
 
 #pet(pet name)
@@ -154,8 +156,9 @@ def hello_server():
         return resp200
 
 
-def run_server():
+def run_server(queue):
     app.run(host='0.0.0.0')
+    rfid_command_queue = queue
 
 if __name__ == "__main__":
     #app.run(host='0.0.0.0', debug=False)#runs on all local interfaces

@@ -1,7 +1,8 @@
 #pet class for automatic cat feeder
 
 class pet:
-    #db_id = None;
+    #db_id = None
+    tag_id = None
 
     def __init__(self, name, age, weight, feed_times):
         self.name = name
