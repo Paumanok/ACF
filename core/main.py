@@ -13,6 +13,7 @@ from database_manager import dbm
 #import char_disp_debug/lcd_manager
 from rfid_service import RFID_util
 from application_server import app_serv
+
 class ACF():
 
     def __init__(self):

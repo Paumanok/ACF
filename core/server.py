@@ -155,6 +155,58 @@ def hello_server():
     if request.method == 'GET':
         return resp200
 
+@app.route('/rfid_config/<pet_name>', methods = ['GET'])
+def rfid_tag_config(pet_name):
+    db = dbm().db
+    pets = dbm().pets
+
+    #here we'll be doing the math to get a tag id and put the id
+    #into the rfid command queue for to be set to a tag
+
+    if pets.find({"name":pet_name}).count() > 0:
+        name = pet_name
+        weight = pets.find_one({"name":pet_name})['weight']
+        #
+        if len(name) > 16:
+            name = name[:16]
+        uid = 0
+        #create number from chars of name
+        for c in name:
+            uid = (uid << 8) + ord(c)
+        uid = uid + weight
+
+        #get number of bytes from number
+        #so we can fill the rest in with 0xFF
+        length = 0
+        temp_uid = uid
+        while temp_uid != 0:
+            temp_uid = temp_uid >> 8
+            length += 1
+
+        #fillin in
+        for i in range(length,16):
+            uid = (uid << 8) + 0xFF
+
+        #put the bytes into array to be put into command queue
+        listed = []
+        temp_uid = uid
+        for i in range(16):
+            byt = temp_uid & 0xFF
+            temp_uid = temp_uid >> 8
+            listed.insert(0, byt)
+
+        #next tag detected will have the calculated tag id written
+        rfid_command_queue.add(listed)
+        #put the uid into the db entry
+        pets.update_one({"name":pet_name}, {"tag_id":uid})
+
+        resp = resp200
+
+    #this pet hasnt been created yet
+    else:
+        resp = resp501
+
+    return resp
 
 def run_server(queue):
     app.run(host='0.0.0.0')
