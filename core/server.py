@@ -204,7 +204,7 @@ def rfid_tag_config(pet_name):
         #next tag detected will have the calculated tag id written
         this_server.rfid_command_queue.put(listed)
         #put the uid into the db entry
-        pets.update_one({"name":pet_name}, {"$set":{"tag_id":str(uid)}})
+        pets.update_one({"name":pet_name}, {"$set":{"tag_id":str(hex(uid))}})
 
         resp = resp200
 
