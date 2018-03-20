@@ -27,7 +27,7 @@ class ACF():
         print("starting services...")
         #threading.Thread(target = server.run_server, args = (self.rfid_command_queue)).start()
         threading.Thread(target = self.rfid.read_while).start()
-        threading.Thread(target = self.apsrv.print_queue).start()
+        threading.Thread(target = self.apsrv.check_for_pet).start()
         server.run_server(self.rfid_command_queue)
 
 

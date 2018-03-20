@@ -27,12 +27,13 @@ class app_serv():
             else:
                 uid_list = self.rfid_queue.get(True)
                 uid_string = self.convert_string(uid_list)
-                if pets.find_one({"tag_id":uid_string}) > 0:
+                print(uid_string)
+                if pets.find_one({"tag_id":uid_string}) is not None:
                     #if pet exists, check if it can feed
                     print("pet found in db!")
 
     def convert_string(self, uid_list):
         uid_string = ""
         for i in uid_list:
-            uid_string += str(hex(i))
-        return uid_string
+            uid_string += str(hex(i)[2:])
+        return "0x" + uid_string
