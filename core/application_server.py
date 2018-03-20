@@ -29,6 +29,7 @@ class app_serv():
                 uid_string = self.convert_string(uid_list)
                 if pets.find_one({"tag_id":uid_string}) > 0:
                     #if pet exists, check if it can feed
+                    print("pet found in db!")
 
     def convert_string(self, uid_list):
         uid_string = ""
