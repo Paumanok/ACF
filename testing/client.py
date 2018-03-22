@@ -36,9 +36,13 @@ def config_tag():
     r =  requests.get("http://" + host_addr +"/rfid_config/" + cat["name"])
     print(r.status_code)
 
+def get_all_pets():
+    r = requests.get("http://" + host_addr + "/pets/")
+    print(r.json())
 
 if __name__ == "__main__":
-    insert_pet()
-    request_pet_info()
-    config_tag()
-    request_pet_info()
+    #insert_pet()
+    #request_pet_info()
+    #config_tag()
+    #request_pet_info()
+    get_all_pets()

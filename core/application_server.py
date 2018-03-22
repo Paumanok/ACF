@@ -27,7 +27,6 @@ class app_serv():
             else:
                 uid_list = self.rfid_queue.get(True)
                 uid_string = self.convert_string(uid_list)
-                print(uid_string)
                 if pets.find_one({"tag_id":uid_string}) is not None:
                     #if pet exists, check if it can feed
                     print("pet found in db!")

@@ -132,13 +132,13 @@ def feeder_config():
 def get_all_pets():
     db = dbm().db
     pets = dbm().pets
-
+    data = []
     if request.method == 'GET':
         #return all pets
         pet_cursor = pets.find({})
-        if len(pet_cursor) > 0:
+        if pet_cursor.count() > 0:
             for document in pet_cursor:
-                data += document
+                data.append(document)
             js = dumps(data)
             resp = Response(js, status=200, mimetype='application/json')
         else:
