@@ -1,21 +1,27 @@
 from machine import Pin, PWM
 
+def getDuty(duty):
+    if 0 <= duty and duty <= 100:
+        return 1023 * duty/100
+    else:
+        return 0
+
 class MotorPin:
     def __init__(self, m1, m2, dir, step, freq=50, duty=0):
-        self.m1 = Pin(m1,Pin.Out)
-        self.m2 = Pin(m2,Pin.Out)
-        self.dir = Pin(dir,Pin.Out)
-        self.drive = PWM(Pin(dir),freq,0)
-        self.duty = duty
-        m1.value(0)
-        m2.value(0)
+        self.m1 = Pin(m1,Pin.OUT)
+        self.m2 = Pin(m2,Pin.OUT)
+        self.dir = Pin(dir,Pin.OUT)
+        self.drive = PWM(Pin(step),freq,0)
+        self.duty = getDuty(duty)
+        self.m1.value(0)
+        self.m2.value(0)
 
     def setDuty(self, duty):
         self.duty = duty
-        self.step.duty(duty)
+        self.drive.duty(duty)
 
     def setFreq(self, freq):
-        self.step.freq(freq)
+        self.drive.freq(freq)
 
     def setStepMode(self, mode):
         if 0 <= mode and mode <= 3:
