@@ -12,7 +12,7 @@ class MotorPin:
         self.dir = dir
         rg.setup(dir, rg.OUT)
         rg.setup(step,rg.OUT)
-        self.drive = PWM(Pin(step),freq)
+        self.drive = rg.PWM(step,freq)
 
         # Store duty cycle and set GPIO pins to 0
         self.duty = duty
@@ -29,8 +29,8 @@ class MotorPin:
 
     def setStepMode(self, mode):
         if 0 <= mode and mode <= 3:
-            rg.output(m1,(1&mode))
-            rg.output(m2,1&(mode>>1))
+            rg.output(self.m1,(1&mode))
+            rg.output(self.m2,1&(mode>>1))
 
     def setDir(self,dir):
         if 0 == dir or 1 == dir:
