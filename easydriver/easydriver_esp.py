@@ -15,6 +15,7 @@ class MotorPin:
         self.duty = getDuty(duty)
         self.m1.value(0)
         self.m2.value(0)
+        self.dir.value(0)
 
     def setDuty(self, duty):
         self.duty = duty
