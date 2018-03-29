@@ -1,4 +1,7 @@
+import mfrc522
 import picoweb
+import load_sensor
+import easydriver_esp
 import acf_network as w
 import coroutines as c
 import tinyDB

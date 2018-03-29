@@ -39,3 +39,12 @@ class acf_network:
         key = resp.json()['key']
         return (b, key)
 
+    def canIFeed(self, tag, key):
+        resp = r.post()
+        b = resp.json()['bool']
+        serv = res.json()['serv']
+        return (b,serv)
+
+    def petFed(self, tag, key, base_wt):
+        resp = r.post()
+
