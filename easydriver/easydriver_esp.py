@@ -6,7 +6,7 @@ def getDuty(duty):
     else:
         return 0
 
-class MotorPin:
+class Motor:
     def __init__(self, m1, m2, dir, step, freq=50, duty=0):
         self.m1 = Pin(m1,Pin.OUT)
         self.m2 = Pin(m2,Pin.OUT)

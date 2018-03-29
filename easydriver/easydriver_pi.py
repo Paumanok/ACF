@@ -2,7 +2,7 @@ import RPi.GPIO as rg
 
 rg.setmode(rg.BCM)
 
-class MotorPin:
+class Motor:
     def __init__(self, m1, m2, dir, step, freq=50, duty=0):
         # Initialize Pins for proper operation
         self.m1 = m1
