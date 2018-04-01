@@ -2,8 +2,8 @@
 
 ## Dependencies
  - ampy
-    - used for loading python scripts
-    - installed with pip
+    - Used for loading python scripts
+    - Installed with pip
         -  pip install adafruit-ampy
  - mpy-cross
     - Micropython byte code cross compiler
@@ -28,7 +28,7 @@ To load the project right away run:
     make load
 
 The first will load the main.py script and then proceed to build the 
-dpendencies as byte code files and load them onto the board.
+dependencies as byte code files and load them onto the board.
 
 The are a handful of other make targets that can be used for adding and 
 removing files quickly.  As well as helper targets for using ampy functions
