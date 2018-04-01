@@ -30,5 +30,5 @@ To load the project right away run:
 The first will load the main.py script and then proceed to build the 
 dependencies as byte code files and load them onto the board.
 
-The are a handful of other make targets that can be used for adding and 
-removing files quickly.  As well as helper targets for using ampy functions
+There are a handful of other make targets that can be used for adding and 
+removing files quickly.  As well as helper targets for using ampy functions.
