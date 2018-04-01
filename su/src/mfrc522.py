@@ -1,5 +1,4 @@
 from machine import Pin, SPI
-from os import uname
 
 
 class MFRC522:
@@ -24,22 +23,11 @@ class MFRC522:
 		self.rst.value(0)
 		self.cs.value(1)
 
-		board = uname()[0]
-
-		if board == 'WiPy' or board == 'LoPy' or board == 'FiPy':
-			if spiblk == None:
-				self.spi = SPI(0)
-			else:
-				self.spi = SPI(spiblk)
-			self.spi.init(SPI.MASTER, baudrate=1000000, pins=(self.sck, self.mosi, self.miso))
-		elif board == 'esp8266':
-			if spiblk == None:
-				self.spi = SPI(baudrate=1000000, polarity=0, phase=0, sck=self.sck, mosi=self.mosi, miso=self.miso)
-			else:
-				self.spi = SPI(spiblk, baudrate=1000000, polarity=0, phase=0)
-			#self.spi.init()
+		if spiblk == None:
+			self.spi = SPI(baudrate=1000000, polarity=0, phase=0, sck=self.sck, mosi=self.mosi, miso=self.miso)
 		else:
-			raise RuntimeError("Unsupported platform")
+			self.spi = SPI(spiblk, baudrate=1000000, polarity=0, phase=0)
+		self.spi.init()
 
 		self.rst.value(1)
 		self.init()
@@ -215,21 +203,21 @@ class MFRC522:
 		(stat, recv, _) = self._tocard(0x0C, data)
 		return recv if stat == self.OK else None
 
-	def write(self, addr, data):
-
-		buf = [0xA0, addr]
-		buf += self._crc(buf)
-		(stat, recv, bits) = self._tocard(0x0C, buf)
-
-		if not (stat == self.OK) or not (bits == 4) or not ((recv[0] & 0x0F) == 0x0A):
-			stat = self.ERR
-		else:
-			buf = []
-			for i in range(16):
-				buf.append(data[i])
-			buf += self._crc(buf)
-			(stat, recv, bits) = self._tocard(0x0C, buf)
-			if not (stat == self.OK) or not (bits == 4) or not ((recv[0] & 0x0F) == 0x0A):
-				stat = self.ERR
-
-		return stat
+#	def write(self, addr, data):
+#
+#		buf = [0xA0, addr]
+#		buf += self._crc(buf)
+#		(stat, recv, bits) = self._tocard(0x0C, buf)
+#
+#		if not (stat == self.OK) or not (bits == 4) or not ((recv[0] & 0x0F) == 0x0A):
+#			stat = self.ERR
+#		else:
+#			buf = []
+#			for i in range(16):
+#				buf.append(data[i])
+#			buf += self._crc(buf)
+#			(stat, recv, bits) = self._tocard(0x0C, buf)
+#			if not (stat == self.OK) or not (bits == 4) or not ((recv[0] & 0x0F) == 0x0A):
+#				stat = self.ERR
+#
+#		return stat

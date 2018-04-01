@@ -38,9 +38,9 @@ def do_read( rdr ):
 class Coroutines:
     def __init__(self,db):
         self.db = db
-        self.net = a.acf_network(DEBUG=False)
-        self.rfid = r.MFRC522(1,3,spiblk=1)
-        self.motor = ed.Motor(15,0,2,16,500,50)
+        self.net = a.acf_network(DEBUG=True)
+        self.rfid = r.MFRC522(2,16,spiblk=1)
+        self.motor = ed.Motor(None,None,0,15,500,50)
         self.load = ls.LoadSensor()
         self.key_verified = False
         self.pet_detected = False
@@ -83,9 +83,9 @@ class Coroutines:
 
     async def dispenseRoutine(self):
         while True:
-            await asyncio.sleep(.3)
+            await asyncio.sleep(.5)
             if self.feed == True:
-                wt = getGram(1)
+                wt = self.load.getGram(1)
                 if self.base_wt == None:
                    self.base_wt = wt
                 

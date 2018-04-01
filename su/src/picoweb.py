@@ -6,36 +6,36 @@ import uio
 import ure as re
 import uerrno
 import uasyncio as asyncio
-import pkg_resources
+#import pkg_resources
 
-from .utils import parse_qs
-
-
-def get_mime_type(fname):
-    # Provide minimal detection of important file
-    # types to keep browsers happy
-    if fname.endswith(".html"):
-        return "text/html"
-    if fname.endswith(".css"):
-        return "text/css"
-    if fname.endswith(".png") or fname.endswith(".jpg"):
-        return "image"
-    return "text/plain"
+from utils import parse_qs
 
 
-def sendstream(writer, f):
-    buf = bytearray(64)
-    while True:
-        l = f.readinto(buf)
-        if not l:
-            break
-        yield from writer.awrite(buf, 0, l)
+#def get_mime_type(fname):
+#    # Provide minimal detection of important file
+#    # types to keep browsers happy
+#    if fname.endswith(".html"):
+#        return "text/html"
+#    if fname.endswith(".css"):
+#        return "text/css"
+#    if fname.endswith(".png") or fname.endswith(".jpg"):
+#        return "image"
+#    return "text/plain"
 
 
-def jsonify(writer, dict):
-    import ujson
-    yield from start_response(writer, "application/json")
-    yield from writer.awrite(ujson.dumps(dict))
+#def sendstream(writer, f):
+#    buf = bytearray(64)
+#    while True:
+#        l = f.readinto(buf)
+#        if not l:
+#            break
+#        yield from writer.awrite(buf, 0, l)
+
+
+#def jsonify(writer, dict):
+#    import ujson
+#    yield from start_response(writer, "application/json")
+#    yield from writer.awrite(ujson.dumps(dict))
 
 
 def start_response(writer, content_type="text/html", status="200"):
@@ -45,9 +45,9 @@ def start_response(writer, content_type="text/html", status="200"):
     yield from writer.awrite("\r\n\r\n")
 
 
-def http_error(writer, status):
-    yield from start_response(writer, status=status)
-    yield from writer.awrite(status)
+#def http_error(writer, status):
+#    yield from start_response(writer, status=status)
+#    yield from writer.awrite(status)
 
 
 class HTTPRequest:
@@ -68,7 +68,7 @@ class HTTPRequest:
 
 class WebApp:
 
-    def __init__(self, pkg, routes=None, serve_static=True):
+    def __init__(self, pkg, routes=None):  #, serve_static=True):
         if routes:
             self.url_map = routes
         else:
@@ -77,11 +77,11 @@ class WebApp:
             self.pkg = pkg.split(".", 1)[0]
         else:
             self.pkg = None
-        if serve_static:
-            self.url_map.append((re.compile("^/(static/.+)"), self.handle_static))
+        #if serve_static:
+        #    self.url_map.append((re.compile("^/(static/.+)"), self.handle_static))
         self.mounts = []
         self.inited = False
-        # Instantiated lazily
+        # Instantiated lazil/
         self.template_loader = None
         self.headers_mode = "parse"
 
@@ -211,53 +211,53 @@ class WebApp:
         app.url = url
         self.mounts.append(app)
 
-    def route(self, url, **kwargs):
-        def _route(f):
-            self.url_map.append((url, f, kwargs))
-            return f
-        return _route
+    #def route(self, url, **kwargs):
+    #    def _route(f):
+    #        self.url_map.append((url, f, kwargs))
+    #        return f
+    #    return _route
 
-    def add_url_rule(self, url, func, **kwargs):
-        # Note: this method skips Flask's "endpoint" argument,
-        # because it's alleged bloat.
-        self.url_map.append((url, func, kwargs))
+    #def add_url_rule(self, url, func, **kwargs):
+    #    # Note: this method skips Flask's "endpoint" argument,
+    #    # because it's alleged bloat.
+    #    self.url_map.append((url, func, kwargs))
 
-    def _load_template(self, tmpl_name):
-        if self.template_loader is None:
-            import utemplate.source
-            self.template_loader = utemplate.source.Loader(self.pkg, "templates")
-        return self.template_loader.load(tmpl_name)
+    #def _load_template(self, tmpl_name):
+    #    if self.template_loader is None:
+    #        import utemplate.source
+    #        self.template_loader = utemplate.source.Loader(self.pkg, "templates")
+    #    return self.template_loader.load(tmpl_name)
 
-    def render_template(self, writer, tmpl_name, args=()):
-        tmpl = self._load_template(tmpl_name)
-        for s in tmpl(*args):
-            yield from writer.awrite(s)
+    #def render_template(self, writer, tmpl_name, args=()):
+    #    tmpl = self._load_template(tmpl_name)
+    #    for s in tmpl(*args):
+    #        yield from writer.awrite(s)
 
-    def render_str(self, tmpl_name, args=()):
-        #TODO: bloat
-        tmpl = self._load_template(tmpl_name)
-        return ''.join(tmpl(*args))
+    #def render_str(self, tmpl_name, args=()):
+    #    #TODO: bloat
+    #    tmpl = self._load_template(tmpl_name)
+    #    return ''.join(tmpl(*args))
 
-    def sendfile(self, writer, fname, content_type=None):
-        if not content_type:
-            content_type = get_mime_type(fname)
-        try:
-            with pkg_resources.resource_stream(self.pkg, fname) as f:
-                yield from start_response(writer, content_type)
-                yield from sendstream(writer, f)
-        except OSError as e:
-            if e.args[0] == uerrno.ENOENT:
-                yield from http_error(writer, "404")
-            else:
-                raise
+    #def sendfile(self, writer, fname, content_type=None):
+    #    if not content_type:
+    #        content_type = get_mime_type(fname)
+    #    try:
+    #        with pkg_resources.resource_stream(self.pkg, fname) as f:
+    #            yield from start_response(writer, content_type)
+    #            yield from sendstream(writer, f)
+    #    except OSError as e:
+    #        if e.args[0] == uerrno.ENOENT:
+    #            yield from http_error(writer, "404")
+    #        else:
+    #            raise
 
-    def handle_static(self, req, resp):
-        path = req.url_match.group(1)
-        print(path)
-        if ".." in path:
-            yield from http_error(resp, "403")
-            return
-        yield from self.sendfile(resp, path)
+    #def handle_static(self, req, resp):
+    #    path = req.url_match.group(1)
+    #    print(path)
+    #    if ".." in path:
+    #        yield from http_error(resp, "403")
+    #        return
+    #    yield from self.sendfile(resp, path)
 
     def init(self):
         """Initialize a web application. This is for overriding by subclasses.

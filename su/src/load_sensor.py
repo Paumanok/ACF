@@ -18,6 +18,7 @@ class LoadSensor:
             raise("Hardware malfunction sck is not changing value")
         self.__offset = 0
         self.calibrate()
+        self.calibrate()
 
     # Get 24 bit weight value
     def getValue(self):

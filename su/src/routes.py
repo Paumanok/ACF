@@ -1,4 +1,4 @@
-import picoweb as pw
+import picoweb
 import ujson as uj
 
 json_content = b'application/json'

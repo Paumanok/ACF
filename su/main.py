@@ -1,3 +1,9 @@
+import utime
+# Debug sleep for when using RX TX as gpio for rfid
+# since the repl won't be availble after being
+# reconfigured
+utime.sleep(5)
+
 import mfrc522
 import picoweb
 import load_sensor
@@ -13,11 +19,11 @@ r = routes.Route(db)
 
 cr = c.Coroutines(db)
 
-while cr.net.isConnected() == False:
-    pass
-
 funcs = [cr.networkRoutine]
 
 app = picoweb.WebApp(__name__,r.ROUTES)
+
+while cr.net.isConnected() == False:
+    pass
 
 app.run(debug=True, host=cr.net.wlan.ifconfig()[0], func_list=funcs)
