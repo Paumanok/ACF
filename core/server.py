@@ -7,7 +7,6 @@ from flask import Flask, Response, request
 from database_manager import dbm
 from bson import objectid
 from bson.json_util import dumps
-from config import *
 import sys
 import hashlib
 from queue import *
