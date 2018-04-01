@@ -41,7 +41,7 @@ $(OBJDIR)/%.mpy: $(SRCDIR)/%.py
 # Upload function
 # Upload all byte code files
 load:
-	@echo Loading
+	@echo Loading dependencies
 	@for file in $(OBJ) ; do \
 		$(UL) $(UF) put $$file ; \
 		sync ; \
@@ -49,8 +49,9 @@ load:
 	done
 	@echo Done
 
+# Upload all python scripts not including main
 loadpy:
-	@echo Loading
+	@echo Loading dependencies
 	@for file in $(SRC) ; do \
 		$(UL) $(UF) put $$file ; \
 		sync ; \
@@ -61,12 +62,6 @@ loadpy:
 # Upload main python script
 loadmain:
 	$(UL) $(UF) put main.py
-
-loadlib:
-	$(UL) $(UF) put $(OBJDIR)/lib
-
-loadlibpy:
-	$(UL) $(UF) put $(SRCDIR)/lib
 
 # Remove byte code
 rmbulk:
@@ -87,14 +82,21 @@ rmbulkpy:
 	@echo Done
 
 # ampy helper functions
+# all ones requiring input require it being declared when running make
+# i.e. : make esprm input=<somefile>.py
+
+# List files on board
 espls:
 	$(UL) $(UF) ls
 
+# Upload a file
 espput:
 	$(UL) $(UF) put $(input)
 
+# Print contents of file on board
 espget:
 	$(UL) $(UF) get $(input)
 
+# Remove file on boar
 esprm:
 	$(UL) $(UF) rm $(input)
