@@ -23,17 +23,21 @@ def do_read( rdr ):
             if rdr.select_tag(raw_uid) == rdr.OK:
 
                 key = [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]
-                
+
                 auth = rdr.auth(rdr.AUTHENT1A, 8, key, raw_uid)
                 if auth == rdr.OK:
                     tag = rdr.read(8)
                     #print("Address 8 data: %s" % rdr.read(8))
                     rdr.stop_crypto1()
-                    return (auth,tag) 
+
+                    uid_string = ""
+                    for i in tag:
+                        uid_string += str(hex(i)[2:])
+                    return (auth,"0x" + uid_string)
                 else:
-                    return(rdr.NOTAGERR, None)
+                    return (rdr.NOTAGERR, None)
             else:
-                    return (rdr.ERR, None)
+                return (rdr.ERR, None)
 
 class Coroutines:
     def __init__(self,db):
@@ -74,7 +78,7 @@ class Coroutines:
                     self.pet_detected = False
             elif self.key_verified == False:
                 self.pet_detected = False
-            
+
             if self.pet_detected == True:
                 (b, serv) = self.net.canIFeed(tag,)
                 self.feed = b
@@ -88,7 +92,7 @@ class Coroutines:
                 wt = self.load.getGram(1)
                 if self.base_wt == None:
                    self.base_wt = wt
-                
+
                 if self.feed_wt <= wt:
                     self.net.petFed(tag,key,self.base_wt)
                     self.feed = False

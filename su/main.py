@@ -15,9 +15,9 @@ import routes
 
 db = tinyDB.TinyDB()
 
-r = routes.Route(db)
-
 cr = c.Coroutines(db)
+
+r = routes.Route(db,cr)
 
 funcs = [cr.networkRoutine]
 

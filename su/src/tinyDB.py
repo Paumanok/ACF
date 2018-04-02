@@ -17,3 +17,10 @@ class TinyDB:
     def setKey(self, key):
         self.db[b"key"] = key
         self.db.flush()
+
+    def getCalib(self):
+        return self.db[b"calib"]
+
+    def setCalib(self, calib):
+        self.db[b"calib"] = calib
+        self.db.flush()

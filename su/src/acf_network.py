@@ -34,17 +34,21 @@ class acf_network:
         return b
 
     def getNewKey(self):
-        resp = r.post('http://'+self.wlan.ifconfig()[2]+":5000/sfeeder/config", json = {'id':esp.flash_id(), 'key': newkey_key}, headers={'Content-Type':'application/json'})
+        resp = r.post('http://'+self.wlan.ifconfig()[2]+':5000/sfeeder/config', json = {'id':esp.flash_id(), 'key': newkey_key}, headers={'Content-Type':'application/json'})
         b = resp.json()['bool']
         key = resp.json()['key']
         return (b, key)
 
-    def canIFeed(self, tag, key):
-        resp = r.post()
+    def canIFeed(self, key, tag):
+        resp = r.get('http://'+self.wlan.ifconfig()[2]+':5000/sfeeder/feed', json = {'key':key, 'tag':tag }, headers={'Content-Type':'application/json'})
         b = resp.json()['bool']
-        serv = res.json()['serv']
-        return (b,serv)
+        if b:
+            serv = resp.json()['serv']
+        else:
+            serv = None
+        return serv
 
-    def petFed(self, tag, key, base_wt):
-        resp = r.post()
+    def petFed(self, key, tag, base_wt):
+        resp = r.post('http://'+self.wlan.ifconfig()[2]+':5000/sfeeder/feed', json = {'key':key, 'tag':tag, 'base_wt':base_wt}, headers={'Content-Type':'application/json'})
+        return
 
