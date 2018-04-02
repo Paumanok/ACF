@@ -1,5 +1,5 @@
 import RPi.GPIO as rg
-
+import time
 rg.setmode(rg.BCM)
 
 class Motor:
@@ -41,3 +41,10 @@ class Motor:
 
     def driveOff(self):
         self.drive.stop()
+
+    def driveFor(self, seconds):
+        start_time = time.time()
+        self.driveOn()
+        while time.time() != start_time + seconds:
+            time.sleep(.1)
+        self.driveOff()
