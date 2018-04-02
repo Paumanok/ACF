@@ -1,9 +1,10 @@
-#application server for running servos and junk
+#application server for running stepper and junk
 #author: matthew smith
 import time
 import datetime
 import sys
 import signal
+import threading
 from database_manager import dbm
 from bson import objectid
 from easydriver/easydriver_py import Motor
@@ -15,8 +16,10 @@ class app_serv():
 
     def __init__(self, queue):
         self.rfid_queue = queue
+        self.weighing = False
         self.motor = Motor(m1, m2, dir, step)
         self.load_sensor = LoadSensor()
+        self.load_sensor.calibrate() #set it up
 
     def print_queue(self):
         while True:
@@ -38,7 +41,7 @@ class app_serv():
                 pet = pets.find_one({"tag_id":uid_string})
                 if pet is not None:
                     if check_time(pet):
-                        #feed
+                        self.feed(pet)
                     else:
                         pass
 
@@ -56,17 +59,23 @@ class app_serv():
                         return True
         return False
 
-    def feed(self, pet);
-        #here we're going to use the easy driver and load sensor in unison
-        #create queue of weight readings
-        #loop load reading in second thread
-        #while amount < allowed_amount:
-        #run motor
-        #kill load sensor reading thread
+    def feed(self, pet):
+        weight_queue = Queue()#queue for holding weights from different thread
+        self.weighing = True #flag for weigh_while
+        food_amt = pet["food_quantity"] #get allowed amount
+        #start weigh_while thread
+        threading.Thread(target = self.weigh_while, args = weight_queue).start()
+        cur_weight = weight_queue.get()#get first weight
+        self.motor.driveOn()
+        while cur_weight < food_amt:
+            cur_weight = weight_queue.get()
+        self.motor.driveOff()
+        self.weighing = False #stop weighing thread
+
 
     def weigh_while(self, weight_queue):
-        while True:
-            weight = None#weigh
+        while self.weighing:
+            weight = self.load_sensor.getGram()
             weight_queue.add(weight)
             time.sleep(1)
 

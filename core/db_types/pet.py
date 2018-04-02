@@ -4,10 +4,11 @@ class pet:
     #db_id = None
     tag_id = None
 
-    def __init__(self, name, age, weight):
+    def __init__(self, name, age, weight, quantity):
         self.name = name
         self.age = age
         self.weight = weight
+        self.food_quantity = quantity
 
         #this should just be a list of 24hr times that would normally repeat daily
         #kiss: no colon, 4 digit number, 0100 = 1:00 am, 2300 = 11:00pm

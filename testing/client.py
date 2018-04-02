@@ -13,26 +13,27 @@ host_addr = "192.168.10.1:5000"
 new_cat = {"name":"bucky", "age":3, "weight": 10, "feed_times" : []}
 
 #here i'm using my pets db type and converting it to a dict
-cat1 = pet("sniffles", 5, 25).__dict__
-cat2 = pet("fluff", 2, 15).__dict__
-cat3 = pet("mango", 4, 12).__dict__
+cat1 = pet("sniffles", 5, 25, 50).__dict__
+cat2 = pet("fluff", 2, 15, 50).__dict__
+cat3 = pet("mango", 4, 12, 50).__dict__
 
 
-def request_pet_info():
-    r = requests.get("http://" + host_addr + "/pets/name/fluff")
+def request_pet_info(thecat):
+    name = thecat["name"]
+    r = requests.get("http://" + host_addr + "/pets/name/"+ name)
     print(r.status_code)
 
     print(r.json())
 
 
-def insert_pet():
-    cat = cat2
+def insert_pet(thecat):
+    cat = thecat
     r = requests.post( "http://" + host_addr + "/pets/name/"+ cat["name"], json = cat )
     print(r.status_code)
     #print(r.json())
 
-def config_tag():
-    cat = cat2
+def config_tag(thecat):
+    cat = thecat
     r =  requests.get("http://" + host_addr +"/rfid_config/" + cat["name"])
     print(r.status_code)
 
@@ -41,8 +42,10 @@ def get_all_pets():
     print(r.json())
 
 if __name__ == "__main__":
-    #insert_pet()
-    #request_pet_info()
-    #config_tag()
-    #request_pet_info()
+    cats = [cat1, cat2, cat3]
+    for cat in cats:
+        insert_pet(cat)
+        request_pet_info(cat)
+    config_tag(cat1)
+    request_pet_info(cat1)
     get_all_pets()
