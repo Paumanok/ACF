@@ -3,14 +3,14 @@ import RPi.GPIO as rg
 rg.setmode(rg.BCM)
 
 class DTPin:
-    def __init__(self, pin=16):
+    def __init__(self, pin=19):
         self.dt = pin
         rg.setup(pin, rg.IN)
     def value(self):
         return rg.input(self.dt)
 
 class SCKPin:
-    def __init__(self, pin=20):
+    def __init__(self, pin=26):
         self.sck = pin
         rg.setup(pin, rg.OUT)
     def on(self):

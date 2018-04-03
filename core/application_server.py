@@ -13,14 +13,16 @@ from hx711/load_sensor import LoadSensor
 class app_serv():
 
     num_to_day = {0:"M", 1:"T", 2:"W", 3:"R", 4:"F", 5:"S", 6:"U"}
+    mp = {"m1":17, "m2":27, "dir":18, "step":23} #motor pins
 
     def __init__(self, queue):
         self.rfid_queue = queue
         self.weighing = False
-        self.motor = Motor(m1, m2, dir, step)
+        self.motor = Motor(mp["m1"], mp["m2"], mp["dir"], mp["step"])
         self.load_sensor = LoadSensor()
         self.load_sensor.calibrate() #set it up
 
+    #tests functionality of inter-thread command queue
     def print_queue(self):
         while True:
             if self.rfid_queue.empty():
@@ -45,7 +47,8 @@ class app_serv():
                     else:
                         pass
 
-
+    #check time: logic to see if current time is between one of
+    #allowed time tuples
     def check_time(self, pet):
         #check the time and see if it's cool to feed
         cur_time = int(time.strftime("%l%M"))
@@ -59,6 +62,10 @@ class app_serv():
                         return True
         return False
 
+    #feed: initializes weighing loop in second thread and checks
+    #the weighing status as more food is added.
+    #stops motors when desired amount is reached
+    #param: pet--pet dictionary pulled from database
     def feed(self, pet):
         weight_queue = Queue()#queue for holding weights from different thread
         self.weighing = True #flag for weigh_while
@@ -73,12 +80,15 @@ class app_serv():
         self.weighing = False #stop weighing thread
 
 
+    #weigh_while: loops while weighing flag = true
     def weigh_while(self, weight_queue):
         while self.weighing:
             weight = self.load_sensor.getGram()
             weight_queue.add(weight)
             time.sleep(1)
 
+    #convert_string: converts a list of 16 hex digits into a
+    #single 16 byte hex string for use in db entry
     def convert_string(self, uid_list):
         uid_string = ""
         for i in uid_list:
