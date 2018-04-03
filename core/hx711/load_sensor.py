@@ -1,8 +1,8 @@
 import os
 if os.__name__ == 'uos':
-    from hx711_esp_pin import DTPin, SCKPin
+    from hx711.hx711_esp_pin import DTPin, SCKPin
 else :
-    from hx711_pi_pin import DTPin, SCKPin
+    from hx711.hx711_pi_pin import DTPin, SCKPin
 
 # Gram Conversion Value
 scale = 743.0

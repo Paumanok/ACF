@@ -1,21 +1,21 @@
 #application server for running stepper and junk
 #author: matthew smith
 import time
-import datetime
+from datetime import datetime
 import sys
 import signal
 import threading
+from queue import *
 from database_manager import dbm
 from bson import objectid
-from easydriver/easydriver_py import Motor
-from hx711/load_sensor import LoadSensor
-
+from easydriver.easydriver_pi import Motor
+from hx711.load_sensor import LoadSensor
 class app_serv():
 
     num_to_day = {0:"M", 1:"T", 2:"W", 3:"R", 4:"F", 5:"S", 6:"U"}
-    mp = {"m1":17, "m2":27, "dir":18, "step":23} #motor pins
 
     def __init__(self, queue):
+        mp = {"m1":11, "m2":13, "dir":12, "step":16} #motor pins
         self.rfid_queue = queue
         self.weighing = False
         self.motor = Motor(mp["m1"], mp["m2"], mp["dir"], mp["step"])
@@ -42,8 +42,10 @@ class app_serv():
                 uid_string = self.convert_string(uid_list)
                 pet = pets.find_one({"tag_id":uid_string})
                 if pet is not None:
-                    if check_time(pet):
+                    if self.check_time(pet):
+                        print("feeding")
                         self.feed(pet)
+
                     else:
                         pass
 
@@ -52,14 +54,14 @@ class app_serv():
     def check_time(self, pet):
         #check the time and see if it's cool to feed
         cur_time = int(time.strftime("%l%M"))
-        today = num_to_day[datetime.today().weekday()]
+        today = self.num_to_day[datetime.today().weekday()]
         feed_times = pet["feed_times"]
-        for t in feed_times[today]
+        for t in feed_times[today]:
             if len(t) > 0:
-                for i in val:
-                    #if current time is within feedtime bracket
-                    if cur_time >= i[0] and cur_time <= i[1]:
-                        return True
+                print(t)
+                #if current time is within feedtime bracket
+                if cur_time >= t[0] and cur_time <= t[1]:
+                    return True
         return False
 
     #feed: initializes weighing loop in second thread and checks
@@ -71,7 +73,7 @@ class app_serv():
         self.weighing = True #flag for weigh_while
         food_amt = pet["food_quantity"] #get allowed amount
         #start weigh_while thread
-        threading.Thread(target = self.weigh_while, args = weight_queue).start()
+        threading.Thread(target = self.weigh_while, args = [weight_queue]).start()
         cur_weight = weight_queue.get()#get first weight
         self.motor.driveOn()
         while cur_weight < food_amt:
@@ -84,7 +86,7 @@ class app_serv():
     def weigh_while(self, weight_queue):
         while self.weighing:
             weight = self.load_sensor.getGram()
-            weight_queue.add(weight)
+            weight_queue.put(weight)
             time.sleep(1)
 
     #convert_string: converts a list of 16 hex digits into a

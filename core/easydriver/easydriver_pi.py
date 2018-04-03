@@ -1,5 +1,5 @@
 import RPi.GPIO as rg
-rg.setmode(rg.BCM)
+rg.setmode(rg.BOARD)
 
 class Motor:
     def __init__(self, m1, m2, dir, step, freq=50, duty=0):

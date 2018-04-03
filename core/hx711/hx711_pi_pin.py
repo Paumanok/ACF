@@ -1,16 +1,16 @@
 import RPi.GPIO as rg
 
-rg.setmode(rg.BCM)
+rg.setmode(rg.BOARD)
 
 class DTPin:
-    def __init__(self, pin=19):
+    def __init__(self, pin=35):
         self.dt = pin
         rg.setup(pin, rg.IN)
     def value(self):
         return rg.input(self.dt)
 
 class SCKPin:
-    def __init__(self, pin=26):
+    def __init__(self, pin=37):
         self.sck = pin
         rg.setup(pin, rg.OUT)
     def on(self):
