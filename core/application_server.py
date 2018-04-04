@@ -19,6 +19,8 @@ class app_serv():
         self.rfid_queue = queue
         self.weighing = False
         self.motor = Motor(mp["m1"], mp["m2"], mp["dir"], mp["step"])
+        self.motor.setFreq(400)
+        self.motor.setDuty(50)
         self.load_sensor = LoadSensor()
         self.load_sensor.calibrate() #set it up
 
@@ -40,9 +42,12 @@ class app_serv():
             else:
                 uid_list = self.rfid_queue.get(True)
                 uid_string = self.convert_string(uid_list)
+                print(uid_string)
                 pet = pets.find_one({"tag_id":uid_string})
                 if pet is not None:
+                    print(pet["name"])
                     if self.check_time(pet):
+                        print("uid: "+ uid_string)
                         print("feeding")
                         self.feed(pet)
 
@@ -80,6 +85,7 @@ class app_serv():
             cur_weight = weight_queue.get()
         self.motor.driveOff()
         self.weighing = False #stop weighing thread
+        print("finished feeding")
 
 
     #weigh_while: loops while weighing flag = true
