@@ -5,13 +5,13 @@ from machine import Pin, freq
 freq(160000000)
 
 class DTPin:
-    def __init__(self, pin=4):
+    def __init__(self, pin=5):
         self.dt = Pin(pin, Pin.IN)
     def value(self):
         return self.dt.value()
 
 class SCKPin:
-    def __init__(self, pin=5):
+    def __init__(self, pin=16):
         self.sck = Pin(pin, Pin.OUT)
     def on(self):
         self.sck.value(1)

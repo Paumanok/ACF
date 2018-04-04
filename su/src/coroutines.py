@@ -24,9 +24,9 @@ def do_read( rdr ):
 
                 key = [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]
 
-                auth = rdr.auth(rdr.AUTHENT1A, 8, key, raw_uid)
+                auth = rdr.auth(rdr.AUTHENT1A, 9, key, raw_uid)
                 if auth == rdr.OK:
-                    tag = rdr.read(8)
+                    tag = rdr.read(9)
                     #print("Address 8 data: %s" % rdr.read(8))
                     rdr.stop_crypto1()
 
@@ -43,8 +43,8 @@ class Coroutines:
     def __init__(self,db):
         self.db = db
         self.net = a.acf_network(DEBUG=True)
-        self.rfid = r.MFRC522(2,16,spiblk=1)
-        self.motor = ed.Motor(None,None,0,15,500,50)
+        self.rfid = r.MFRC522(2,15,spiblk=1)
+        self.motor = ed.Motor(None,None,0,4,500,50)
         self.load = ls.LoadSensor()
         self.key_verified = False
         self.pet_detected = False
