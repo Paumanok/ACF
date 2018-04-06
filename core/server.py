@@ -10,6 +10,7 @@ from bson.json_util import dumps
 import sys
 import hashlib
 from queue import *
+from util import can_pet_feed
 
 app =  Flask("ACF")
 
@@ -84,7 +85,6 @@ def pet(pet_name):
         pass
     return resp
 
-
 @app.route('/sfeeder/config', methods = ['GET','POST'])
 def feeder_config():
     feeders = dbm().feeders
@@ -108,13 +108,12 @@ def feeder_config():
 
                 ip = request.environ['REMOTE_ADDR']
 
-                #sha.update(data['id'])
-                #newkey = str(sha.digest())
                 newkey = str(data['id'] * 31)
-                feeder_js = {"id":data['id'], "key":newkey, "ip":ip}
+                feeder_id = available_id()
+                feeder_js = {"id":feeder_id, "key":newkey, "ip":ip}
 
-                if feeders.find({"id":data['id']}).count() > 0:
-                    feeders.update_one({"id":data['id']},{"$set":feeder_js})
+                if feeders.find({"key":newkey}).count() > 0:
+                    feeders.update_one({"key":newkey},{"$set":feeder_js})
                 else:
                     feeders.insert_one(feeder_js)
 
@@ -123,6 +122,41 @@ def feeder_config():
                 resp_js_str = dumps({"bool":False, "key":""})
 
             resp = Response(resp_js_str, status = 200, mimetype = 'application/json')
+
+    return resp
+
+NULL_WEIGHT = -1
+KEY_INVALID = -1
+NO_FEED = 0
+@app.route('/sfeeder/feed', methods = ['GET','POST'])
+def feed_permission():
+    feedlog = dbm().feedlog
+    feeders = dbm().feeders
+    pets = dmb().pets
+    resp = resp501
+    if request.method == 'GET':
+        if request.headers['Content-Type'] == 'application/json':
+            data = request.json
+            entry = feeder.find_one({"key":data["key"]})
+            if entry is not None:
+                print(data, file=sys.stderr)
+                print("feeder entry: ", entry, file = sys.stderr)
+                    # If valid feed intial feedlog time is stored
+                    if can_pet_feed(data["tag_uid"],entry["id"]):
+                        feed = pets["tag_uid"]["food_quantity"]
+                        resp = Response(dumps({"feed":feed}), status=200, mimetype='application/json')
+            else :
+                resp = Response(dumps({"feed":NO_FEED}), status=200, mimetype='application/json')
+
+            resp = Response(dumps({"feed":KEY_INVALID}), status=200, mimetype='application/json')
+    elif request.method == 'POST':
+        if request.headers['Content-Type'] == 'application/json':
+            data = request.json
+            entry = feeder.find_one({"key":data["key"]})
+            if entry is not None:
+                # store base weight of bowl
+                feedlog.update_one({"name":pet_name,"base_wt":NULL_WAIT}, {"$set":{"base_wt":data["base_wt"]}})
+                resp = resp200
 
     return resp
 
@@ -171,7 +205,7 @@ def rfid_tag_config(pet_name):
     if pets.find({"name":pet_name}).count() > 0:
         name = pet_name
         weight = pets.find_one({"name":pet_name})['weight']
-        #
+
         if len(name) > 16:
             name = name[:16]
         uid = 0

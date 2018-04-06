@@ -20,6 +20,10 @@ class dbm:
         self.feedlogs = self.db['feedlogs']
         self.feeders = self.db['feeders']
 
+
+    def canFeed(self, tag):
+        
+
     #DO WE NEED THESE HELPERS ANYMORE?
 
     #insert will check for a name and replace instead of insert if cat
