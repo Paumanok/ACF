@@ -3,6 +3,8 @@ import esp
 import network
 
 newkey_key = "CanIHasCheezeburger"
+KEYINVALID = -1
+NOFEED=0
 
 class acf_network:
     def __init__(self,DEBUG=False):
@@ -40,15 +42,11 @@ class acf_network:
         return (b, key)
 
     def canIFeed(self, key, tag):
-        resp = r.get('http://'+self.wlan.ifconfig()[2]+':5000/sfeeder/feed', json = {'key':key, 'tag':tag }, headers={'Content-Type':'application/json'})
-        b = resp.json()['bool']
-        if b:
-            serv = resp.json()['serv']
-        else:
-            serv = None
-        return serv
+        resp = r.get('http://'+self.wlan.ifconfig()[2]+':5000/sfeeder/feed', json = {'key':key, 'tag_id':tag }, headers={'Content-Type':'application/json'})
+        feed = resp.json()['feed']
+        return feed
 
     def petFed(self, key, tag, base_wt):
-        resp = r.post('http://'+self.wlan.ifconfig()[2]+':5000/sfeeder/feed', json = {'key':key, 'tag':tag, 'base_wt':base_wt}, headers={'Content-Type':'application/json'})
+        resp = r.post('http://'+self.wlan.ifconfig()[2]+':5000/sfeeder/feed', json = {'key':key, 'tag_id':tag, 'base_wt':base_wt}, headers={'Content-Type':'application/json'})
         return
 

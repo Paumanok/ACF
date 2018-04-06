@@ -6,6 +6,8 @@ import easydriver_esp as ed
 
 import network
 
+KEYINVALID = -1
+NOFEED=0
 
 def do_read( rdr ):
     (stat, tag_type) = rdr.request(rdr.REQIDL)
@@ -15,10 +17,6 @@ def do_read( rdr ):
         (stat, raw_uid) = rdr.anticoll()
 
         if stat == rdr.OK:
-            #print("New card detected")
-            #print("  - tag type: 0x%02x" % tag_type)
-            #print("  - uid     : 0x%02x%02x%02x%02x" % (raw_uid[0], raw_uid[1], raw_uid[2], raw_uid[3]))
-            #print("")
 
             if rdr.select_tag(raw_uid) == rdr.OK:
 
@@ -27,7 +25,6 @@ def do_read( rdr ):
                 auth = rdr.auth(rdr.AUTHENT1A, 9, key, raw_uid)
                 if auth == rdr.OK:
                     tag = rdr.read(9)
-                    #print("Address 8 data: %s" % rdr.read(8))
                     rdr.stop_crypto1()
 
                     uid_string = ""
@@ -80,20 +77,22 @@ class Coroutines:
                 self.pet_detected = False
 
             if self.pet_detected == True:
-                (b, serv) = self.net.canIFeed(tag,)
-                self.feed = b
-                if b:
-                    self.feed_wt = serv * .95
+                val = self.net.canIFeed(tag,)
+                if val == KEYINVALID:
+                    self.key_verified = False
+                elif val > NOFEED:
+                    self.feed = True
+                    self.feed_wt = val
+                    self.motor.driveOn()
 
     async def dispenseRoutine(self):
         while True:
             await asyncio.sleep(.5)
             if self.feed == True:
-                wt = self.load.getGram(1)
                 if self.base_wt == None:
-                   self.base_wt = wt
+                   self.base_wt = self.load.getGram()
 
-                if self.feed_wt <= wt:
+                if self.loadIsValid(self.feed_wt):
                     self.net.petFed(tag,key,self.base_wt)
                     self.feed = False
                     self.base_wt = None
