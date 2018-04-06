@@ -39,7 +39,6 @@ class LoadSensor:
         for bval in self.buf:
             if lf(bval):
                 cnt += 1
-        print(cnt,valid_buf_cnt)
         return cnt == valid_buf_cnt
 
     def __buf_avg__(self, lf):
