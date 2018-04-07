@@ -141,10 +141,10 @@ def feed_permission():
             if entry is not None:
                 print(data, file=sys.stderr)
                 print("feeder entry: ", entry, file = sys.stderr)
-                    # If valid feed intial feedlog time is stored
-                    if can_pet_feed(data["tag_uid"],entry["id"]):
-                        feed = pets["tag_uid"]["food_quantity"]
-                        resp = Response(dumps({"feed":feed}), status=200, mimetype='application/json')
+                # If valid feed intial feedlog time is stored
+                if can_pet_feed(data["tag_uid"],entry["id"]):
+                    feed = pets["tag_uid"]["food_quantity"]
+                    resp = Response(dumps({"feed":feed}), status=200, mimetype='application/json')
             else :
                 resp = Response(dumps({"feed":NO_FEED}), status=200, mimetype='application/json')
 
