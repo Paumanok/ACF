@@ -10,7 +10,10 @@ from bson.json_util import dumps
 import sys
 import hashlib
 from queue import *
-from util import can_pet_feed
+from util import can_pet_feed, available_id
+from db_types.pet import pet
+from db_types.feedlog import feedlog
+
 
 app =  Flask("ACF")
 

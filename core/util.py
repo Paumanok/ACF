@@ -25,7 +25,7 @@ def can_pet_feed( uid_string, f_id):
                 print(t)
                 #if current time is within feedtime bracket
                 if cur_time >= t[0] and cur_time <= t[1]:
-                    db.feedlogs.insert_one({"name":pet["name"],"feed_time":cur_time, "base_wt":NULL_WEIGHT})
+                    db.feedlogs.insert_one({"name":pet["name"],"datetime":cur_time, "base_wt":NULL_WEIGHT})
                     return True
     return False
 
