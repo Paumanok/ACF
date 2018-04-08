@@ -19,7 +19,7 @@ class app_serv():
         self.rfid_queue = queue
         self.weighing = False
         self.motor = Motor(mp["m1"], mp["m2"], mp["dir"], mp["step"])
-        self.motor.setFreq(400)
+        self.motor.setFreq(800)
         self.motor.setDuty(50)
         self.load_sensor = LoadSensor()
         self.load_sensor.calibrate() #set it up
@@ -83,6 +83,7 @@ class app_serv():
         self.motor.driveOn()
         while cur_weight < food_amt:
             cur_weight = weight_queue.get()
+            print(cur_weight)
         self.motor.driveOff()
         self.weighing = False #stop weighing thread
         print("finished feeding")
@@ -91,7 +92,11 @@ class app_serv():
     #weigh_while: loops while weighing flag = true
     def weigh_while(self, weight_queue):
         while self.weighing:
+            weight = 0.0
             weight = self.load_sensor.getGram()
+            #for i in range(5):
+             #   weight += self.load_sensor.getGram()
+                #time.sleep(.1)
             weight_queue.put(weight)
             time.sleep(1)
 
