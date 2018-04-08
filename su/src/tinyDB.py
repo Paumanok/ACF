@@ -1,52 +1,45 @@
-import btree
-from gc import collect, mem_free
+import gc
 
 dbname="tiny.db"
-key=b"key"
-calib=b"calib"
 wb="w+b"
+rb="r+b"
+split=b':'
 
-def __write__(k,val):
-    collect()
-    file = open(dbname,wb)
-    db = btree.open(file)
-    db[k] = val 
-    __clean__(db,file)
+def __read__():
+    file = open(dbname, rb)
+    vals = file.read().split(b':')
+    file.close()
+    gc.collect()
+    return vals
 
-def __clean__(d,f):
-    d.flush()
-    d.close()
-    f.close()
-    collect()
+def __write__(v):
+    file = open(dbname, wb)
+    file.write(split.join(v))
+    file.close()
+    gc.collect()
 
 class TinyDB:
     def __init__(self):
         try:
-            file = open(dbname, "r+b")
-            db = btree.open(file)
-            self.key = db[key]
-            self.calib = db[calib]
-            __clean__(db,file)
+            self.vals = __read__()
 
         except OSError:
             file = open(dbname, wb)
-            db = btree.open(file)
-            self.key = ""
-            self.calib = ""
-            db[key] = self.key
-            db[calib] = self.calib
-            __clean__(db,file)
+            self.vals = [b'0',b'0']
+            file.write(b'0:0')
+            file.close()
+            gc.collect()
 
     def getKey(self):
-        return self.key
+        return self.vals[0]
 
     def setKey(self, val):
-        self.key = val
-        __write__(key,val)
+        self.vals[0] = val
+        __write__(self.vals)
 
     def getCalib(self):
-        return self.calib
+        return self.vals[1]
 
     def setCalib(self, val):
-        self.calib=val
-        __write__(calib,val)
+        self.vals[1]=val
+        __write__(self.vals)

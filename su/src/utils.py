@@ -18,7 +18,3 @@ def parse_qs(s):
             else:
                 res[vals[0]] = [vals[1]]
     return res
-
-#print(unquote("foo"))
-#print(unquote("fo%41o+bar"))
-

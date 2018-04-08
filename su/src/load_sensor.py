@@ -9,8 +9,19 @@ from array import array
 scale = 743.0
 # reading buffer size
 buffer_size = 10
-valid_buf_cnt = int(buffer_size * .8)
+valid_buf_cnt = 7
 readtolerance = 100
+
+# caliCheck :: int -> bool
+caliCheck = lambda x: abst(x,readtolerance)
+# loadCheck :: int -> (int -> bool)
+loadCheck = lambda t: lambda x: gte(x,t)
+# ltt :: int -> int -> bool
+gte = lambda x,t: x >= t
+# absdt :: int -> int -> int -> bool
+absdt = lambda x1,x2,t: abs(x1 - x2) < t
+# abst :: int -> int -> bool
+abst = lambda x,t: abs(x) < t
 
 class LoadSensor:
     def __init__(self):
@@ -36,17 +47,10 @@ class LoadSensor:
 
     def __buf_check__(self, lf):
         cnt = 0
-        for bval in self.buf:
-            if lf(bval):
+        for val in self.buf:
+            if lf(val):
                 cnt += 1
-        return cnt == valid_buf_cnt
-
-    def __buf_avg__(self, lf):
-        total = 0
-        for bval in self.buf:
-            if lf(bval):
-                total += bval
-        return int(bval/buffer_size)
+        return cnt >= valid_buf_cnt
 
     def __buf_load__(self):
         for i in range(buffer_size):
@@ -61,7 +65,7 @@ class LoadSensor:
             if difl < readtolerance and difr < readtolerance:
                 cnt += 1
                 sum += self.buf[i-1]
-        if cnt == valid_buf_cnt:
+        if cnt >= valid_buf_cnt:
             return sum/cnt
         return None
 
@@ -92,7 +96,6 @@ class LoadSensor:
         while cnt > 0:
             sum += self.getValue()
             cnt -= 1
-
         return sum / avg_cnt
 
     def gramToLoadVal(self, weight):
@@ -118,9 +121,9 @@ class LoadSensor:
 
     def calibrate(self,avg_cnt=5):
         self.__offset = int(self.getAvgValue(avg_cnt))
-        # Checks to see if 80% of the buffer values are within the
+        # Checks to see if 70% of the buffer values are within the
         # tolerable offset of 100 before gram conversion. Most values
         # seem to fall within this tolerance which equates to about a
         # .13 Gram offset from the 0 reading
-        while self.isLoadValid(lambda x: abs(x)<readtolerance) == False:
+        while self.isLoadValid(caliCheck) == False:
             self.__offset = int(self.getAvgValue(avg_cnt))

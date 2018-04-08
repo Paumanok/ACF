@@ -4,10 +4,7 @@ import utime
 # reconfigured
 utime.sleep(5)
 
-import mfrc522
 import picoweb
-import load_sensor
-import easydriver_esp
 import acf_network as w
 import coroutines as c
 import tinyDB
@@ -15,11 +12,11 @@ import routes
 
 db = tinyDB.TinyDB()
 
-cr = c.Coroutines(db)
+cr = c.Coroutines(db,DB=True)
 
-r = routes.Route(db,cr)
+r = routes.Routes(db,cr)
 
-funcs = [cr.networkRoutine]
+funcs = [cr.networkRoutine,cr.petRoutine,cr.dispenseRoutine]
 
 app = picoweb.WebApp(__name__,r.ROUTES)
 

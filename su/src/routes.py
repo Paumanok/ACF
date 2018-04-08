@@ -3,7 +3,7 @@ import ujson as uj
 
 json_content = b'application/json'
 
-class Route:
+class Routes:
     def __init__(self,db,cr):
         self.ROUTES = [
                  ("/calibrate",self.calibrate),
@@ -13,11 +13,11 @@ class Route:
         # Coroutine object reference for state variables
         self.cr = cr
 
-
     def calibrate(req, resp):
         if req.method == "GET":
             yield from picoweb.start_response(resp, content_type=json_content)
-            self.cr.load.calibrate(5)
+            self.cr.load.calibrate()
+            self.db.setCalib(str(self.cr.__offset).encode('utf-8'))
             yield from resp.awrite("{'calib': True}")
 
         else:
