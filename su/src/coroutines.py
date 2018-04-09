@@ -35,9 +35,9 @@ def do_read( rdr ):
     return (rdr.ERR, None)
 
 class Coroutines:
-    def __init__(self,db,DB=False):
+    def __init__(self,db,DBG=False):
         self.db = db
-        self.DEBUG = DB
+        self.DEBUG = DBG
         self.net = a.acf_network(DEBUG=self.DEBUG)
         self.rfid = r.MFRC522(2,15,spiblk=1)
         self.motor = ed.Motor(None,None,0,4,500,50)

@@ -12,7 +12,7 @@ import routes
 
 db = tinyDB.TinyDB()
 
-cr = c.Coroutines(db,DB=True)
+cr = c.Coroutines(db,DBG=True)
 
 r = routes.Routes(db,cr)
 

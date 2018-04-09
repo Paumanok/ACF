@@ -1,9 +1,7 @@
 import urequests as r
 import esp
 import network
-
-SSID=    'ACF'
-SSIDKEY= 'FeedUrKatz'
+import time
 
 newkey_key = "CanIHasCheezeburger"
 KEYINVALID = -1
@@ -11,8 +9,10 @@ NOFEED=0
 RECNT=1000
 
 class acf_network:
-    def __init__(self,DEBUG=False):
+    def __init__(self,DEBUG=False,SSID='ACF',SSIDKEY='FeedUrKatz'):
         self.wlan = network.WLAN(network.STA_IF)
+        self.SSID = SSID
+        self.SSIDKEY = SSIDKEY
         self.wlan.active(True)
         self.connect()
         self.DEBUG = DEBUG
@@ -20,25 +20,29 @@ class acf_network:
         self.recnt = 0
 
     def connect(self):
-        self.wlan.connect(SSID,SSIDKEY)
+        self.wlan.connect(self.SSID,self.SSIDKEY)
 
     def isConnected(self):
         if self.wlan.status() == network.STAT_GOT_IP and self.connected == False:
             self.connected = True
-            if self.DEBUG == True:
-                print("connected")
-                print( self.wlan.ifconfig() )
+            print("connected")
         elif self.wlan.status() != network.STAT_GOT_IP:
             self.connected = False
-            if self.DEBUG == True:
-                if self.recnt < RECNT:
-                    self.recnt+=1
-                else:
-                    self.wlan.disconnect()
-                    self.connect()
-                    self.recnt=0
+            if self.recnt < RECNT:
+                self.recnt+=1
+            else:
+                if self.DEBUG == True:
                     print("Reconnect attempted")
-                print("connection status: ", self.wlan.status())
+                self.wlan.disconnect()
+                time.sleep(5)
+                self.connect()
+                self.recnt=0
+                if self.DEBUG == True:
+                    print("connection status: ", self.wlan.status())
+
+        if(self.DEBUG==True and self.connected == True):
+            print(self.wlan.ifconfig())
+
         return self.connected
 
     # Checks to see if the stored key is valid with the pi server
