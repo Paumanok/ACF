@@ -23,19 +23,19 @@ def can_pet_feed( uid_string, f_id):
         cur_time = int(time.strftime("%l%M"))
         today = num_to_day[datetime.today().weekday()]
         feed_times = pet["feed_times"]
-        feeder_id = pet["f_id"]
+        feeder_id = pet["feeder_id"]
         if feeder_id == 0 or feeder_id == f_id:
             for t in feed_times[today]:
                 if len(t) > 0:
                     print(t)
                     #if current time is within feedtime bracket
                     if cur_time >= t[0] and cur_time <= t[1]:
-                        update_log(pet)
+                        update_log(pet, cur_time)
                         return pet
     return None
 
 #update feed logs
-def update_log(pet):
+def update_log(pet, cur_time):
     if db.feedlogs.find({"name":pet["name"], "base_wt":NULL_WEIGHT}).count() > 0:
         db.feedlogs.update_one({"name":pet["name"], "base_wt":NULL_WEIGHT},{"$set":{"name":pet["name"],"datetime":cur_time, "base_wt":NULL_WEIGHT}})
     else:
