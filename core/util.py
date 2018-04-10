@@ -1,6 +1,7 @@
 import time
 from datetime import datetime
 from database_manager import dbm
+from db_types.pet import pet
 
 num_to_day = {0:"M", 1:"T", 2:"W", 3:"R", 4:"F", 5:"S", 6:"U"}
 
@@ -25,7 +26,10 @@ def can_pet_feed( uid_string, f_id):
                 print(t)
                 #if current time is within feedtime bracket
                 if cur_time >= t[0] and cur_time <= t[1]:
-                    db.feedlogs.insert_one({"name":pet["name"],"datetime":cur_time, "base_wt":NULL_WEIGHT})
+                    if db.feedlogs.find({"name":pet["name"], "base_wt":NULL_WEIGHT}).count() > 0:
+                        db.feedlogs.update_one({"name":pet["name"], "base_wt":NULL_WEIGHT},{"$set":{"name":pet["name"],"datetime":cur_time, "base_wt":NULL_WEIGHT}})
+                    else:
+                        db.feedlogs.insert_one({"name":pet["name"],"datetime":cur_time, "base_wt":NULL_WEIGHT})
                     return True
     return False
 

@@ -133,32 +133,32 @@ KEY_INVALID = -1
 NO_FEED = 0
 @app.route('/sfeeder/feed', methods = ['GET','POST'])
 def feed_permission():
-    feedlog = dbm().feedlog
+    feedlogs = dbm().feedlogs
     feeders = dbm().feeders
-    pets = dmb().pets
+    pets = dbm().pets
     resp = resp501
     if request.method == 'GET':
         if request.headers['Content-Type'] == 'application/json':
             data = request.json
-            entry = feeder.find_one({"key":data["key"]})
+            entry = feeders.find_one({"key":data["key"]})
             if entry is not None:
                 print(data, file=sys.stderr)
                 print("feeder entry: ", entry, file = sys.stderr)
                 # If valid feed intial feedlog time is stored
-                if can_pet_feed(data["tag_uid"],entry["id"]):
-                    feed = pets["tag_uid"]["food_quantity"]
+                if can_pet_feed(data["tag_id"],entry["id"]):
+                    feed = pets.find_one({"tag_id":data["tag_id"]})["food_quantity"]
                     resp = Response(dumps({"feed":feed}), status=200, mimetype='application/json')
-            else :
-                resp = Response(dumps({"feed":NO_FEED}), status=200, mimetype='application/json')
-
-            resp = Response(dumps({"feed":KEY_INVALID}), status=200, mimetype='application/json')
+                else :
+                    resp = Response(dumps({"feed":NO_FEED}), status=200, mimetype='application/json')
+            else:
+                resp = Response(dumps({"feed":KEY_INVALID}), status=200, mimetype='application/json')
     elif request.method == 'POST':
         if request.headers['Content-Type'] == 'application/json':
             data = request.json
-            entry = feeder.find_one({"key":data["key"]})
-            if entry is not None:
+            pet = pets.find_one({"tag_id":data["tag_id"]})
+            if pet is not None:
                 # store base weight of bowl
-                feedlog.update_one({"name":pet_name,"base_wt":NULL_WAIT}, {"$set":{"base_wt":data["base_wt"]}})
+                feedlogs.update_one({"name":pet['name'],"base_wt":NULL_WEIGHT}, {"$set":{"base_wt":data["base_wt"]}})
                 resp = resp200
 
     return resp
@@ -175,15 +175,33 @@ def get_all_pets():
         if pet_cursor.count() > 0:
             for document in pet_cursor:
                 data.append(document)
-            js = dumps(data)
-            resp = Response(js, status=200, mimetype='application/json')
-        else:
-            resp = resp501
+        js = dumps({"petlist":data})
+        resp = Response(js, status=200, mimetype='application/json')
 
     else:
         resp = resp501
 
     return resp
+
+@app.route('/feeders/', methods = ['GET'])
+def get_all_feeders():
+    db = dbm().db
+    feeders = dbm().feeders
+    data = [0]
+    if request.method == 'GET':
+        #return all pets
+        feeder_cursor = feeders.find({})
+        if feeder_cursor.count() > 0:
+            for document in feeder_cursor:
+                data.append(document['id'])
+        js = dumps({"petlist":data})
+        resp = Response(js, status=200, mimetype='application/json')
+
+    else:
+        resp = resp501
+
+    return resp
+
 
 @app.route('/pets/id/<pet_id>', methods = ['GET', 'POST', 'DELETE'])
 def pet_by_id(pet_id):
