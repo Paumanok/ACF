@@ -52,14 +52,18 @@ class Coroutines:
         while True:
             await asyncio.sleep(.5)
             if self.net.isConnected() and self.key_verified == False:
-                if self.net.verifyKey(self.db.getKey()) == False:
-                    (b, key) = self.net.getNewKey()
-                    if b == True:
+                try:
+                    if self.net.verifyKey(self.db.getKey()) == False:
+                        (b, key) = self.net.getNewKey()
+                        if b == True:
+                            self.key_verified = True
+                            self.db.setKey(key)
+                    else:
                         self.key_verified = True
-                        self.db.setKey(key)
-                else:
-                    self.key_verified = True
-
+                except OSError as e:
+                    if self.DEBUG == True:
+                        print("Error during during key evaluation due to :", e)
+                        await asyncio.sleep(5)
             elif self.net.isConnected() == False:
                 self.key_verified = False
 
@@ -79,7 +83,11 @@ class Coroutines:
 
             if self.pet_detected == True:
                 if self.feed == False:
-                    val = self.net.canIFeed(self.db.getKey(),tag)
+                    try:
+                        val = self.net.canIFeed(self.db.getKey(),tag)
+                    except OSError as e:
+                        print("Feed permission error due to :",e)
+                        val = KEYINVALID
                     if val == KEYINVALID:
                         self.key_verified = False
                     elif val > NOFEED:
@@ -97,11 +105,15 @@ class Coroutines:
 
                 if self.load.isLoadValid(ls.loadCheck(self.feed_wt)):
                     self.motor.driveOff()
-                    self.net.petFed(self.tag,self.base_wt)
-                    if self.DEBUG :
-                        print("Pet food dispensed: ",self.feed_wt-self.base_wt)
-                        print("Pet food weight:    ", self.feed_wt)
-                        print("Base food weight:   ", self.base_wt)
-                    self.feed = False
-                    self.base_wt = None
-                    self.feed_wt = None
+                    try:
+                        self.net.petFed(self.tag,self.base_wt)
+                        if self.DEBUG :
+                            print("Pet food dispensed: ",self.feed_wt-self.base_wt)
+                            print("Pet food weight:    ", self.feed_wt)
+                            print("Base food weight:   ", self.base_wt)
+                        self.feed = False
+                        self.base_wt = None
+                        self.feed_wt = None
+                    except OSError as e:
+                        if self.DEBUG:
+                            print("Error Communicating finished feeding to feeder due to :", e)

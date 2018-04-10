@@ -22,4 +22,4 @@ class Routes:
 
         else:
             yield from picoweb.start_response(resp, content_type=json_content,status="501")
-            yield from resp.awrite("{'bool': False}")
+            yield from resp.awrite("{'calib': False}")
