@@ -76,7 +76,7 @@ def pet(pet_name):
 
     elif request.method == 'DELETE':
         #you heard the man
-        delete_count = pets.delete_many({"name":pet_name})
+        delete_count = pets.delete_many({"name":pet_name}).deleted_count
         print("{} entries deleted\n".format(delete_count))
         if delete_count > 0:
             resp = resp200
