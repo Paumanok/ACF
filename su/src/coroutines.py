@@ -85,10 +85,8 @@ class Coroutines:
                     elif val > NOFEED:
                         self.feed = True
                         self.feed_wt = val
+                        self.tag = tag
                         self.motor.driveOn()
-                    
-                    if self.DEBUG:
-                        print("Feed dispense val: ", val)
 
     async def dispenseRoutine(self):
         while True:
@@ -97,9 +95,9 @@ class Coroutines:
                 if self.base_wt == None:
                    self.base_wt = self.load.getGram()
 
-                if self.isLoadValid(ls.loadCheck(self.feed_wt)):
+                if self.load.isLoadValid(ls.loadCheck(self.feed_wt)):
                     self.motor.driveOff()
-                    self.net.petFed(tag,key,self.base_wt)
+                    self.net.petFed(self.tag,self.base_wt)
                     if self.DEBUG :
                         print("Pet food dispensed: ",self.feed_wt-self.base_wt)
                         print("Pet food weight:    ", self.feed_wt)

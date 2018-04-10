@@ -15,7 +15,7 @@ readtolerance = 100
 # caliCheck :: int -> bool
 caliCheck = lambda x: abst(x,readtolerance)
 # loadCheck :: int -> (int -> bool)
-loadCheck = lambda t: lambda x: gte(x,t)
+loadCheck = lambda t: lambda x: gte(x,t*scale)
 # ltt :: int -> int -> bool
 gte = lambda x,t: x >= t
 # absdt :: int -> int -> int -> bool

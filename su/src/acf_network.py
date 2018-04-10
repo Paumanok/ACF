@@ -25,24 +25,22 @@ class acf_network:
     def isConnected(self):
         if self.wlan.status() == network.STAT_GOT_IP and self.connected == False:
             self.connected = True
-            print("connected")
+            if self.DEBUG == True:
+                print("connected")
+                print(self.wlan.ifconfig())
         elif self.wlan.status() != network.STAT_GOT_IP:
             self.connected = False
             if self.recnt < RECNT:
                 self.recnt+=1
             else:
-                if self.DEBUG == True:
+                if self.DEBUG == True: 
                     print("Reconnect attempted")
                 self.wlan.disconnect()
                 time.sleep(5)
                 self.connect()
                 self.recnt=0
-                if self.DEBUG == True:
-                    print("connection status: ", self.wlan.status())
-
-        if(self.DEBUG==True and self.connected == True):
-            print(self.wlan.ifconfig())
-
+            if self.DEBUG == True:
+                print("connection status: ", self.wlan.status())
         return self.connected
 
     # Checks to see if the stored key is valid with the pi server
@@ -68,7 +66,7 @@ class acf_network:
             print("Feed value: ", feed)
         return feed
 
-    def petFed(self, key, tag, base_wt):
-        resp = r.post('http://'+self.wlan.ifconfig()[2]+':5000/sfeeder/feed', json = {'key':key, 'tag_id':tag, 'base_wt':base_wt}, headers={'Content-Type':'application/json'})
+    def petFed(self, tag, base_wt):
+        resp = r.post('http://'+self.wlan.ifconfig()[2]+':5000/sfeeder/feed', json = {'tag_id':tag, 'base_wt':base_wt}, headers={'Content-Type':'application/json'})
         return
 
