@@ -12,7 +12,7 @@ from easydriver.easydriver_pi import Motor
 from hx711.load_sensor import LoadSensor
 from util import can_pet_feed, convert_string
 
-MASTER_FEEDER_ID=0
+MASTER_FEEDER_ID=1
 
 class app_serv():
 
@@ -35,13 +35,15 @@ class app_serv():
                 print(self.rfid_queue.get(True))
 
     def check_for_pet(self):
+        db = dbm() 
         while True:
             if self.rfid_queue.empty():
                 time.sleep(1)
             else:
                 uid_list = self.rfid_queue.get(True)
                 uid_string = convert_string(uid_list)
-                if can_pet_feed(uid_string,MASTER_FEEDER_ID):
+                pet = can_pet_feed(uid_string, MASTER_FEEDER_ID)
+                if pet != None:
                     print("feeding")
                     self.feed(pet)
 

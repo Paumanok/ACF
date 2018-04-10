@@ -135,7 +135,6 @@ NO_FEED = 0
 def feed_permission():
     feedlogs = dbm().feedlogs
     feeders = dbm().feeders
-    pets = dbm().pets
     resp = resp501
     if request.method == 'GET':
         if request.headers['Content-Type'] == 'application/json':
@@ -145,8 +144,9 @@ def feed_permission():
                 print(data, file=sys.stderr)
                 print("feeder entry: ", entry, file = sys.stderr)
                 # If valid feed intial feedlog time is stored
-                if can_pet_feed(data["tag_id"],entry["id"]):
-                    feed = pets.find_one({"tag_id":data["tag_id"]})["food_quantity"]
+                pet = can_pet_feed(data["tag_id"],entry["id"])
+                if pet != None:
+                    feed = pet["food_quantity"]
                     resp = Response(dumps({"feed":feed}), status=200, mimetype='application/json')
                 else :
                     resp = Response(dumps({"feed":NO_FEED}), status=200, mimetype='application/json')

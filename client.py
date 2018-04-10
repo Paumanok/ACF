@@ -48,6 +48,6 @@ if __name__ == "__main__":
     for cat in cats:
         insert_pet(cat)
         request_pet_info(cat)
-    config_tag(cat1)
+    #config_tag(cat1)
     request_pet_info(cat1)
     get_all_pets()
