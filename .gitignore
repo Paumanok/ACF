@@ -107,3 +107,4 @@ __pycache__
 *.toc
 *.sympy
 independent_risk_investigation.pdf
+*.swp

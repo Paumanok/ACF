@@ -53,26 +53,13 @@ class app_serv():
     #param: pet--pet dictionary pulled from database
     def feed(self, pet):
         weight_queue = Queue()#queue for holding weights from different thread
-        self.weighing = True #flag for weigh_while
         food_amt = pet["food_quantity"] #get allowed amount
-        #start weigh_while thread
         baseweight = self.load_sensor.getGram()#weight_queue.get()#get first weight
-        threading.Thread(target = self.weigh_while, args = [weight_queue]).start()
         self.motor.driveOn()
         while self.load_sensor.isLoadFull(food_amt) == False:
-            cur_weight = weight_queue.get()
             print(cur_weight) if cur_weight != None else -1
         self.motor.driveOff()
         self.weighing = False #stop weighing thread
         log_feed(pet,baseweight)
         print("finished feeding")
 
-    #weigh_while: loops while weighing flag = true
-    def weigh_while(self, weight_queue):
-        while self.weighing:
-            weight = self.load_sensor.getGram_cur()
-            #for i in range(5):
-             #   weight += self.load_sensor.getGram()
-                #time.sleep(.1)
-            weight_queue.put(weight)
-            time.sleep(1)
