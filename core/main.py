@@ -25,17 +25,12 @@ class ACF():
         self.apsrv = app_serv(self.rfid_read_queue)
 
         print("starting services...")
-        #threading.Thread(target = server.run_server, args = (self.rfid_command_queue)).start()
         threading.Thread(target = self.rfid.read_while).start()
         threading.Thread(target = self.apsrv.check_for_pet).start()
         server.run_server(self.rfid_command_queue)
-
-
-
 
 
 if __name__ == "__main__":
     feeder = ACF()
     while True:
         continue
-

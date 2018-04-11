@@ -2,16 +2,18 @@ from machine import Pin, freq
 
 # Increase esp clock frequency for the SCK signal to operate
 # fast enough to prevent data saturation
-freq(160000000)
+def hx711_init(mode):
+    if mode:
+        freq(160000000)
 
 class DTPin:
-    def __init__(self, pin=4):
+    def __init__(self, pin):
         self.dt = Pin(pin, Pin.IN)
     def value(self):
         return self.dt.value()
 
 class SCKPin:
-    def __init__(self, pin=5):
+    def __init__(self, pin):
         self.sck = Pin(pin, Pin.OUT)
     def on(self):
         self.sck.value(1)

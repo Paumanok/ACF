@@ -9,8 +9,8 @@ from queue import *
 from database_manager import dbm
 from bson import objectid
 from easydriver.easydriver_pi import Motor
-from hx711.load_sensor import LoadSensor
-from util import can_pet_feed, convert_string
+from hx711 import LoadSensor
+from util import can_pet_feed, convert_string,log_feed
 
 MASTER_FEEDER_ID=1
 
@@ -56,26 +56,23 @@ class app_serv():
         self.weighing = True #flag for weigh_while
         food_amt = pet["food_quantity"] #get allowed amount
         #start weigh_while thread
+        baseweight = self.load_sensor.getGram()#weight_queue.get()#get first weight
         threading.Thread(target = self.weigh_while, args = [weight_queue]).start()
-        cur_weight = weight_queue.get()#get first weight
         self.motor.driveOn()
-        while cur_weight < food_amt:
+        while self.load_sensor.isLoadFull(food_amt) == False:
             cur_weight = weight_queue.get()
-            print(cur_weight)
+            print(cur_weight) if cur_weight != None else -1
         self.motor.driveOff()
         self.weighing = False #stop weighing thread
+        log_feed(pet,baseweight)
         print("finished feeding")
-
 
     #weigh_while: loops while weighing flag = true
     def weigh_while(self, weight_queue):
         while self.weighing:
-            weight = 0.0
-            weight = self.load_sensor.getGram()
+            weight = self.load_sensor.getGram_cur()
             #for i in range(5):
              #   weight += self.load_sensor.getGram()
                 #time.sleep(.1)
             weight_queue.put(weight)
             time.sleep(1)
-
-

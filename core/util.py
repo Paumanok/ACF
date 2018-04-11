@@ -30,17 +30,19 @@ def can_pet_feed( uid_string, f_id):
                     print(t)
                     #if current time is within feedtime bracket
                     if cur_time >= t[0] and cur_time <= t[1]:
-                        update_log(pet, cur_time)
+                        initialize_log(pet, cur_time)
                         return pet
     return None
 
 #update feed logs
-def update_log(pet, cur_time):
+def initialize_log(pet, cur_time):
     if db.feedlogs.find({"name":pet["name"], "base_wt":NULL_WEIGHT}).count() > 0:
         db.feedlogs.update_one({"name":pet["name"], "base_wt":NULL_WEIGHT},{"$set":{"name":pet["name"],"datetime":cur_time, "base_wt":NULL_WEIGHT}})
     else:
         db.feedlogs.insert_one({"name":pet["name"],"datetime":cur_time, "base_wt":NULL_WEIGHT})
 
+def log_feed(pet,baseweight):
+    db.feedlogs.update_one({"name":pet['name'],"base_wt":NULL_WEIGHT}, {"$set":{"base_wt":baseweight}})
 
 #convert_string: converts a list of 16 hex digits into a
 #single 16 byte hex string for use in db entry

@@ -10,7 +10,7 @@ from bson.json_util import dumps
 import sys
 import hashlib
 from queue import *
-from util import can_pet_feed, available_id
+from util import can_pet_feed, available_id, log_feed
 from db_types.pet import pet
 from db_types.feedlog import feedlog
 
@@ -158,7 +158,8 @@ def feed_permission():
             pet = pets.find_one({"tag_id":data["tag_id"]})
             if pet is not None:
                 # store base weight of bowl
-                feedlogs.update_one({"name":pet['name'],"base_wt":NULL_WEIGHT}, {"$set":{"base_wt":data["base_wt"]}})
+                #feedlogs.update_one({"name":pet['name'],"base_wt":NULL_WEIGHT}, {"$set":{"base_wt":data["base_wt"]}})
+                log_feed(pet,data["base_wt"])
                 resp = resp200
 
     return resp
