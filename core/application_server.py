@@ -23,6 +23,8 @@ class app_serv():
         self.motor = Motor(mp["m1"], mp["m2"], mp["dir"], mp["step"])
         self.motor.setFreq(800)
         self.motor.setDuty(50)
+        self.motor.setDir(1)
+        self.motor.setStepMode(3)
         self.load_sensor = LoadSensor()
 
     #tests functionality of inter-thread command queue
