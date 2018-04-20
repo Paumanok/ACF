@@ -20,18 +20,27 @@ def can_pet_feed( uid_string, f_id):
     if pet is not None:
         print(pet["name"])
         print("uid: "+ uid_string)
-        cur_time = int(time.strftime("%l%M"))
+        cur_time = int(time.strftime("%H%M"))
         today = num_to_day[datetime.today().weekday()]
         feed_times = pet["feed_times"]
         feeder_id = pet["feeder_id"]
         if feeder_id == 0 or feeder_id == f_id:
             for t in feed_times[today]:
+                print("checking feed times")
                 if len(t) > 0:
                     print(t)
                     #if current time is within feedtime bracket
+                    print("Current Time:", cur_time)
                     if cur_time >= t[0] and cur_time <= t[1]:
                         initialize_log(pet, cur_time)
                         return pet
+                    else:
+                        print("cannot feed right now")
+                else:
+                    print("no feed times available")
+
+        else:
+            print("at wrong feeder")
     return None
 
 #update feed logs
