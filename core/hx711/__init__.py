@@ -19,6 +19,12 @@ buffer_size = 10
 valid_buf_cnt = 7
 readtolerance = 100
 
+# Jam Checking Values
+jam_check_cnt = 5
+FULL = 0
+FEEDING = 1
+JAMMED = 2
+
 # caliCheck :: int -> bool
 caliCheck = lambda x: abst(x,readtolerance)
 # fullCheck :: int -> (int -> bool)
@@ -38,6 +44,7 @@ class LoadSensor:
         self.buf = array('q',[0]*buffer_size)
         self.bufi = 0
         self.bufload = True
+        self.jamcnt = 0
 
         # Make sure sck is off
         self.sck.off()
@@ -76,6 +83,15 @@ class LoadSensor:
         if cnt >= valid_buf_cnt:
             return sum/cnt
         return None
+
+    def __is_jammed__(self):
+        cnt = 0
+        for i in range(buffer_size):
+            difl = abs(self.buf[i-1] - self.buf[i])
+            difr = abs(self.buf[i-1] - self.buf[i-2])
+            if difl > readtolerance or difr > readtolerance:
+                cnt += 1
+        return cnt > buffer_size - valid_buf_cnt
 
     # Get 24 bit weight value
     def getValue(self):
@@ -133,8 +149,21 @@ class LoadSensor:
         self.bufload = self.__buf_check__(lf)
         return self.bufload
 
-    def isLoadFull(self, feed):
-        return self.isLoadValid(fullCheck(feed))
+    def loadState(self, feed):
+        valid = self.isLoadValid(fullCheck(feed))
+        if self.jamcnt == jam_check_cnt:
+            self.jamcnt = 0
+            jam = self.__is_jammed__()
+        else:
+            self.jamcnt += 1
+            jam = False
+
+        if (valid):
+            return FULL
+        elif(jam):
+            return JAMMED
+        else:
+            return FEEDING
 
     def calibrate(self,avg_cnt=5):
         self.__offset = int(self.getAvgValue(avg_cnt))
