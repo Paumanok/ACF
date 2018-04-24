@@ -20,7 +20,7 @@ class Motor:
         self.dir = Pin(dir,Pin.OUT)
         self.drive = PWM(Pin(step),freq,0)
         self.duty = getDuty(duty)
-        self.dir.value(0)
+        self.dir.value(1)
 
     def setDuty(self, duty):
         self.duty = duty
