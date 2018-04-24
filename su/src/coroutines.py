@@ -40,7 +40,7 @@ class Coroutines:
         self.DEBUG = DBG
         self.net = a.acf_network(DEBUG=self.DEBUG)
         self.rfid = r.MFRC522(2,15,spiblk=1)
-        self.motor = ed.Motor(None,None,0,4,500,50)
+        self.motor = ed.Motor(None,None,1,4,800,50)
         self.load = ls.LoadSensor()
         self.key_verified = False
         self.pet_detected = False
