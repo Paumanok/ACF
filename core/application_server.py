@@ -24,7 +24,7 @@ class app_serv():
         self.motor.setFreq(800)
         self.motor.setDuty(50)
         self.motor.setDir(1)
-        self.motor.setStepMode(3)
+        self.motor.setStepMode(0)
         self.load_sensor = LoadSensor()
 
     #tests functionality of inter-thread command queue
@@ -59,7 +59,8 @@ class app_serv():
         baseweight = self.load_sensor.getGram()#weight_queue.get()#get first weight
         self.motor.driveOn()
         while self.load_sensor.isLoadFull(food_amt) == False:
-            print(cur_weight) if cur_weight != None else -1
+            #print(cur_weight) if cur_weight != None else -1
+            pass
         self.motor.driveOff()
         self.weighing = False #stop weighing thread
         log_feed(pet,baseweight)
