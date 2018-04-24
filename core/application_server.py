@@ -12,7 +12,13 @@ from easydriver.easydriver_pi import Motor
 from hx711 import LoadSensor
 from util import can_pet_feed, convert_string,log_feed
 
-MASTER_FEEDER_ID=1
+MASTER_FEEDER_ID = 1
+
+# Determine if JAMMING or if empty
+EMPTYCOUNT = 5
+# Make count even and greater than 0
+JIG_COUNT = 6
+JIG_HALF_PERIOD = .5
 
 class app_serv():
 
@@ -26,6 +32,7 @@ class app_serv():
         self.motor.setDir(1)
         self.motor.setStepMode(0)
         self.load_sensor = LoadSensor()
+        self.emptycnt = 0
 
     #tests functionality of inter-thread command queue
     def print_queue(self):
@@ -58,13 +65,32 @@ class app_serv():
         food_amt = pet["food_quantity"] #get allowed amount
         baseweight = self.load_sensor.getGram()#weight_queue.get()#get first weight
         self.motor.driveOn()
-        while self.load_sensor.isLoadFull(food_amt) == False:
-            #print(cur_weight) if cur_weight != None else -1
-            pass
+        while (1):
+            load_state = self.load_sensor.loadState(food_amt)
+            if (load_state == JAMMED):
+                self.emptycnt += 1
+                self.jig()
+            elif (load_state == FULL):
+                self.emptycnt = 0
+                break
+            if(self.emptycnt == FULLCOUNT):
+                break;
+            self.emptycnt = 0
+
         self.motor.driveOff()
         self.weighing = False #stop weighing thread
         log_feed(pet,baseweight)
         print("finished feeding")
+
+        if (self.emptycnt == FULLCOUNT):
+            print("refill feeder")
+
+    def jig(self):
+        i = JIG_COUNT
+        while(i >= 1):
+            self.motor.setDir(i%2)
+            i -= 1
+            time.sleep(JIG_HALF_PERIOD)
 
     #attempt to clear jams with rapid back and forth movement.
     def stall_dance():
