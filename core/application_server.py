@@ -37,7 +37,7 @@ class app_serv():
                 print(self.rfid_queue.get(True))
 
     def check_for_pet(self):
-        db = dbm() 
+        db = dbm()
         while True:
             if self.rfid_queue.empty():
                 time.sleep(1)
@@ -65,4 +65,19 @@ class app_serv():
         self.weighing = False #stop weighing thread
         log_feed(pet,baseweight)
         print("finished feeding")
+
+    #attempt to clear jams with rapid back and forth movement.
+    def stall_dance():
+        self.motor.driveOn()
+        for i in range(10):
+            if i % 2:
+                self.motor.setDir(1)
+            else:
+                self.motor.setDir(0)
+            sleep(.2)
+
+        self.motor.setFreq(800)
+        self.motor.setDuty(50)
+        self.motor.setDir(1)
+        self.motor.setStepMode(0)
 
