@@ -105,7 +105,7 @@ class Coroutines:
                 if self.base_wt == None:
                    self.base_wt = self.load.getGram()
 
-                if self.load.isLoadValid(ls.loadCheck(self.feed_wt)):
+                if self.load.isLoadValid(ls.loadCheck(self.feed_wt) or self.weightcheck == 100):
                     self.motor.driveOff()
                     self.weightcheck = 0
                     try:
@@ -120,7 +120,7 @@ class Coroutines:
                     except OSError as e:
                         if self.DEBUG:
                             print("Error Communicating finished feeding to feeder due to :", e)
-                elif self.weightcheck >= 10 and self.load.isJammed() :
+                elif (self.weightcheck+1)%10 == 0 and self.load.isJammed() :
                     i = 6
                     while (i >= 1):
                         self.motor.setDir(i%2)
