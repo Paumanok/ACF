@@ -52,7 +52,7 @@ class Coroutines:
 
     async def networkRoutine(self):
         while True:
-            await asyncio.sleep(.5)
+            await asyncio.sleep(5)
             if self.net.isConnected() and self.key_verified == False:
                 try:
                     if self.net.verifyKey(self.db.getKey()) == False:
@@ -71,7 +71,7 @@ class Coroutines:
 
     async def petRoutine(self):
         while True:
-            await asyncio.sleep(.3)
+            await asyncio.sleep(.2)
             if self.key_verified == True and self.feed == False:
                 (auth, tag) = do_read(self.rfid)
                 if tag != None:
@@ -100,12 +100,12 @@ class Coroutines:
 
     async def dispenseRoutine(self):
         while True:
-            await asyncio.sleep(.5)
+            await asyncio.sleep(.3)
             if self.feed == True:
                 if self.base_wt == None:
                    self.base_wt = self.load.getGram()
 
-                if self.load.isLoadValid(ls.loadCheck(self.feed_wt) or self.weightcheck == 100):
+                if self.load.isLoadValid(ls.loadCheck(self.feed_wt) or self.weightcheck == 30):
                     self.motor.driveOff()
                     self.weightcheck = 0
                     try:
@@ -120,8 +120,10 @@ class Coroutines:
                     except OSError as e:
                         if self.DEBUG:
                             print("Error Communicating finished feeding to feeder due to :", e)
-                elif (self.weightcheck+1)%10 == 0 and self.load.isJammed() :
+                elif (self.weightcheck+1)%2 == 0 and self.load.isJammed() :
                     i = 6
+                    if (self.DEBUG):
+                        print("attempting unjam")
                     while (i >= 1):
                         self.motor.setDir(i%2)
                         time.sleep(1)
