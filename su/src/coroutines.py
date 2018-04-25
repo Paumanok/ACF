@@ -3,6 +3,7 @@ import acf_network as a
 import mfrc522 as r
 import load_sensor as ls
 import easydriver_esp as ed
+import time
 
 KEYINVALID = -1
 NOFEED=0
@@ -47,6 +48,7 @@ class Coroutines:
         self.feed = False
         self.base_wt = None
         self.feed_wt = None
+        self.weightcheck = 0
 
     async def networkRoutine(self):
         while True:
@@ -105,6 +107,7 @@ class Coroutines:
 
                 if self.load.isLoadValid(ls.loadCheck(self.feed_wt)):
                     self.motor.driveOff()
+                    self.weightcheck = 0
                     try:
                         self.net.petFed(self.tag,self.base_wt)
                         if self.DEBUG :
@@ -117,3 +120,12 @@ class Coroutines:
                     except OSError as e:
                         if self.DEBUG:
                             print("Error Communicating finished feeding to feeder due to :", e)
+                elif self.weightcheck >= 5 and self.load.isJammed() :
+                    i = 6
+                    while (i >= 1):
+                        self.motor.setDir(i%2)
+                        time.sleep(1)
+                        i-=1
+                    self.weightcheck = 0
+                else :
+                    self.weightcheck +=1

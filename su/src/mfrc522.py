@@ -27,7 +27,6 @@ class MFRC522:
             self.spi = SPI(baudrate=1000000, polarity=0, phase=0, sck=self.sck, mosi=self.mosi, miso=self.miso)
         else:
             self.spi = SPI(spiblk, baudrate=1000000, polarity=0, phase=0)
-        self.spi.init()
 
         self.rst.value(1)
         self.init()

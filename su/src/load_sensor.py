@@ -69,6 +69,16 @@ class LoadSensor:
             return sum/cnt
         return None
 
+    def isJammed(self):
+        cnt = 0
+        sum = 0
+        for i in range(buffer_size):
+            difl = abs(self.buf[i-1] - self.buf[i])
+            difr = abs(self.buf[i-1] - self.buf[i-2])
+            if difl > readtolerance or difr > readtolerance:
+                cnt += 1
+        return cnt < buffer_size - valid_buf_cnt
+
     # Get 24 bit weight value
     def getValue(self):
         # Initalize base reading value
@@ -89,18 +99,6 @@ class LoadSensor:
         # XOR to clear sign bit
         return reading ^ 0x800000
 
-    # Get an average of the weight readings
-    def getAvgValue(self, avg_cnt = 10):
-        sum = 0
-        cnt = avg_cnt
-        while cnt > 0:
-            sum += self.getValue()
-            cnt -= 1
-        return sum / avg_cnt
-
-    def gramToLoadVal(self, weight):
-        return int(weight*scale)
-
     def getGram(self):
         self.__buf_load__()
         while 1:
@@ -110,6 +108,16 @@ class LoadSensor:
             else:
                 break
         return avg/scale
+
+    # Get an average of the weight readings
+    def getAvgValue(self, avg_cnt = 10):
+        sum = 0
+        cnt = avg_cnt
+        while cnt > 0:
+            sum += self.getValue()
+            cnt -= 1
+        return sum / avg_cnt
+
 
     def isLoadValid(self, lf):
         if self.bufload:

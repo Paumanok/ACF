@@ -22,17 +22,17 @@ class Motor:
         self.duty = getDuty(duty)
         self.dir.value(1)
 
-    def setDuty(self, duty):
-        self.duty = duty
-        self.drive.duty(duty)
-
-    def setFreq(self, freq):
-        self.drive.freq(freq)
-
-    def setStepMode(self, mode):
-        if 0 <= mode and mode <= 3:
-            self.m1.value(1&mode)
-            self.m2.value(1&(mode>>1))
+#    def setDuty(self, duty):
+#        self.duty = duty
+#        self.drive.duty(duty)
+#
+#    def setFreq(self, freq):
+#        self.drive.freq(freq)
+#
+#    def setStepMode(self, mode):
+#        if 0 <= mode and mode <= 3:
+#            self.m1.value(1&mode)
+#            self.m2.value(1&(mode>>1))
 
     def setDir(self,dir):
         if 0 == dir or 1 == dir:
