@@ -120,7 +120,7 @@ class Coroutines:
                     except OSError as e:
                         if self.DEBUG:
                             print("Error Communicating finished feeding to feeder due to :", e)
-                elif self.weightcheck >= 5 and self.load.isJammed() :
+                elif self.weightcheck >= 10 and self.load.isJammed() :
                     i = 6
                     while (i >= 1):
                         self.motor.setDir(i%2)
