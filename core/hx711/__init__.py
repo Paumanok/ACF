@@ -20,7 +20,7 @@ valid_buf_cnt = 7
 readtolerance = 100
 
 # Jam Checking Values
-jam_check_cnt = 5
+jam_check_cnt = 30
 FULL = 0
 FEEDING = 1
 JAMMED = 2

@@ -9,16 +9,17 @@ from queue import *
 from database_manager import dbm
 from bson import objectid
 from easydriver.easydriver_pi import Motor
-from hx711 import LoadSensor
+from hx711 import LoadSensor, FULL, JAMMED, FEEDING
 from util import can_pet_feed, convert_string,log_feed
+
 
 MASTER_FEEDER_ID = 1
 
 # Determine if JAMMING or if empty
-EMPTYCOUNT = 5
+EMPTYCOUNT = 10
 # Make count even and greater than 0
 JIG_COUNT = 6
-JIG_HALF_PERIOD = .5
+JIG_HALF_PERIOD = 1
 
 class app_serv():
 
@@ -30,7 +31,7 @@ class app_serv():
         self.motor.setFreq(800)
         self.motor.setDuty(50)
         self.motor.setDir(1)
-        self.motor.setStepMode(0)
+        self.motor.setStepMode(3)
         self.load_sensor = LoadSensor()
         self.emptycnt = 0
 
@@ -73,7 +74,7 @@ class app_serv():
             elif (load_state == FULL):
                 self.emptycnt = 0
                 break
-            if(self.emptycnt == FULLCOUNT):
+            if(self.emptycnt == EMPTYCOUNT):
                 break;
             self.emptycnt = 0
 
@@ -82,7 +83,7 @@ class app_serv():
         log_feed(pet,baseweight)
         print("finished feeding")
 
-        if (self.emptycnt == FULLCOUNT):
+        if (self.emptycnt == EMPTYCOUNT):
             print("refill feeder")
 
     def jig(self):

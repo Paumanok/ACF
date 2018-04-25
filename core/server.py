@@ -135,6 +135,7 @@ NO_FEED = 0
 def feed_permission():
     feedlogs = dbm().feedlogs
     feeders = dbm().feeders
+    pets = dbm().pets
     resp = resp501
     if request.method == 'GET':
         if request.headers['Content-Type'] == 'application/json':
