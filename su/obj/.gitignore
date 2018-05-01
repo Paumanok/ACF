@@ -1,0 +1,4 @@
+# Ignore byte code files in this directory
+*
+# With the exception of the gitignore
+! .gitignore
